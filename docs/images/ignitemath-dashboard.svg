@@ -1,0 +1,129 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <!-- Stylized illustration of the IgniteMath teacher dashboard -->
+  <rect width="1280" height="720" fill="#f6f1ea"/>
+  <g opacity="0.5" fill="#e4ddd2">
+    <circle cx="60" cy="80" r="3"/><circle cx="120" cy="40" r="3"/><circle cx="1220" cy="640" r="3"/>
+    <circle cx="1180" cy="60" r="3"/><circle cx="80" cy="660" r="3"/><circle cx="1240" cy="360" r="3"/>
+  </g>
+
+  <defs>
+    <clipPath id="win"><rect x="70" y="50" width="1140" height="620" rx="16"/></clipPath>
+  </defs>
+
+  <!-- window -->
+  <rect x="70" y="50" width="1140" height="620" rx="16" fill="#ffffff" stroke="#dbdee1"/>
+  <g clip-path="url(#win)">
+    <!-- top bar -->
+    <rect x="70" y="50" width="1140" height="52" fill="#fffdfa"/>
+    <line x1="70" y1="102" x2="1210" y2="102" stroke="#eceae6"/>
+    <circle cx="102" cy="76" r="6" fill="#e4e1db"/>
+    <circle cx="126" cy="76" r="6" fill="#e4e1db"/>
+    <circle cx="150" cy="76" r="6" fill="#e4e1db"/>
+    <rect x="190" y="62" width="320" height="28" rx="14" fill="#f3f5f8"/>
+    <text x="350" y="80" text-anchor="middle" font-size="13" fill="#505963">ignitemath · Teacher Dashboard</text>
+
+    <!-- sidebar -->
+    <rect x="70" y="102" width="230" height="568" fill="#3e3b6b"/>
+    <path d="M112 132 C114.7 146.4 118.6 150.3 131.2 152.4 C118.6 154.5 114.7 158.4 112 172.8 C109.3 158.4 105.4 154.5 92.8 152.4 C105.4 150.3 109.3 146.4 112 132 Z" fill="#f16935"/>
+    <text x="144" y="158" font-size="16" font-weight="600" fill="#ffffff">IgniteMath</text>
+
+    <text x="112" y="222" font-size="14" fill="#c9c6e4">Lesson plan</text>
+    <text x="112" y="266" font-size="14" fill="#c9c6e4">Guardrails</text>
+    <rect x="88" y="284" width="194" height="36" rx="8" fill="#ffffff" opacity="0.14"/>
+    <rect x="88" y="284" width="4" height="36" rx="2" fill="#f16935"/>
+    <text x="112" y="307" font-size="14" font-weight="600" fill="#ffffff">Live class</text>
+    <text x="112" y="352" font-size="14" fill="#c9c6e4">Reports</text>
+
+    <!-- main header -->
+    <text x="330" y="148" font-size="20" font-weight="600" fill="#050c13">Unit 4 · Linear Equations</text>
+    <text x="330" y="172" font-size="13" fill="#505963">Period 3 · 24 students</text>
+    <rect x="960" y="128" width="220" height="30" rx="15" fill="#f3f0fa"/>
+    <text x="1070" y="147" text-anchor="middle" font-size="13" fill="#3e3b6b">Pacing: teacher-controlled</text>
+
+    <!-- student cards: 3 x 2 -->
+    <g>
+      <!-- card template repeated -->
+      <g>
+        <rect x="330" y="200" width="180" height="120" rx="10" fill="#ffffff" stroke="#e7e3dd"/>
+        <circle cx="356" cy="230" r="14" fill="#ece9f5"/>
+        <rect x="380" y="224" width="76" height="9" rx="4.5" fill="#e2dfd9"/>
+        <rect x="352" y="258" width="136" height="6" rx="3" fill="#f0ede7"/>
+        <rect x="352" y="258" width="96" height="6" rx="3" fill="#6b66b4"/>
+        <circle cx="360" cy="292" r="4" fill="#2e9e6b"/>
+        <text x="372" y="296" font-size="12" fill="#505963">Reasoning</text>
+      </g>
+      <g>
+        <rect x="530" y="200" width="180" height="120" rx="10" fill="#fff7f2" stroke="#f16935" stroke-width="1.5"/>
+        <circle cx="556" cy="230" r="14" fill="#ece9f5"/>
+        <rect x="580" y="224" width="64" height="9" rx="4.5" fill="#e2dfd9"/>
+        <rect x="552" y="258" width="136" height="6" rx="3" fill="#f0ede7"/>
+        <rect x="552" y="258" width="44" height="6" rx="3" fill="#6b66b4"/>
+        <circle cx="560" cy="292" r="4" fill="#e8a13d"/>
+        <text x="572" y="296" font-size="12" font-weight="600" fill="#b25b12">Stuck · needs you</text>
+      </g>
+      <g>
+        <rect x="730" y="200" width="180" height="120" rx="10" fill="#ffffff" stroke="#e7e3dd"/>
+        <circle cx="756" cy="230" r="14" fill="#ece9f5"/>
+        <rect x="780" y="224" width="82" height="9" rx="4.5" fill="#e2dfd9"/>
+        <rect x="752" y="258" width="136" height="6" rx="3" fill="#f0ede7"/>
+        <rect x="752" y="258" width="116" height="6" rx="3" fill="#6b66b4"/>
+        <circle cx="760" cy="292" r="4" fill="#2e9e6b"/>
+        <text x="772" y="296" font-size="12" fill="#505963">Reasoning</text>
+      </g>
+      <g>
+        <rect x="330" y="340" width="180" height="120" rx="10" fill="#ffffff" stroke="#e7e3dd"/>
+        <circle cx="356" cy="370" r="14" fill="#ece9f5"/>
+        <rect x="380" y="364" width="70" height="9" rx="4.5" fill="#e2dfd9"/>
+        <rect x="352" y="398" width="136" height="6" rx="3" fill="#f0ede7"/>
+        <rect x="352" y="398" width="128" height="6" rx="3" fill="#6b66b4"/>
+        <circle cx="360" cy="432" r="4" fill="#2e9e6b"/>
+        <text x="372" y="436" font-size="12" fill="#505963">Reasoning</text>
+      </g>
+      <g>
+        <rect x="530" y="340" width="180" height="120" rx="10" fill="#ffffff" stroke="#e7e3dd"/>
+        <circle cx="556" cy="370" r="14" fill="#ece9f5"/>
+        <rect x="580" y="364" width="88" height="9" rx="4.5" fill="#e2dfd9"/>
+        <rect x="552" y="398" width="136" height="6" rx="3" fill="#f0ede7"/>
+        <rect x="552" y="398" width="72" height="6" rx="3" fill="#6b66b4"/>
+        <circle cx="560" cy="432" r="4" fill="#2e9e6b"/>
+        <text x="572" y="436" font-size="12" fill="#505963">Reasoning</text>
+      </g>
+      <g>
+        <rect x="730" y="340" width="180" height="120" rx="10" fill="#ffffff" stroke="#e7e3dd"/>
+        <circle cx="756" cy="370" r="14" fill="#ece9f5"/>
+        <rect x="780" y="364" width="60" height="9" rx="4.5" fill="#e2dfd9"/>
+        <rect x="752" y="398" width="136" height="6" rx="3" fill="#f0ede7"/>
+        <rect x="752" y="398" width="104" height="6" rx="3" fill="#6b66b4"/>
+        <circle cx="760" cy="432" r="4" fill="#2e9e6b"/>
+        <text x="772" y="436" font-size="12" fill="#505963">Reasoning</text>
+      </g>
+    </g>
+
+    <!-- right rail: hint panel -->
+    <rect x="940" y="200" width="240" height="150" rx="10" fill="#ffffff" stroke="#e7e3dd"/>
+    <text x="960" y="230" font-size="14" font-weight="600" fill="#050c13">Hint 2 of 4</text>
+    <rect x="960" y="246" width="200" height="8" rx="4" fill="#f0ede7"/>
+    <rect x="960" y="262" width="172" height="8" rx="4" fill="#f0ede7"/>
+    <rect x="960" y="278" width="188" height="8" rx="4" fill="#f0ede7"/>
+    <rect x="960" y="302" width="150" height="26" rx="13" fill="#f3f0fa"/>
+    <path d="M974 313 v-3 a4 4 0 0 1 8 0 v3" stroke="#3e3b6b" stroke-width="1.6" fill="none"/>
+    <rect x="972" y="313" width="12" height="9" rx="2" fill="#3e3b6b"/>
+    <text x="992" y="320" font-size="12" fill="#3e3b6b">Answer withheld</text>
+
+    <!-- right rail: mastery gate -->
+    <rect x="940" y="370" width="240" height="90" rx="10" fill="#ffffff" stroke="#e7e3dd"/>
+    <text x="960" y="398" font-size="14" font-weight="600" fill="#050c13">Next section</text>
+    <text x="960" y="420" font-size="12" fill="#505963">Unlocks when you say so</text>
+    <rect x="1116" y="396" width="44" height="24" rx="12" fill="#3e3b6b"/>
+    <circle cx="1148" cy="408" r="9" fill="#ffffff"/>
+
+    <!-- class mastery bar -->
+    <text x="330" y="522" font-size="13" fill="#505963">Class mastery</text>
+    <rect x="330" y="536" width="580" height="10" rx="5" fill="#f0ede7"/>
+    <rect x="330" y="536" width="360" height="10" rx="5" fill="#f16935"/>
+    <text x="926" y="546" font-size="14" font-weight="600" fill="#050c13">62%</text>
+
+    <rect x="330" y="580" width="850" height="1" fill="#eceae6"/>
+    <text x="330" y="614" font-size="13" fill="#505963">You decide when the class moves on — the AI never advances a lesson on its own.</text>
+  </g>
+</svg>

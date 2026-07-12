@@ -1,9 +1,5 @@
 <svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Ignite Curiosity Lab spark mark -->
   <path d="M42 8 C46.5 32 53 38.5 74 42 C53 45.5 46.5 52 42 76 C37.5 52 31 45.5 10 42 C31 38.5 37.5 32 42 8 Z" fill="#f16935"/>
   <path d="M72 56 C74.2 67 77.5 70.3 87 72 C77.5 73.7 74.2 77 72 88 C69.8 77 66.5 73.7 57 72 C66.5 70.3 69.8 67 72 56 Z" fill="#3e3b6b"/>
-  <style>
-    @media (prefers-color-scheme: dark) {
-      path:nth-of-type(2) { fill: #8f8ad0; }
-    }
-  </style>
 </svg>
