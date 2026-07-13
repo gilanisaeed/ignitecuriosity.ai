@@ -19,16 +19,12 @@ pnpm build
 
 Outputs a fully static site to `out/`.
 
-## IgniteEd subsite
+## Site structure
 
-The IgniteEd pages served at [/igniteed/](https://www.ignitecuriosity.ai/igniteed/) are a separate Next.js app whose source lives in `~/workspace/ignite-ed-website-design`. Its static build output is checked in under `public/igniteed/` so it deploys with the main site. To update it:
+The site hosts two product sections alongside the Lab pages:
 
-```bash
-cd ~/workspace/ignite-ed-website-design
-pnpm install && pnpm build   # exports to out/ with basePath /igniteed
-rm -rf <this-repo>/public/igniteed
-cp -R out/ <this-repo>/public/igniteed/
-```
+- **IgniteMath** — `/ignitemath`, components in `components/ignitemath/`
+- **IgniteEd** — `/igniteed` (with `/program`, `/impact`, `/about`, `/pricing`, `/readiness-review` subpages), components in `components/igniteed/`, assets in `public/igniteed/`
 
 ## Deployment
 

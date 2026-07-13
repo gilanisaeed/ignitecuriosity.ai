@@ -1,8 +1,0 @@
-1:"$Sreact.fragment"
-2:I[89836,["/igniteed/_next/static/chunks/cdea7944cb5920d7.js","/igniteed/_next/static/chunks/796e7f5bb07ad38d.js"],"ViewportBoundary"]
-4:I[89836,["/igniteed/_next/static/chunks/cdea7944cb5920d7.js","/igniteed/_next/static/chunks/796e7f5bb07ad38d.js"],"MetadataBoundary"]
-5:"$Sreact.suspense"
-7:I[76629,["/igniteed/_next/static/chunks/cdea7944cb5920d7.js","/igniteed/_next/static/chunks/796e7f5bb07ad38d.js"],"IconMark"]
-0:{"buildId":"pH0-ngTCkPcyyste5SUGA","rsc":["$","$1","h",{"children":[["$","meta",null,{"name":"robots","content":"noindex"}],["$","$L2",null,{"children":"$@3"}],["$","div",null,{"hidden":true,"children":["$","$L4",null,{"children":["$","$5",null,{"name":"Next.Metadata","children":"$@6"}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"loading":null,"isPartial":false}
-3:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
-6:[["$","title","0",{"children":"IgniteEd: Responsible AI & Adaptive Learning for Educators"}],["$","meta","1",{"name":"description","content":"Empowering educators to design adaptive, equitable, and meaningful learning experiences that keep teachers at the heart of the classroom."}],["$","meta","2",{"name":"generator","content":"v0.app"}],["$","link","3",{"rel":"icon","href":"/igniteed/icon-light-32x32.png","media":"(prefers-color-scheme: light)"}],["$","link","4",{"rel":"icon","href":"/igniteed/icon-dark-32x32.png","media":"(prefers-color-scheme: dark)"}],["$","link","5",{"rel":"icon","href":"/igniteed/icon.svg","type":"image/svg+xml"}],["$","link","6",{"rel":"apple-touch-icon","href":"/igniteed/apple-icon.png"}],["$","$L7","7",{}]]

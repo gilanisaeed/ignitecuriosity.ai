@@ -9,8 +9,7 @@ import { cn } from "@/lib/utils"
 
 const navLinks = [
   { href: "/ignitemath", label: "IgniteMath" },
-  // Served as a standalone static site from public/igniteed — needs a full page load, not client routing
-  { href: "/igniteed/", label: "IgniteEd", external: true },
+  { href: "/igniteed", label: "IgniteEd" },
   { href: "/science", label: "The Science" },
   { href: "/about", label: "About Us" },
 ]
@@ -29,23 +28,20 @@ export function SiteHeader() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-8 text-sm font-bold">
-          {navLinks.map((link) => {
-            const LinkComponent = link.external ? "a" : Link
-            return (
-              <LinkComponent
-                key={link.href}
-                href={link.href}
-                aria-current={isActive(link.href) ? "page" : undefined}
-                className={cn(
-                  "relative transition-colors hover:text-primary",
-                  "after:absolute after:-bottom-1.5 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:bg-primary after:transition-transform hover:after:scale-x-100",
-                  isActive(link.href) ? "text-primary after:scale-x-100" : "text-muted-foreground",
-                )}
-              >
-                {link.label}
-              </LinkComponent>
-            )
-          })}
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              aria-current={isActive(link.href) ? "page" : undefined}
+              className={cn(
+                "relative transition-colors hover:text-primary",
+                "after:absolute after:-bottom-1.5 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:bg-primary after:transition-transform hover:after:scale-x-100",
+                isActive(link.href) ? "text-primary after:scale-x-100" : "text-muted-foreground",
+              )}
+            >
+              {link.label}
+            </Link>
+          ))}
         </nav>
 
         <div className="hidden md:flex items-center gap-4">
@@ -66,23 +62,20 @@ export function SiteHeader() {
       {open && (
         <div className="md:hidden border-t bg-background">
           <nav className="container flex flex-col gap-1 px-6 py-4">
-            {navLinks.map((link) => {
-              const LinkComponent = link.external ? "a" : Link
-              return (
-                <LinkComponent
-                  key={link.href}
-                  href={link.href}
-                  aria-current={isActive(link.href) ? "page" : undefined}
-                  className={cn(
-                    "rounded-md px-3 py-3 text-base font-bold transition-colors hover:bg-muted hover:text-primary",
-                    isActive(link.href) ? "bg-muted text-primary" : "text-muted-foreground",
-                  )}
-                  onClick={() => setOpen(false)}
-                >
-                  {link.label}
-                </LinkComponent>
-              )
-            })}
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                aria-current={isActive(link.href) ? "page" : undefined}
+                className={cn(
+                  "rounded-md px-3 py-3 text-base font-bold transition-colors hover:bg-muted hover:text-primary",
+                  isActive(link.href) ? "bg-muted text-primary" : "text-muted-foreground",
+                )}
+                onClick={() => setOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
             <Button className="mt-2 w-full bg-secondary text-secondary-foreground hover:bg-secondary/90">
               Request a Demo
             </Button>
