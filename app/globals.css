@@ -1,0 +1,317 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Ignite Curiosity Lab — Purple-primary / Orange-CTA design tokens (WCAG 2.1) */
+  /* Page background — warm off-white (#FBF8F3) */
+  --background: #fbf8f3;
+  --foreground: #2c2a33; /* Body text — near-black (#2C2A33) */
+
+  --card: #ffffff;
+  --card-foreground: #2c2a33;
+
+  --popover: #ffffff;
+  --popover-foreground: #2c2a33;
+
+  /* Primary: Deep Curiosity Purple (#56457F) — headings, nav, logo, structure */
+  --primary: #56457f;
+  --primary-foreground: #ffffff;
+
+  /* Secondary = primary CTA. Darkened orange (#C0531F) so white text passes AA */
+  --secondary: #c0531f;
+  --secondary-foreground: #ffffff;
+
+  /* Muted: Supporting purple tint (#EFEDF5) — cards, alternating sections */
+  --muted: #efedf5;
+  --muted-foreground: #6e6a75; /* Secondary text, captions (#6E6A75) */
+
+  /* Accent: Supporting purple tint — replaces all teal usage */
+  --accent: #efedf5;
+  --accent-foreground: #56457f;
+
+  /* Destructive = crimson-600 (#B3261E) — problem / decline / destructive */
+  --destructive: #b3261e;
+  --destructive-foreground: #ffffff;
+
+  --border: #e3dfea; /* Hairline borders, dividers (#E3DFEA) */
+  --input: #e3dfea;
+  --ring: #56457f; /* Purple focus ring */
+
+  /* Brand accent tokens (bright orange for non-text accents only) */
+  --color-accent-brand: #f27a37; /* orange-500 — CTA accent, never under white text */
+  --color-accent-strong: #c0531f; /* orange-strong — use with white text */
+  --color-accent-hover: #ac4b1f; /* orange-hover — hover / pressed fill */
+
+  /* Semantic data & state colors — never brand, never CTA */
+  --color-crimson: #b3261e; /* Problem · decline · destructive */
+  --color-crimson-surface: #f9e7e5; /* crimson-50 */
+  --color-green: #2e7d53; /* Gain · positive · mastery */
+  --color-green-surface: #e8f4ee; /* green-50 */
+  --color-warning: #b7791f; /* Caution · in-progress */
+  --color-slate: #192028; /* Dark bands / footer (shared w/ IgniteEd) */
+
+  /* Chart colors — categorical order per spec: purple-600 → orange → purple-400 → orange-strong → slate */
+  --chart-1: #56457f; /* purple-600 */
+  --chart-2: #f27a37; /* orange-500 */
+  --chart-3: #8275a0; /* purple-400 */
+  --chart-4: #c0531f; /* orange-strong */
+  --chart-5: #192028; /* slate */
+
+  /* Legacy decorative tokens remapped to brand family (no third accent) */
+  --logo-deep-violet: #56457f;
+  --logo-sky-blue: #8a78b3;
+  --logo-warm-orange: #f27a37;
+  --logo-rose-pink: #c0531f;
+  --logo-teal-blue: #6e6a75;
+
+  --radius: 1rem; /* r-lg = 16px (cards, panels) */
+
+  --sidebar: #fbf8f3;
+  --sidebar-foreground: #2c2a33;
+  --sidebar-primary: #56457f;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #efedf5;
+  --sidebar-accent-foreground: #56457f;
+  --sidebar-border: #e3dfea;
+  --sidebar-ring: #56457f;
+}
+
+.dark {
+  /* Dark Mode — deep purple-tinted neutrals */
+  --background: #1c1924;
+  --foreground: #f5f3f8;
+
+  --card: #25212e;
+  --card-foreground: #f5f3f8;
+
+  --popover: #25212e;
+  --popover-foreground: #f5f3f8;
+
+  /* Primary: Lighter purple for dark-mode visibility */
+  --primary: #b3a6d6;
+  --primary-foreground: #1c1924;
+
+  /* Secondary = primary CTA (darkened orange, white text) */
+  --secondary: #c0531f;
+  --secondary-foreground: #ffffff;
+
+  --muted: #2e2939;
+  --muted-foreground: #b7b2c2;
+
+  /* Accent: muted purple surface */
+  --accent: #2e2939;
+  --accent-foreground: #f5f3f8;
+
+  --destructive: #d1483f; /* lighter crimson for dark-mode visibility */
+  --destructive-foreground: #ffffff;
+
+  --border: #38324a;
+  --input: #38324a;
+  --ring: #b3a6d6;
+
+  --color-accent-brand: #f27a37;
+  --color-accent-strong: #c0531f;
+  --color-accent-hover: #ac4b1f;
+
+  /* Semantic data & state colors — lightened for dark surfaces */
+  --color-crimson: #d1483f;
+  --color-crimson-surface: #3a2320;
+  --color-green: #4faf7d;
+  --color-green-surface: #1f3a2c;
+  --color-warning: #d0972f;
+  --color-slate: #0f141a;
+
+  --chart-1: #b3a6d6; /* light purple */
+  --chart-2: #f27a37; /* orange-500 */
+  --chart-3: #8275a0; /* purple-400 */
+  --chart-4: #c0531f; /* orange-strong */
+  --chart-5: #b7b2c2; /* muted */
+
+  --logo-deep-violet: #b3a6d6;
+  --logo-sky-blue: #8a78b3;
+  --logo-warm-orange: #f27a37;
+  --logo-rose-pink: #c0531f;
+  --logo-teal-blue: #b7b2c2;
+
+  --sidebar: #25212e;
+  --sidebar-foreground: #f5f3f8;
+  --sidebar-primary: #b3a6d6;
+  --sidebar-primary-foreground: #1c1924;
+  --sidebar-accent: #2e2939;
+  --sidebar-accent-foreground: #f5f3f8;
+  --sidebar-border: #38324a;
+  --sidebar-ring: #b3a6d6;
+}
+
+@theme inline {
+  /* Typography: Montserrat for headlines (geometric, credible), Roboto for UI & body */
+  --font-sans: var(--font-body), "Roboto", sans-serif;
+  --font-heading: var(--font-heading), "Montserrat", sans-serif;
+  --font-body: var(--font-body), "Roboto", sans-serif;
+  /* Lab-label monospace — eyebrows, tabular stats, cited source notes */
+  --font-mono: var(--font-mono), "Roboto Mono", ui-monospace, monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  /* Radius scale per spec: sm 8 · md 12 · lg 16 · xl 24 */
+  --radius-sm: 0.5rem; /* 8px — buttons, inputs, tags */
+  --radius-md: 0.75rem; /* 12px — chips, small cards */
+  --radius-lg: 1rem; /* 16px — cards, panels */
+  --radius-xl: 1.5rem; /* 24px — hero panels, media */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Brand accent utilities (orange) — non-text accents / white-text buttons */
+  --color-accent-brand: var(--color-accent-brand);
+  --color-accent-strong: var(--color-accent-strong);
+  --color-accent-hover: var(--color-accent-hover);
+
+  /* Semantic data & state utilities — bg-crimson, text-green, etc. */
+  --color-crimson: var(--color-crimson);
+  --color-crimson-surface: var(--color-crimson-surface);
+  --color-green: var(--color-green);
+  --color-green-surface: var(--color-green-surface);
+  --color-warning: var(--color-warning);
+  --color-slate: var(--color-slate);
+
+  /* Elevation — depth for meaning, not decoration */
+  --shadow-e1: 0 1px 2px rgba(42, 34, 61, 0.06);
+  --shadow-e2: 0 4px 12px rgba(42, 34, 61, 0.08);
+  --shadow-e3: 0 14px 34px rgba(42, 34, 61, 0.12);
+
+  /* Motion — confirms actions, never performs */
+  --ease-lab: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  /* Legacy decorative tokens, remapped to the purple/orange brand family */
+  --color-logo-deep-violet: var(--logo-deep-violet);
+  --color-logo-sky-blue: var(--logo-sky-blue);
+  --color-logo-warm-orange: var(--logo-warm-orange);
+  --color-logo-rose-pink: var(--logo-rose-pink);
+  --color-logo-teal-blue: var(--logo-teal-blue);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* HEADINGS — Montserrat SemiBold/Bold, authoritative */
+  h1 {
+    font-family: var(--font-heading), 'Montserrat', sans-serif;
+    font-weight: 700; /* Bold for Hero Headlines */
+    letter-spacing: -0.01em; /* −1% tracking per spec */
+  }
+
+  h2 {
+    font-family: var(--font-heading), 'Montserrat', sans-serif;
+    font-weight: 700; /* Bold for Section Headers */
+    letter-spacing: -0.01em;
+  }
+
+  h3 {
+    font-family: var(--font-heading), 'Montserrat', sans-serif;
+    font-weight: 600; /* SemiBold for Feature Titles */
+    letter-spacing: -0.01em;
+  }
+
+  h4, h5, h6 {
+    font-family: var(--font-heading), 'Montserrat', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  /* BODY — Roboto, highly legible */
+  p, li {
+    font-family: var(--font-body), 'Roboto', sans-serif;
+    font-weight: 400;
+    line-height: 1.6; /* per spec body 1.6 */
+  }
+
+  /* Quotes / Pull-quotes — Italic */
+  blockquote {
+    font-family: var(--font-body), 'Roboto', sans-serif;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.6;
+  }
+}
+
+/* UI ELEMENTS — Roboto, clean & scannable */
+button, .button, [class*="Button"] {
+  font-family: var(--font-body), 'Roboto', sans-serif;
+  font-weight: 600; /* SemiBold */
+  letter-spacing: 0.01em;
+}
+
+/* Navigation — Medium weight */
+nav a, .nav-link {
+  font-family: var(--font-body), 'Roboto', sans-serif;
+  font-weight: 500; /* Medium */
+}
+
+/* Footer Links */
+.footer-link, footer a {
+  font-family: var(--font-body), 'Roboto', sans-serif;
+  font-weight: 500;
+}
+
+/* ── Lab motifs (§10) ───────────────────────────────────────────── */
+
+/* Specimen-label eyebrow + lab-label: monospace, uppercase, letter-spaced */
+.lab-label {
+  font-family: var(--font-mono), 'Roboto Mono', ui-monospace, monospace;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.16em; /* +16% */
+  font-variant-numeric: tabular-nums;
+}
+
+/* Section rule: short 3px purple bar under the eyebrow */
+.section-rule {
+  display: block;
+  width: 40px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--color-primary);
+}
+
+/* Cited source note: hairline rule above a monospace citation */
+.source-note {
+  font-family: var(--font-mono), 'Roboto Mono', ui-monospace, monospace;
+  font-size: 0.71875rem; /* 11.5px */
+  color: var(--color-text-muted, var(--muted-foreground));
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--color-border, var(--border));
+}
