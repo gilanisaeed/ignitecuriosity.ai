@@ -19,6 +19,13 @@ pnpm build
 
 Outputs a fully static site to `out/`.
 
+## Site structure
+
+The site hosts two product sections alongside the Lab pages:
+
+- **IgniteMath** — `/ignitemath`, components in `components/ignitemath/`
+- **IgniteEd** — `/igniteed` (with `/program`, `/impact`, `/about`, `/pricing`, `/readiness-review` subpages), components in `components/igniteed/`, assets in `public/igniteed/`
+
 ## Deployment
 
 Pushes to `main` trigger the GitHub Actions workflow in `.github/workflows/deploy.yml`, which builds the static export and publishes it to GitHub Pages. The custom domain is set via `public/CNAME`.

@@ -150,6 +150,8 @@
   --font-sans: var(--font-body), "Roboto", sans-serif;
   --font-heading: var(--font-heading), "Montserrat", sans-serif;
   --font-body: var(--font-body), "Roboto", sans-serif;
+  /* Alias used by the IgniteEd section (components/igniteed) */
+  --font-montserrat: var(--font-heading), "Montserrat", sans-serif;
   /* Lab-label monospace — eyebrows, tabular stats, cited source notes */
   --font-mono: var(--font-mono), "Roboto Mono", ui-monospace, monospace;
   --color-background: var(--background);
