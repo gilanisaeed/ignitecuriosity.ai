@@ -54,9 +54,9 @@ export function SiteFooter() {
                 </Link>
               </li>
               <li>
-                <Link href="/igniteed" className="hover:text-foreground transition-colors">
+                <a href="/igniteed/" className="hover:text-foreground transition-colors">
                   IgniteEd
-                </Link>
+                </a>
               </li>
               <li>
                 <Link href="/science" className="hover:text-foreground transition-colors">
