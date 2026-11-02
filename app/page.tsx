@@ -7,7 +7,7 @@ import { SiteFooter } from "@/components/site-footer"
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col">
-      <SiteHeader />
+      <SiteHeader current="home" />
       <main className="flex-1">
         <HeroSection />
         <PhilosophySection />
