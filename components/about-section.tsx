@@ -150,7 +150,7 @@ export function AboutSection() {
               <p className="text-sm font-medium text-primary mb-4">CTO & System Architect</p>
               <p className="text-sm text-muted-foreground">
                 Saeed is the engineering force behind the platform. As a software architect with years of experience
-                building scalable systems, he leads the hands-on implementation of IgniteMath. He translates the Lab's
+                building scalable systems, he leads the hands-on implementation. He translates the Lab's
                 architectural vision into robust, production-ready code, ensuring the system is secure (FERPA/COPPA),
                 real-time, and optimized to run efficiently even in low-bandwidth school environments.
               </p>
@@ -165,11 +165,6 @@ export function AboutSection() {
           <h2 className="font-heading text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-primary mb-8">
             Built for Teachers. Backed by Science.
           </h2>
-          <Link href="/ignitemath">
-            <Button size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
-              Explore IgniteMath
-            </Button>
-          </Link>
         </div>
       </div>
     </section>

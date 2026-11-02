@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
 const navLinks = [
-  { href: "/ignitemath", label: "IgniteMath" },
   { href: "/igniteed", label: "IgniteEd" },
   { href: "/science", label: "The Science" },
   { href: "/about", label: "About Us" },

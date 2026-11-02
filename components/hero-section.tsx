@@ -43,15 +43,6 @@ export function HeroSection() {
           </p>
 
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link href="/ignitemath">
-              <Button
-                size="lg"
-                className="h-auto bg-[#F27A37] px-8 py-6 text-lg font-medium text-[#2c2a33] hover:bg-[#F27A37]/90"
-              >
-                Meet IgniteMath
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
             <Link href="/science">
               <Button
                 size="lg"

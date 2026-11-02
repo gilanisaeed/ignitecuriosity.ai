@@ -287,15 +287,6 @@ export default function SolutionPage() {
               </p>
             </div>
 
-            <div className="flex justify-center">
-              <Button
-                size="lg"
-                className="h-14 px-10 text-lg bg-secondary text-secondary-foreground hover:bg-secondary/90"
-              >
-                See IgniteMath in Action
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </div>
           </div>
         </div>
       </section>

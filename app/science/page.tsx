@@ -53,7 +53,6 @@ export default function SciencePage() {
                   <span className="font-bold text-destructive tabular-nums">95%</span> of the 40+ teachers and
                   principals we interviewed named AI answer-leaking a top-three classroom concern.
                 </p>
-                <p className="text-muted-foreground/80 text-xs mt-3">Source: IgniteMath educator interviews (2025–26).</p>
               </div>
             </div>
           </div>
