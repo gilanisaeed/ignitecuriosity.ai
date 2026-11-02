@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IgniteThinking | Ignite Curiosity Lab</title>
+<meta name="description" content="IgniteThinking, for grades 4 and 5: a thinking app designed to build independent reasoning. Your child works computational thinking puzzles and math puzzles through a design thinking process, with help in small steps from a guide that is never given the answer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Roboto:wght@400;500&family=Roboto+Mono:wght@500&family=Baloo+2:wght@600;700&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ICL house system, identical to the home page: every colour is a token from IgniteCuriosityLab_DesignSystem.html.
+   One ruled exception: the product depictions (the demo frame and the puzzle cards) take the app's own tokens
+   from ignitethinking-app/app/globals.css, because they show the product (sub-brand boundary at the app frame). */
+:root{
+  color-scheme: light;
+  --purple-900:#2A223D; --purple-800:#362C4F; --purple-700:#453765; --purple-600:#56457F; --purple-500:#6A5B8E;
+  --purple-400:#8275A0; --purple-300:#A097B7; --purple-200:#BFB8CE; --purple-100:#E3DFEA; --purple-50:#EFEDF5;
+  --orange:#F27A37; --orange-strong:#C0531F; --orange-hover:#AC4B1F; --orange-50:#FEF2EB;
+  --slate:#192028; --bg:#FBF8F3; --surface:#FFFFFF; --tint:#EFEDF5;
+  --ink:#2C2A33; --ink-muted:#6E6A75; --line:#E3DFEA;
+  --font-h:"Montserrat","Helvetica Neue",Arial,sans-serif; --font-b:"Roboto","Helvetica Neue",Arial,sans-serif;
+  --font-m:"Roboto Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --ease:cubic-bezier(.2,.6,.3,1); --ease-pop:cubic-bezier(.34,1.4,.64,1);
+  /* product tokens: demo frame and puzzle cards only */
+  --app-paper:#FDF8F0; --app-paper-deep:#F6EEE1; --app-ink:#2C2440; --app-ink2:#5B5470; --app-line:#EAE1D3;
+  --app-coral:#FB5A3C; --app-deep:#CB3B1B; --app-gold:#F7B23B;
+  --band-easy:#17A67B; --band-medium:#4C8DF6; --band-hard:#7B61FF;
+  --font-app-h:"Baloo 2","Montserrat",sans-serif; --font-app-b:"Nunito","Roboto",sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{overflow-x:clip}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-b);font-size:17px;line-height:1.6;text-wrap:pretty;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--font-h);color:var(--purple-700);margin:0;text-wrap:balance;letter-spacing:-.015em}
+h2{font-weight:600;font-size:clamp(1.7rem,3.1vw,2.4rem);line-height:1.14}
+h3{font-weight:600;font-size:1.12rem;line-height:1.28}
+p{margin:0 0 1em}
+a{color:var(--purple-600)}
+.wrap{width:100%;max-width:1240px;margin-inline:auto;padding-inline:24px}
+.prose{max-width:62ch}
+.lab{font-family:var(--font-m);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-muted)}
+.rule{width:44px;height:3px;border-radius:2px;background:var(--purple-600);margin-bottom:20px}
+.muted{color:var(--ink-muted)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+:where(a,button,input,[tabindex]):focus-visible{outline:3px solid var(--purple-500);outline-offset:3px;border-radius:4px}
+/* review chips: draft annotations, removed before publishing */
+.todo{display:inline-block;font-family:var(--font-m);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;background:var(--orange-50);color:var(--purple-900);border:1px solid var(--orange);border-radius:4px;padding:2px 7px;vertical-align:middle}
+.draft-banner{background:var(--orange-50);border-bottom:1px solid var(--orange);color:var(--purple-900);font:500 13px/1.5 "Roboto Mono",monospace;padding:9px 24px;letter-spacing:.04em}
+
+.topbar{position:relative;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;gap:28px;min-height:64px;flex-wrap:wrap}
+.brandmark{font-family:var(--font-h);font-weight:700;font-size:.94rem;color:var(--purple-700);text-decoration:none}
+.topbar nav{display:flex;gap:20px;flex-wrap:wrap}
+.topbar nav a{font-size:.93rem;font-weight:500;color:var(--ink);text-decoration:none;padding:10px 0;transition:color .18s var(--ease)}
+.topbar nav a:hover{color:var(--purple-600)}
+.topbar nav a[aria-current]{color:var(--purple-700);font-weight:600;box-shadow:inset 0 -2px 0 var(--purple-600)}
+.topbar .tail{margin-left:auto}
+.login{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border:1.5px solid var(--purple-600);border-radius:999px;font-family:var(--font-h);font-weight:600;font-size:.9rem;color:var(--purple-700);text-decoration:none;white-space:nowrap;transition:background-color .18s var(--ease)}
+.login:hover{background:var(--tint)}
+.menu{display:none}
+.menu summary{list-style:none;cursor:pointer;min-height:44px;min-width:44px;display:inline-flex;align-items:center;gap:8px;font-family:var(--font-h);font-weight:600;font-size:.9rem;color:var(--purple-700);padding:0 4px}
+.menu summary::-webkit-details-marker{display:none}
+.menu summary svg{display:block}
+.sticky-cta{display:none}
+
+/* hero */
+.hero{position:relative;isolation:isolate;background:var(--slate);color:#fff;padding:clamp(52px,6.5vw,80px) 0}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.55;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:28px 28px}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse at 18% 45%,rgba(86,69,127,.32),transparent 52%)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:44px;align-items:start}
+.hero .kicker{display:inline-block;font-family:var(--font-m);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.24);border-radius:999px;padding:7px 15px;margin-bottom:24px}
+.hero h1{font-family:var(--font-h);font-weight:600;color:#fff;font-size:clamp(2.1rem,4.6vw,3.5rem);line-height:1.06;letter-spacing:-.03em;max-width:16ch;margin:0 0 18px}
+.hero h1 b{display:block;font-weight:600;color:var(--purple-200)}
+.hero .sub{font-family:var(--font-h);font-weight:500;font-size:1.15rem;color:var(--purple-200);margin:0 0 18px;max-width:40ch}
+.hero .lede{font-size:1.06rem;line-height:1.55;color:rgba(255,255,255,.92);max-width:48ch;margin:0}
+.cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 24px;border-radius:999px;font-family:var(--font-h);font-weight:600;font-size:1rem;text-decoration:none;border:1.5px solid transparent;cursor:pointer;transition:background-color .18s var(--ease),border-color .18s var(--ease),color .18s var(--ease),transform .18s var(--ease-pop)}
+.btn-primary{background:var(--orange-strong);color:#fff}.btn-primary:hover{background:var(--orange-hover);transform:translateY(-1px)}
+.btn-onphoto{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.4)}.btn-onphoto:hover{background:rgba(255,255,255,.2)}
+.btn:active{transform:translateY(0)}
+
+/* facts strip */
+.facts{background:var(--slate);border-top:1px solid rgba(255,255,255,.12);padding:14px 0}
+.facts .wrap{display:flex;gap:10px 34px;flex-wrap:wrap}
+.facts span{font-family:var(--font-m);font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.62)}
+
+/* ---- the demo: the product, in its own skin ---- */
+.demo{background:var(--app-paper);border:1px solid var(--line);border-radius:16px;overflow:hidden;color:var(--app-ink);font-family:var(--font-app-b);box-shadow:0 18px 44px rgba(25,32,40,.35)}
+.demo-head{display:flex;align-items:center;gap:10px;padding:11px 18px;background:var(--app-paper-deep);border-bottom:1px solid var(--app-line);flex-wrap:wrap}
+.demo-head .dot{width:9px;height:9px;border-radius:50%;background:var(--app-coral)}
+.demo-head .t{font-family:var(--font-m);font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;color:var(--app-ink2)}
+.demo-head .t.right{margin-left:auto;font-size:.62rem}
+.demo-body{padding:18px 20px 20px}
+.demo-body>.q{font-size:1rem;line-height:1.5;color:var(--app-ink);margin-bottom:12px}
+.maze-wrap{background:#fff;border:1px solid var(--app-line);border-radius:12px;padding:12px;display:flex;justify-content:center}
+.maze{display:grid;grid-template-columns:repeat(3,minmax(60px,84px));grid-template-rows:repeat(3,minmax(60px,84px));gap:8px}
+.cell{position:relative;display:grid;place-items:center;border-radius:12px;border:2px solid var(--app-line);background:var(--app-paper);
+  font-family:var(--font-app-h);font-weight:700;font-size:2rem;line-height:1;color:var(--app-ink);padding:0;
+  transition:background-color .18s var(--ease),border-color .18s var(--ease)}
+button.cell{cursor:pointer}
+button.cell:hover{border-color:var(--app-ink2)}
+button.cell[disabled]{cursor:default}
+.cell .arrow{display:block;transition:transform .18s var(--ease)}
+.cell .start{position:absolute;left:6px;top:4px;font-family:var(--font-m);font-size:.52rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--app-ink2)}
+.cell .stepn{position:absolute;right:5px;top:5px;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:var(--app-deep);color:#FFFAF5;
+  font-family:var(--font-m);font-size:.66rem;font-weight:500;line-height:20px;text-align:center}
+.cell.changed{border-style:dashed;border-color:var(--app-coral)}
+.cell.on{background:var(--app-paper-deep);border-color:var(--app-deep)}
+.cell.again{border-color:var(--app-deep);border-style:dotted}
+.cell.house{background:var(--app-paper-deep)}
+.cell.house.reached{border-color:var(--app-deep)}
+.cell.house svg{width:34px;height:34px}
+.map-cap{font-size:.84rem;color:var(--app-ink2);margin:8px 2px 0}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.abtn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:999px;font-family:var(--font-app-h);font-weight:700;font-size:.95rem;border:1.5px solid transparent;cursor:pointer;transition:background-color .18s var(--ease),transform .18s var(--ease-pop)}
+.abtn-pri{background:var(--app-deep);color:#FFFAF5}.abtn-pri:hover{transform:translateY(-1px)}
+.abtn-gho{background:transparent;color:var(--app-ink);border-color:var(--app-line)}.abtn-gho:hover{background:var(--app-paper-deep)}
+.abtn[disabled]{opacity:.45;cursor:not-allowed;transform:none}
+.guide{margin-top:16px;border-top:1px solid var(--app-line);padding-top:14px}
+.guide-row{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px}
+.spark{flex:0 0 auto;width:34px;height:34px}
+.bubble{background:#fff;border:1px solid var(--app-line);border-radius:4px 14px 14px 14px;padding:10px 14px;font-size:.96rem;color:var(--app-ink);max-width:52ch}
+.bubble .who{display:block;font-family:var(--font-m);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--app-deep);margin-bottom:4px}
+.chip{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:999px;border:1px dashed var(--app-line);background:transparent;color:var(--app-ink2);font-family:var(--font-app-b);font-size:.86rem;cursor:pointer;margin-top:8px}
+.chip:hover{background:var(--app-paper-deep);color:var(--app-ink)}
+.why{margin-top:14px;padding:12px 14px;background:#fff;border-left:3px solid var(--app-coral);border-radius:0 8px 8px 0;font-size:.9rem;color:var(--app-ink)}
+.why b{font-weight:600;font-family:var(--font-app-h)}
+.why.lit{animation:lit 1.6s var(--ease) 1}
+@keyframes lit{0%,70%{background:var(--orange-50)}100%{background:#fff}}
+.aside-note{font-size:.84rem;color:var(--app-ink2);margin:10px 2px 0}
+
+section{padding:clamp(52px,6.5vw,80px) 0}
+section.tinted{background:var(--tint);border-block:1px solid var(--line)}
+.head{margin-bottom:32px}
+.head p{margin-top:12px}
+.why-band{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:40px;align-items:start}
+.why-band p{font-size:1.04rem;max-width:56ch}
+.why-band h3{margin:22px 0 8px}
+.cite{font-family:var(--font-m);font-size:.78rem;letter-spacing:.04em;color:var(--ink-muted)}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.step{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--purple-600);border-radius:10px;padding:18px 16px}
+.step h3{margin:6px 0 7px;font-size:1.02rem}
+.step p{font-size:.9rem;margin:0}
+.branch{margin-top:18px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;background:var(--surface);border:1px dashed var(--purple-100);border-left:3px solid var(--purple-600);border-radius:10px;padding:18px}
+.branch .n{font-family:var(--font-m);font-size:.68rem;letter-spacing:.14em;color:var(--purple-600);white-space:nowrap;padding-top:3px}
+.branch h3{font-size:1.02rem;margin:0 0 6px}
+.branch p{margin:0;font-size:.93rem}
+
+/* puzzle cards: product depictions, app tokens */
+.pz{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.pzc{background:var(--app-paper);border:1px solid var(--app-line);border-top:3px solid var(--pa);border-radius:12px;padding:18px 18px 16px;color:var(--app-ink);font-family:var(--font-app-b);transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
+.pzc:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(25,32,40,.10)}
+.pzc .bd{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-m);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--app-ink2);margin-bottom:8px}
+.pzc .bd i{display:block;width:9px;height:9px;border-radius:50%;background:var(--pa)}
+.pzc h3{font-family:var(--font-app-h);font-size:1.05rem;color:var(--app-ink);margin:0 0 6px}
+.pzc p{margin:0;font-size:.92rem;color:var(--app-ink2)}
+.pzc .ct{display:block;margin-top:10px;font-family:var(--font-m);font-size:.64rem;letter-spacing:.08em;color:var(--app-ink2)}
+.pzv{display:block;width:100%;height:auto;max-width:168px;margin:2px 0 14px}
+@media (prefers-reduced-motion:reduce){.pzc:hover{transform:none}}
+
+/* screenshot slots + grown-up */
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:44px;align-items:center}
+.shot{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.shot-bar{display:flex;gap:6px;padding:10px 14px;background:var(--purple-50);border-bottom:1px solid var(--line)}
+.shot-bar i{width:9px;height:9px;border-radius:50%;background:var(--purple-100);display:block}
+.shot-slot{aspect-ratio:16/10;display:grid;place-content:center;gap:8px;text-align:center;padding:24px;background:repeating-linear-gradient(45deg,var(--bg),var(--bg) 11px,var(--tint) 11px,var(--tint) 22px)}
+.shot-slot .lab{color:var(--purple-600)}
+.shot-slot p{margin:0;font-size:.88rem;color:var(--ink-muted);max-width:34ch}
+.ticks{list-style:none;padding:0;margin:20px 0 0}
+.ticks li{display:grid;grid-template-columns:auto 1fr;gap:11px;padding:9px 0;border-bottom:1px solid var(--line);font-size:.97rem}
+.ticks li:last-child{border-bottom:0}
+.ticks svg{margin-top:4px}
+
+/* honest band */
+.band{background:var(--slate);color:var(--purple-50);border-radius:16px;padding:clamp(28px,4.5vw,52px);display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:40px;align-items:center}
+.band .lab{color:var(--purple-200);display:block;margin-bottom:8px}
+.band h2{color:#fff;font-size:clamp(1.6rem,3.2vw,2.5rem);margin:0 0 12px}
+.band p{color:var(--purple-100);margin:0 0 .8em;font-size:1.02rem;max-width:48ch}
+.band p:last-child{margin-bottom:0}
+.band p strong{color:#fff;font-weight:500}
+.track{position:relative;height:14px;border-radius:999px;background:rgba(255,255,255,.12);container-type:inline-size}
+.band figure.play .support{animation:shrink 7s var(--ease) 1 both}
+.band figure.play .walker{animation:walk 7s var(--ease) 1 both}
+.support{position:absolute;inset:0;border-radius:999px;background:linear-gradient(90deg,var(--purple-500),var(--purple-400));transform-origin:left center;transform:scaleX(0)}
+.walker{position:absolute;top:50%;left:0;width:22px;height:22px;margin-top:-11px;border-radius:50%;background:var(--orange);box-shadow:0 0 0 4px rgba(242,122,55,.25);transform:translateX(calc(100cqw - 22px))}
+@supports (animation-timeline: view()){
+  .support{animation:shrink linear both;animation-timeline:view();animation-range:entry 15% cover 60%}
+  .walker{animation:walk linear both;animation-timeline:view();animation-range:entry 15% cover 60%}
+}
+.stages{display:flex;justify-content:space-between;margin-top:12px;font-family:var(--font-m);font-size:.64rem;letter-spacing:.13em;text-transform:uppercase;color:var(--purple-200)}
+@keyframes shrink{0%,18%{transform:scaleX(1)}30%,48%{transform:scaleX(.62)}60%,78%{transform:scaleX(.26)}90%,100%{transform:scaleX(0)}}
+@keyframes walk{0%,18%{transform:translateX(0)}30%,48%{transform:translateX(38cqw)}60%,78%{transform:translateX(72cqw)}90%,100%{transform:translateX(calc(100cqw - 22px))}}
+
+/* beta */
+.beta{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:clamp(28px,4.5vw,48px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:center}
+.beta ul{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.beta li{display:grid;grid-template-columns:auto 1fr;gap:11px;font-size:.97rem}
+.beta li svg{margin-top:5px}
+.have{margin-top:14px;font-size:.93rem;color:var(--ink-muted)}
+.have a{color:var(--purple-700);font-weight:600}
+.bridge{margin-top:28px;padding-top:20px;border-top:1px solid var(--line);font-size:.93rem;color:var(--ink-muted);max-width:70ch}
+
+footer{border-top:1px solid var(--line);padding:24px 0;font-size:.88rem;color:var(--ink-muted)}
+footer .wrap{display:flex;gap:10px 26px;flex-wrap:wrap;align-items:center}
+footer a{color:var(--ink-muted)}
+footer .tag{font-family:var(--font-h);font-weight:600;color:var(--purple-700)}
+footer .tail{margin-left:auto}
+
+@media (max-width:960px){.hero-grid,.two,.band,.beta,.why-band{grid-template-columns:1fr;gap:28px}.steps{grid-template-columns:repeat(2,1fr)}.pz{grid-template-columns:1fr}}
+@media (max-width:760px){
+  .topbar .wrap{gap:14px}
+  .topbar .tail{display:none}
+  .menu{display:block;margin-left:auto}
+  .topbar nav{display:none}
+  .topbar:has(.menu[open]) nav{display:flex;flex-direction:column;gap:0;width:100%;order:5;border-top:1px solid var(--line);padding:6px 0 10px}
+  .topbar:has(.menu[open]) nav a{padding:12px 0;font-size:1rem}
+  .topbar:has(.menu[open]) nav a[aria-current]{box-shadow:none;border-left:3px solid var(--purple-600);padding-left:10px}
+  .sticky-cta{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;justify-content:center;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(251,248,243,.94);border-top:1px solid var(--line);backdrop-filter:blur(6px)}
+  .sticky-cta .btn{width:100%;max-width:420px}
+  body{padding-bottom:76px}
+  .hero{padding-top:40px}
+  .demo-body{padding:14px 10px 16px}
+  .maze-wrap{padding:8px}
+  .controls .abtn{flex:1 1 auto}
+}
+@media (max-width:560px){.steps{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}.support,.walker,.band figure.play .support,.band figure.play .walker{animation:none}.support{transform:scaleX(0)}.walker{transform:translateX(calc(100cqw - 22px))}}
+</style>
+</head>
+<body>
+
+<!-- IgniteThinking page, draft v3.1, 29 Oct 2026 (v3.1: IgniteMath back in the nav, to match home v8.1; no price on the website, Azade's ruling; v3.2: site tagline in the footer, to match home v8.2; v3.3: IgniteMath out of the nav, to match home v8.3; v3.4, 1 Nov 2026: this page is IgniteThinking's public landing page at ignitecuriosity.ai/ignitethinking and app.ignitecuriosity.ai is the login, Azade's ruling; adds Log in to the header and footer and a log-in and invite-code line under the beta button. No copy or claim changed). Built on the 22 Sep Drive copy (v2.3) plus the v7.6 changes recorded in
+     the 20 Oct review, then a claim-by-claim audit against Company Core v1.6, the app repo and the 26 Oct build review.
+     The demo is a sample maze written for this page: it is not one of the app's 24 puzzles. -->
+<div class="draft-banner">
+  DRAFT v3.4 &middot; NOT FOR PUBLICATION &middot; gated on trademark clearance, a live privacy notice and the two screenshots &middot; the provisional patent gate is cleared (filed 22 Oct 2026)
+</div>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brandmark" href="/">Ignite Curiosity Lab</a>
+    <details class="menu"><summary aria-label="Open menu"><svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true"><path d="M1 1h18M1 7h18M1 13h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Menu</summary></details>
+    <nav aria-label="Products and pages">
+      <a href="/ignitethinking/" aria-current="page">IgniteThinking</a>
+      <a href="/igniteed/">IgniteEd</a>
+      <a href="/science/">The Science</a>
+      <a href="/about/">About</a>
+    </nav>
+    <span class="lab tail">Grades 4 and 5 &middot; at home</span>
+    <a class="login" href="https://app.ignitecuriosity.ai/">Log in</a>
+  </div>
+</header>
+
+<main>
+
+<!-- ============================== HERO ============================== -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="kicker">IgniteThinking &middot; Founding Families beta</span>
+      <h1>Your child solves it.<b>The guide is never given the answer.</b></h1>
+      <p class="sub">A thinking app for grades 4 and 5, designed to build independent reasoning.</p>
+      <p class="lede">Children work through computational thinking puzzles and math puzzles with a design thinking process: they say what is being asked, put down more than one idea, test it, revise as often as they like, and explain what they found. Help comes in small steps, written in advance, and only after a real try. There is no chat box.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#try">Try a puzzle</a>
+        <a class="btn btn-onphoto" href="#beta">Request beta access</a>
+      </div>
+    </div>
+
+    <!-- ---------- a sample puzzle, playable ---------- -->
+    <div class="demo" id="try">
+      <div class="demo-head"><span class="dot" aria-hidden="true"></span><span class="t">Try it yourself</span><span class="t right">Sample maze &middot; Explorer style</span></div>
+      <div class="demo-body">
+        <p class="q">Start at the flag. On each square you must go the way its arrow points. Right now the walk goes round in circles and never reaches the House. You may change <strong>one</strong> arrow. Which one opens the path?</p>
+        <div class="maze-wrap">
+          <div class="maze" id="maze" role="group" aria-label="Arrow maze, 3 squares by 3. Start is top left, the House is bottom right."></div>
+        </div>
+        <p class="map-cap">Tap a square to turn its arrow. Then walk the path.</p>
+        <div class="controls">
+          <button class="abtn abtn-pri" type="button" id="walk">Walk the path</button>
+          <button class="abtn abtn-gho" type="button" id="nudge">Need a nudge?</button>
+          <button class="abtn abtn-gho" type="button" id="reset">Start over</button>
+        </div>
+        <div class="guide" id="guide">
+          <div class="guide-row">
+            <svg class="spark" viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="sg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FB5A3C"/><stop offset="1" stop-color="#F7B23B"/></linearGradient></defs><path d="M20 3c2 8 7 13 15 15-8 2-13 7-15 15-2-8-7-13-15-15C13 16 18 11 20 3Z" fill="url(#sg)"/></svg>
+            <div class="bubble" id="say" aria-live="polite"><span class="who">Ignite</span>Walk the path once before you change anything, and watch where it goes.</div>
+          </div>
+          <p class="sr-only" id="route" aria-live="polite"></p>
+          <button class="chip" type="button" id="trychip">There is no box to ask for the answer. Why?</button>
+        </div>
+        <p class="why" id="why"><b>We do not ask the guide to keep the answer secret. The guide is never given it.</b> And there is no chat box, here or in the app, so there is nowhere to ask and nothing to talk out of. In the app, every hint is written in advance, not generated on the spot.</p>
+        <p class="aside-note">A sample maze written for this page, in the style of the app&rsquo;s Explorer puzzles. It runs in your browser, with written hints and no AI.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="facts"><div class="wrap">
+  <span>Grades 4 and 5 &middot; ages 9 to 11</span><span>Used at home</span><span>No chat box</span><span>Founding Families beta</span>
+</div></div>
+
+<!-- ========================== WHY REASONING ========================== -->
+<section>
+  <div class="wrap why-band">
+    <div>
+      <div class="rule" aria-hidden="true"></div>
+      <h2>Why reasoning?</h2>
+    </div>
+    <div>
+      <p>Your child already has tools that produce answers, and tools that will show the reasoning behind them too. IgniteThinking gives them practice at the part we choose not to outsource: framing a problem, trying an approach, noticing when it fails, revising it, and explaining why the one that works, works.</p>
+      <h3>Why grades 4 and 5</h3>
+      <p>Grades 3 to 5 are when children begin to justify why something is always true, instead of relying on a single example. <span class="cite">NCTM 2000</span> That is the adaptive reasoning the National Research Council counts as a core strand of mathematical proficiency. <span class="cite">NRC 2001</span> Grades 4 and 5 sit inside that window. Reasoning does not begin here. It is where we start.</p>
+      <p style="margin:0"><a href="/science/">How learning science shapes what we build &rarr;</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= HOW A PUZZLE GOES ========================= -->
+<section>
+  <div class="wrap">
+    <div class="head prose">
+      <div class="rule" aria-hidden="true"></div>
+      <h2>A consistent thinking loop</h2>
+      <p class="muted">Every puzzle runs through the same steps, so your child is never working out how the app behaves. The puzzles change. The thinking does not.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><h3>Understand</h3><p>Read the situation. Say what is actually being asked before touching a method.</p></div>
+      <div class="step"><h3>Define</h3><p>Name the real goal. Most answers that miss are answers to a different question.</p></div>
+      <div class="step"><h3>Ideate</h3><p>Put down more than one way it could be done. One idea is not a choice.</p></div>
+      <div class="step"><h3>Prototype</h3><p>Build the attempt, with a picture or a tool to think with.</p></div>
+      <div class="step"><h3>Test</h3><p>Check it. An attempt that does not work is not the end. It is information, and the child reads it.</p></div>
+    </div>
+    <div class="branch">
+      <span class="n">Always available</span>
+      <div><h3>Reflect</h3><p>Reflection closes every puzzle, and a child can reach it without having solved anything. A child who stays stuck is never handed the answer to move on.</p></div>
+    </div>
+    <div class="two" style="margin-top:36px">
+      <div class="shot">
+        <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="shot-slot"><span class="lab">Screenshot 1 of 2</span><p>The workspace mid-puzzle, at the moment a hint appears. 16:10. <span class="todo">awaiting file</span></p></div>
+      </div>
+      <div>
+        <h3>What a hint looks like</h3>
+        <p>Help comes in small steps, and only after a real try: first a nudge, then a strategy, then a step-by-step scaffold. Every step is written in advance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= MANY PUZZLES ========================= -->
+<section class="tinted">
+  <div class="wrap">
+    <div class="head prose">
+      <div class="rule" aria-hidden="true"></div>
+      <h2>Many puzzles. The same habit of mind.</h2>
+      <p class="muted">The maze at the top of this page is a sample written for the website. In the app, puzzles come in three bands, and they are not all about numbers.</p>
+    </div>
+    <div class="pz">
+      <div class="pzc" style="--pa:var(--band-easy)">
+        <span class="bd"><i aria-hidden="true"></i>Warm-Up</span>
+        <svg class="pzv" viewBox="0 0 168 100" role="img" aria-label="Five numbered recipe steps in a column, and a question mark: one step is in the wrong place.">
+          <g fill="#FFFFFF" stroke="var(--app-line)" stroke-width="1.5">
+            <rect x="34" y="6" width="96" height="14" rx="4"/><rect x="34" y="24" width="96" height="14" rx="4"/>
+            <rect x="34" y="42" width="96" height="14" rx="4"/><rect x="34" y="60" width="96" height="14" rx="4"/>
+            <rect x="34" y="78" width="96" height="14" rx="4"/></g>
+          <g fill="var(--app-ink2)" font-family="Roboto Mono, monospace" font-size="9">
+            <text x="40" y="16">1</text><text x="40" y="34">2</text><text x="40" y="52">3</text><text x="40" y="70">4</text><text x="40" y="88">5</text></g>
+          <g stroke="var(--app-line)" stroke-width="3" stroke-linecap="round">
+            <path d="M52 13h56M52 31h48M52 49h60M52 67h44M52 85h52"/></g>
+          <circle cx="148" cy="49" r="11" fill="var(--pa)" opacity=".16"/>
+          <text x="148" y="54" font-family="Baloo 2, sans-serif" font-size="14" text-anchor="middle" fill="var(--app-ink)">?</text>
+        </svg>
+        <h3>The Broken Recipe</h3>
+        <p>Find the step that&rsquo;s out of place.</p>
+        <span class="ct">Debugging: tracing each step to find where it breaks</span>
+      </div>
+      <div class="pzc" style="--pa:var(--band-medium)">
+        <span class="bd"><i aria-hidden="true"></i>Explorer</span>
+        <svg class="pzv" viewBox="0 0 168 100" role="img" aria-label="Five blank map regions, A through E, that share borders">
+          <g fill="#FFFFFF" stroke="var(--app-line)" stroke-width="1.5">
+            <path d="M40 6h88v18H40z"/><path d="M40 24h88v20H40z"/>
+            <path d="M40 44h44v26H40z"/><path d="M84 44h44v26H84z"/>
+            <path d="M40 70h88v22H40z"/></g>
+          <g fill="var(--app-ink2)" font-family="Baloo 2, sans-serif" font-size="11" text-anchor="middle">
+            <text x="84" y="19">E</text><text x="84" y="39">D</text><text x="62" y="62">A</text><text x="106" y="62">B</text><text x="84" y="85">C</text></g>
+        </svg>
+        <h3>Fewest Colours</h3>
+        <p>Color the map with as few colors as you can.</p>
+        <span class="ct">Abstraction: graph coloring</span>
+      </div>
+      <div class="pzc" style="--pa:var(--band-hard)">
+        <span class="bd"><i aria-hidden="true"></i>Challenger</span>
+        <svg class="pzv" viewBox="0 0 168 100" role="img" aria-label="A snowflake branch that splits into three, and each tip splits into three again">
+          <g fill="none" stroke="var(--app-ink2)" stroke-width="2" stroke-linecap="round">
+            <path d="M84 96V62"/><path d="M84 62L56 40M84 62V30M84 62l28-22"/>
+            <path d="M56 40l-12-6M56 40l-6-12M56 40l2-13"/>
+            <path d="M84 30l-9-9M84 30V17M84 30l9-9"/>
+            <path d="M112 40l12-6M112 40l6-12M112 40l-2-13"/></g>
+          <g fill="var(--pa)">
+            <circle cx="44" cy="34" r="2.6"/><circle cx="50" cy="28" r="2.6"/><circle cx="58" cy="27" r="2.6"/>
+            <circle cx="75" cy="21" r="2.6"/><circle cx="84" cy="17" r="2.6"/><circle cx="93" cy="21" r="2.6"/>
+            <circle cx="124" cy="34" r="2.6"/><circle cx="118" cy="28" r="2.6"/><circle cx="110" cy="27" r="2.6"/></g>
+        </svg>
+        <h3>The Copycat Snowflake</h3>
+        <p>Count the tips before you can&rsquo;t.</p>
+        <span class="ct">Recursion and self-similarity</span>
+      </div>
+    </div>
+    <p class="muted" style="margin-top:20px;font-size:.95rem">Logic, patterns, planning, constraints and optimization, across three difficulty bands, alongside math puzzles on grade 4 and 5 ideas such as fractions, common multiples, proportional reasoning and volume. No coding required.</p>
+  </div>
+</section>
+
+<!-- ======================= THE GROWN-UP VIEW ======================= -->
+<section>
+  <div class="wrap two">
+    <div>
+      <div class="rule" aria-hidden="true"></div>
+      <h2>See the thinking, not just the score.</h2>
+      <p>You get your child&rsquo;s thinking, in their own words, next to a plain view of how much help they used, so you can ask a better question at dinner.</p>
+      <ul class="ticks">
+        <li><svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8.6l3.6 3.6L14 3.8" fill="none" stroke="#56457F" stroke-width="2.4" stroke-linecap="round"/></svg><span>The journal: what your child wrote at each step, kept in their own words.</span></li>
+        <li><svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8.6l3.6 3.6L14 3.8" fill="none" stroke="#56457F" stroke-width="2.4" stroke-linecap="round"/></svg><span>Which puzzles were solved outright, and which were solved with help.</span></li>
+        <li><svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8.6l3.6 3.6L14 3.8" fill="none" stroke="#56457F" stroke-width="2.4" stroke-linecap="round"/></svg><span>Whether your child is needing less help over time, and whether a later attempt was completed without opening any help.</span></li>
+        <li><svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8.6l3.6 3.6L14 3.8" fill="none" stroke="#56457F" stroke-width="2.4" stroke-linecap="round"/></svg><span>The reflections, which are often the most interesting thing on the page.</span></li>
+        <li><svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8.6l3.6 3.6L14 3.8" fill="none" stroke="#56457F" stroke-width="2.4" stroke-linecap="round"/></svg><span>Read-only, always. Nothing here lets a grown-up edit a child&rsquo;s work.</span></li>
+      </ul>
+      <p class="muted" style="margin-top:18px;font-size:.94rem">No points. No streaks. No leaderboards.</p>
+    </div>
+    <div class="shot">
+      <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="shot-slot"><span class="lab">Screenshot 2 of 2</span><p>The grown-up review, captured from the running app. 16:10. <span class="todo">awaiting file; rule on the 0 to 100 independence bars first</span></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= THE HONEST BAND ========================= -->
+<section class="tinted">
+  <div class="wrap">
+    <div class="band">
+      <div>
+        <span class="lab">What we will say plainly</span>
+        <h2>The learner needs us less.</h2>
+        <p>No chat box, and nothing generated on the spot: every word of guidance your child sees was written in advance by our team. We measure what matters most to us: <strong>whether your child needs less help as they go, and still solves without it.</strong></p>
+        <p>Independent reasoning is what the app is designed to build, and we will report it once we have measured it.</p>
+      </div>
+      <figure style="margin:0" aria-label="Support decreasing over time, from assisted to less assisted to independent">
+        <div class="track"><div class="support"></div><div class="walker"></div></div>
+        <div class="stages"><span>Assisted</span><span>Less assisted</span><span>Independent</span></div>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== BETA ============================== -->
+<section id="beta">
+  <div class="wrap">
+    <div class="beta">
+      <div>
+        <div class="rule" aria-hidden="true"></div>
+        <h2>The Founding Families beta opens in late November <span class="todo">on readiness; re-check before publishing</span></h2>
+        <p>Your child gets the whole puzzle library, computational thinking puzzles and math puzzles, and a guide that will not do the work for them. Your family helps us learn what works, what is confusing, and what we should fix. We are keeping the group small, so we can answer every family who writes to us.</p>
+        <div class="cta-row"><a class="btn btn-primary" href="mailto:hello@ignitecuriosity.ai?subject=IgniteThinking%20beta">Request beta access</a></div>
+        <p class="have">Already a Founding Family? <a href="https://app.ignitecuriosity.ai/">Log in</a>. Have an invite code? <a href="https://app.ignitecuriosity.ai/register">Set up your family</a>.</p>
+      </div>
+      <div>
+        <p class="lab" style="margin-bottom:12px">What a family gets</p>
+        <ul>
+          <li><svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8.6l3.6 3.6L14 3.8" fill="none" stroke="#56457F" stroke-width="2.4" stroke-linecap="round"/></svg><span>The full puzzle library, across three difficulty bands, all open from the first day.</span></li>
+          <li><svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8.6l3.6 3.6L14 3.8" fill="none" stroke="#56457F" stroke-width="2.4" stroke-linecap="round"/></svg><span>The guide, with every hint written in advance.</span></li>
+          <li><svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8.6l3.6 3.6L14 3.8" fill="none" stroke="#56457F" stroke-width="2.4" stroke-linecap="round"/></svg><span>The journal and the grown-up review.</span></li>
+          <li><svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8.6l3.6 3.6L14 3.8" fill="none" stroke="#56457F" stroke-width="2.4" stroke-linecap="round"/></svg><span>A direct line to the people who built it, and a say in what changes.</span></li>
+        </ul>
+        <p class="bridge">IgniteThinking is where <a href="/">Ignite Curiosity Lab</a> starts. We are a research-driven product lab: learning science, AI engineering, and a habit of claiming only what our data supports. <a href="/science/">The science &rarr;</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div class="sticky-cta"><a class="btn btn-primary" href="#beta">Request beta access</a></div>
+
+<footer>
+  <div class="wrap">
+    <span class="tag">Learning to think with AI, not just use it.</span>
+    <span>&copy; 2026 Ignite Curiosity Lab</span>
+    <a href="/privacy/">Privacy notice <span class="todo">blocker: needs a real page</span></a>
+    <a href="mailto:hello@ignitecuriosity.ai">Contact</a>
+    <a href="https://app.ignitecuriosity.ai/">Log in</a>
+    <span class="tail lab">Draft v3.4 &middot; 1 Nov 2026</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduce=!!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+  /* Sample maze written for this page; it is not one of the app's puzzles.
+     Nothing here is a stored answer: a walk is checked by following the arrows. */
+  var START=[['R','D','L'],['D','L','D'],['U','L',null]];
+  var HOUSE={r:2,c:2};
+  var STEP={R:[0,1],D:[1,0],L:[0,-1],U:[-1,0]};
+  var GLYPH={R:'→',D:'↓',L:'←',U:'↑'};
+  var WORD={R:'right',D:'down',L:'left',U:'up'};
+  var TURN=['R','D','L','U'];
+
+  /* Written help for this sample. It never receives the answer: only how many walks there have been. */
+  var guide=(function(){
+    var HINTS=[
+      'Watch the walk again. Which square does it reach a second time? That is where the circle closes.',
+      'Work backwards. Which squares could step straight into the House? Can your walk ever reach one of them?',
+      'List the squares your walk visits, in order. For each one, ask: if this arrow pointed another way, where would the walk go next, and could that lead to the House?'
+    ];
+    var i=0;
+    return {
+      opening:'Walk the path once before you change anything, and watch where it goes.',
+      nudge:function(walks){
+        if(walks===0)return 'Try one walk first. Press Walk the path and watch where it goes.';
+        if(i<HINTS.length)return HINTS[i++];
+        return 'That is all the help I have for this maze. The last move is yours.';
+      },
+      reset:function(){i=0}
+    };
+  })();
+
+  var grid,changed,walks,solved,busy;
+  var mazeEl=document.getElementById('maze'),say=document.getElementById('say'),route=document.getElementById('route');
+  var walkBtn=document.getElementById('walk'),nudgeBtn=document.getElementById('nudge'),resetBtn=document.getElementById('reset');
+
+  function inside(r,c){return r>=0&&r<3&&c>=0&&c<3}
+  function valid(r,c,d){return inside(r+STEP[d][0],c+STEP[d][1])}
+  function speak(t){say.innerHTML='';var s=document.createElement('span');s.className='who';s.textContent='Ignite';say.appendChild(s);say.appendChild(document.createTextNode(t))}
+  function name(r,c){return 'row '+(r+1)+', column '+(c+1)}
+
+  function label(btn,r,c){
+    var d=grid[r][c];
+    btn.setAttribute('aria-label',(r===0&&c===0?'Start square, ':'')+name(r,c)+': arrow points '+WORD[d]+(changed&&changed.r===r&&changed.c===c?', changed':'')+'. Tap to turn it.');
+  }
+
+  function build(){
+    mazeEl.innerHTML='';
+    for(var r=0;r<3;r++)for(var c=0;c<3;c++){
+      if(r===HOUSE.r&&c===HOUSE.c){
+        var h=document.createElement('div');h.className='cell house';h.id='cell-'+r+'-'+c;h.setAttribute('role','img');h.setAttribute('aria-label','The House, '+name(r,c));
+        h.innerHTML='<svg viewBox="0 0 34 34" aria-hidden="true"><path d="M5 16 17 5l12 11" fill="none" stroke="#CB3B1B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 14v14h16V14" fill="#FFFFFF" stroke="#2C2440" stroke-width="2.4" stroke-linejoin="round"/><rect x="15" y="20" width="5" height="8" rx="1" fill="#F7B23B"/></svg>';
+        mazeEl.appendChild(h);continue;
+      }
+      var b=document.createElement('button');b.type='button';b.className='cell';b.id='cell-'+r+'-'+c;
+      b.innerHTML=(r===0&&c===0?'<span class="start" aria-hidden="true">Start</span>':'')+'<span class="arrow" aria-hidden="true">'+GLYPH[grid[r][c]]+'</span>';
+      (function(r,c,b){b.addEventListener('click',function(){turn(r,c)})})(r,c,b);
+      label(b,r,c);mazeEl.appendChild(b);
+    }
+  }
+
+  function cell(r,c){return document.getElementById('cell-'+r+'-'+c)}
+  function clearMarks(){
+    for(var r=0;r<3;r++)for(var c=0;c<3;c++){var e=cell(r,c);e.classList.remove('on','again','reached');var n=e.querySelector('.stepn');if(n)n.remove()}
+  }
+  function paintChanged(){
+    for(var r=0;r<3;r++)for(var c=0;c<3;c++){
+      if(r===HOUSE.r&&c===HOUSE.c)continue;var e=cell(r,c);
+      e.classList.toggle('changed',!!(changed&&changed.r===r&&changed.c===c));
+      e.querySelector('.arrow').textContent=GLYPH[grid[r][c]];label(e,r,c);
+    }
+  }
+
+  function turn(r,c){
+    if(solved||busy)return;
+    clearMarks();
+    var note='';
+    if(changed&&(changed.r!==r||changed.c!==c)){
+      grid[changed.r][changed.c]=START[changed.r][changed.c];
+      note='Only one arrow may change, so the first one went back. ';
+    }
+    var k=TURN.indexOf(grid[r][c]);
+    do{k=(k+1)%4}while(!valid(r,c,TURN[k]));
+    grid[r][c]=TURN[k];
+    changed=(grid[r][c]===START[r][c])?null:{r:r,c:c};
+    paintChanged();
+    if(note)speak(note+'Walk the path to see what your change does.');
+  }
+
+  function simulate(){
+    var r=0,c=0,seen={},path=[[0,0]];seen['0,0']=1;
+    while(true){
+      if(r===HOUSE.r&&c===HOUSE.c)return {home:true,path:path};
+      var d=STEP[grid[r][c]];r+=d[0];c+=d[1];
+      path.push([r,c]);
+      if(seen[r+','+c])return {home:false,path:path};
+      seen[r+','+c]=1;
+    }
+  }
+
+  function finish(res){
+    busy=false;walks++;
+    var steps=res.path.length-1;
+    route.textContent='Your walk: '+res.path.map(function(p){return p[0]===HOUSE.r&&p[1]===HOUSE.c?'the House':name(p[0],p[1])}).join(', then ')+'.';
+    if(res.home){
+      solved=true;walkBtn.disabled=true;nudgeBtn.disabled=true;
+      speak('You reached the House in '+steps+' steps, and you found the fix, not me. Now ask yourself: why did that one square matter, and not the others?');
+    }else if(!changed){
+      speak('The walk came back to a square it had already visited, so it would go round forever. Which square starts the circle?');
+    }else{
+      speak('Still a circle. Try a different arrow, or turn this one another way, and walk again.');
+    }
+  }
+
+  function mark(p,i,last,res){
+    var e=cell(p[0],p[1]);
+    if(p[0]===HOUSE.r&&p[1]===HOUSE.c){e.classList.add('reached');return}
+    if(last&&!res.home){e.classList.add('again');return}
+    e.classList.add('on');
+    var n=document.createElement('span');n.className='stepn';n.setAttribute('aria-hidden','true');n.textContent=String(i+1);e.appendChild(n);
+  }
+
+  walkBtn.addEventListener('click',function(){
+    if(solved||busy)return;
+    clearMarks();
+    var res=simulate();
+    if(reduce){res.path.forEach(function(p,i){mark(p,i,i===res.path.length-1,res)});finish(res);return}
+    busy=true;var i=0;
+    (function next(){
+      mark(res.path[i],i,i===res.path.length-1,res);i++;
+      if(i<res.path.length)setTimeout(next,280);else finish(res);
+    })();
+  });
+  nudgeBtn.addEventListener('click',function(){if(!solved&&!busy)speak(guide.nudge(walks))});
+  resetBtn.addEventListener('click',init);
+
+  function init(){
+    grid=START.map(function(row){return row.slice()});
+    changed=null;walks=0;solved=false;busy=false;guide.reset();
+    walkBtn.disabled=false;nudgeBtn.disabled=false;
+    build();route.textContent='';speak(guide.opening);
+  }
+  init();
+
+  /* There is no way to ask for the answer, here or in the app. The chip points a curious grown-up at why. */
+  document.getElementById('trychip').addEventListener('click',function(){var w=document.getElementById('why');
+    w.classList.remove('lit');void w.offsetWidth;w.classList.add('lit');w.scrollIntoView({block:'nearest',behavior:reduce?'auto':'smooth'})});
+
+  if(!reduce){
+    document.querySelector('.spark').animate([{opacity:1},{opacity:.72},{opacity:1}],{duration:3200,iterations:Infinity,easing:'ease-in-out'});
+    /* Independence figure: scroll-driven where supported, otherwise played once on entry. Never loops. */
+    if(!(window.CSS&&CSS.supports&&CSS.supports('animation-timeline: view()'))){
+      var fig=document.querySelector('.band figure');
+      if(fig&&'IntersectionObserver' in window){
+        var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){fig.classList.add('play');io.disconnect()}})},{threshold:.35});
+        io.observe(fig)}}}
+})();
+</script>
+</body>
+</html>

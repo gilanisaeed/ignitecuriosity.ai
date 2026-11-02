@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ignite Curiosity Lab | Learning to think with AI, not just use it</title>
+<meta name="description" content="Ignite Curiosity Lab creates AI learning experiences that build independent reasoning skills in K-12 students, where AI guides their thinking instead of giving them answers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Roboto:wght@400;500&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+/* Every colour below is a token from IgniteCuriosityLab_DesignSystem.html, with one ruled exception:
+   Ignite Coral #FB5A3C as the accent of the IgniteThinking card only (DECISIONS, 9 Sep 2026). */
+:root{
+  color-scheme: light;
+  --purple-900:#2A223D; --purple-800:#362C4F; --purple-700:#453765;
+  --purple-600:#56457F; --purple-500:#6A5B8E; --purple-400:#8275A0; --purple-300:#A097B7;
+  --purple-200:#BFB8CE; --purple-100:#E3DFEA; --purple-50:#EFEDF5;
+  --orange:#F27A37;            /* Curiosity Orange: the single warm mark in the diagrams */
+  --orange-strong:#C0531F; --orange-hover:#AC4B1F; --orange-50:#FEF2EB;
+  --coral:#FB5A3C;             /* IgniteThinking signature: its product card ONLY */
+  --disabled:#A9A5B0; --border-strong:#CFC8D6;
+  --slate:#192028;
+  --bg:#FBF8F3; --surface:#FFFFFF; --tint:#EFEDF5;
+  --ink:#2C2A33; --ink-muted:#6E6A75;
+  --line:#E3DFEA;
+  --font-h:"Montserrat","Helvetica Neue",Arial,sans-serif;
+  --font-b:"Roboto","Helvetica Neue",Arial,sans-serif;
+  --font-m:"Roboto Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --ease:cubic-bezier(.2,.6,.3,1); --ease-pop:cubic-bezier(.34,1.4,.64,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{overflow-x:clip}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-b);
+  font-size:17px;line-height:1.6;text-wrap:pretty;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--font-h);color:var(--purple-700);margin:0;text-wrap:balance;letter-spacing:-.015em}
+h2{font-weight:600;font-size:clamp(1.7rem,3.1vw,2.4rem);line-height:1.14}
+h3{font-weight:600;font-size:1.12rem;line-height:1.28}
+p{margin:0 0 1em}
+a{color:var(--purple-600)}
+.wrap{width:100%;max-width:1240px;margin-inline:auto;padding-inline:24px}
+.prose{max-width:62ch}
+.lab{font-family:var(--font-m);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-muted)}
+.rule{width:44px;height:3px;border-radius:2px;background:var(--purple-600);margin-bottom:20px}
+.muted{color:var(--ink-muted)}
+:where(a,button,[tabindex]):focus-visible{outline:3px solid var(--purple-500);outline-offset:3px;border-radius:4px}
+/* review chips: draft annotations, removed before publishing */
+.todo{display:inline-block;font-family:var(--font-m);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--orange-50);color:var(--purple-900);border:1px solid var(--orange);border-radius:4px;padding:2px 7px;vertical-align:middle}
+.draft-banner{background:var(--orange-50);border-bottom:1px solid var(--orange);color:var(--purple-900);font:500 13px/1.5 "Roboto Mono",monospace;padding:9px 24px;letter-spacing:.04em}
+
+.topbar{position:relative;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;gap:28px;min-height:64px;flex-wrap:wrap}
+.brandmark{font-family:var(--font-h);font-weight:700;font-size:.94rem;color:var(--purple-700);text-decoration:none}
+.topbar nav{display:flex;gap:20px;flex-wrap:wrap}
+.topbar nav a{font-size:.93rem;font-weight:500;color:var(--ink);text-decoration:none;padding:10px 0;transition:color .18s var(--ease)}
+.topbar nav a:hover{color:var(--purple-600)}
+.topbar nav a[aria-current]{color:var(--purple-700);font-weight:600;box-shadow:inset 0 -2px 0 var(--purple-600)}
+.topbar .tail{margin-left:auto}
+.login{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border:1.5px solid var(--purple-600);border-radius:999px;font-family:var(--font-h);font-weight:600;font-size:.9rem;color:var(--purple-700);text-decoration:none;white-space:nowrap;transition:background-color .18s var(--ease)}
+.login:hover{background:var(--tint)}
+.menu{display:none}
+.menu summary{list-style:none;cursor:pointer;min-height:44px;min-width:44px;display:inline-flex;align-items:center;gap:8px;font-family:var(--font-h);font-weight:600;font-size:.9rem;color:var(--purple-700);padding:0 4px}
+.menu summary::-webkit-details-marker{display:none}
+.menu summary svg{display:block}
+
+/* hero: slate ground, faint grid, the thinking trace on the right */
+.hero{position:relative;isolation:isolate;background:var(--slate);color:#fff;padding:clamp(56px,7vw,88px) 0}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.55;
+  background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+  background-size:28px 28px}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;
+  background:radial-gradient(ellipse at 18% 45%,rgba(86,69,127,.32),transparent 52%)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:44px;align-items:center}
+.trace{margin:0}
+.trace svg{display:block;width:100%;height:auto}
+.trace .ghost{fill:none;stroke:rgba(255,255,255,.2);stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.trace .line{fill:none;stroke:var(--orange);stroke-width:5;stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:1500;stroke-dashoffset:1500;animation:draw 3.2s var(--ease) .3s forwards}
+.trace .node{fill:#192028;stroke:var(--orange);stroke-width:3}
+.trace .node.end{fill:var(--orange)}
+.trace .node.turn{r:9}
+.trace .ring{fill:none;stroke:var(--orange);stroke-width:1.5;opacity:.45}
+.trace .ai{fill:none;stroke:var(--purple-200);stroke-width:1.5;stroke-dasharray:4 5}
+.trace .aidot{fill:var(--purple-200)}
+.trace text{font-family:var(--font-m);font-size:13px;letter-spacing:.07em;text-transform:uppercase;fill:rgba(255,255,255,.86)}
+.trace text.ai-t{fill:var(--purple-200)}
+.trace figcaption{margin-top:2px;text-align:center;font-family:var(--font-m);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.72)}
+@keyframes draw{to{stroke-dashoffset:0}}
+.hero .kicker{display:inline-block;font-family:var(--font-m);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;
+  color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.24);border-radius:999px;padding:7px 15px;margin-bottom:24px}
+.hero h1{font-family:var(--font-h);font-weight:600;color:#fff;font-size:clamp(2.3rem,5.3vw,4.2rem);line-height:1.03;letter-spacing:-.03em;max-width:17ch;margin:0 0 24px}
+.hero h1 b{font-weight:600;color:var(--purple-200)}
+.hero .mission{font-family:var(--font-h);font-weight:500;font-size:clamp(1.05rem,1.6vw,1.25rem);line-height:1.45;color:#fff;max-width:46ch;margin:0 0 16px}
+.hero .mission .mlab{display:block;font-family:var(--font-m);font-size:.7rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--purple-200);margin-bottom:6px}
+.hero .lede{font-size:clamp(1rem,1.4vw,1.1rem);line-height:1.55;color:rgba(255,255,255,.9);max-width:56ch;margin:0}
+.hero .lede .q{display:block;margin-top:12px;font-family:var(--font-h);font-weight:600;font-size:1.1em;color:#fff}
+.cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 24px;border-radius:999px;
+  font-family:var(--font-h);font-weight:600;font-size:1rem;text-decoration:none;border:1.5px solid transparent;cursor:pointer;
+  transition:background-color .18s var(--ease),border-color .18s var(--ease),color .18s var(--ease),transform .18s var(--ease-pop)}
+.btn-primary{background:var(--orange-strong);color:#fff}
+.btn-primary:hover{background:var(--orange-hover);transform:translateY(-1px)}
+.btn-onphoto{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.4)}
+.btn-onphoto:hover{background:rgba(255,255,255,.2)}
+.btn:active{transform:translateY(0)}
+.creds{background:var(--slate);border-top:1px solid rgba(255,255,255,.12);padding:14px 0}
+.creds .wrap{display:flex;gap:10px 34px;flex-wrap:wrap;align-items:center}
+.creds span{font-family:var(--font-m);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.62)}
+.creds .todo{color:var(--purple-900);letter-spacing:.1em}
+
+section{padding:clamp(52px,6.5vw,80px) 0}
+section.tinted{background:var(--tint);border-block:1px solid var(--line)}
+.head{margin-bottom:32px}
+
+/* frame */
+.frame-head{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:44px;align-items:end;margin-bottom:30px}
+.frame-head p{margin:0;font-size:1.06rem}
+.vs{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface)}
+.col-head{padding:16px 22px;border-bottom:1px solid var(--line)}
+.col-head .tag{font-family:var(--font-m);font-size:.66rem;letter-spacing:.15em;text-transform:uppercase;display:block;margin-bottom:4px}
+.col-head h3{font-size:1.2rem;margin:0}
+.a .col-head{background:var(--bg)}.a .col-head .tag{color:var(--ink-muted)}.a .col-head h3{color:var(--ink-muted)}
+.b .col-head{background:var(--purple-50);border-left:1px solid var(--line)}
+.b .col-head .tag{color:var(--purple-600)}.b .col-head h3{color:var(--purple-800)}
+.vs .row{padding:15px 22px;border-bottom:1px solid var(--line);font-size:.98rem;min-height:70px}
+.b .row{border-left:1px solid var(--line)}
+.vs .row:last-child{border-bottom:0}
+.a .row{color:var(--ink-muted);background:var(--bg)}
+.b .row strong{font-weight:500;color:var(--purple-800)}
+
+/* question + can/must */
+.q-grid{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:48px;align-items:center}
+.bigq{font-family:var(--font-h);font-weight:600;font-size:clamp(1.6rem,3.2vw,2.5rem);line-height:1.12;letter-spacing:-.025em;color:var(--purple-500);margin:0}
+.bigq em{font-style:normal;color:var(--purple-900)}
+.cm{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 20px 16px}
+.panel h3{font-size:1.02rem;margin:0 0 12px}
+.panel.learner{border-top:3px solid var(--purple-600)}
+.panel.ai{border-top:3px solid var(--purple-200)}
+.panel ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.panel li{display:grid;grid-template-columns:18px 1fr;gap:9px;font-size:.95rem;align-items:start}
+.panel li svg{margin-top:5px}
+.boundary{grid-column:1/-1;margin:4px 0 0;text-align:center;font-family:var(--font-h);font-weight:600;font-size:1.02rem;color:var(--purple-800)}
+
+/* handoff rail: scroll-driven where supported, resting at the learner end otherwise */
+.handoff{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.handoff .hl{font-family:var(--font-m);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted)}
+.rail{flex:1;position:relative;height:8px;border-radius:999px;background:var(--purple-100);container-type:inline-size}
+.knob{position:absolute;top:50%;left:0;width:26px;height:26px;margin-top:-13px;border-radius:50%;background:var(--orange);
+  box-shadow:0 0 0 4px rgba(242,122,55,.25);transform:translateX(calc(100cqw - 26px))}
+@supports (animation-timeline: view()){
+  .knob{animation:handoff linear both;animation-timeline:view();animation-range:entry 10% cover 45%}
+}
+@keyframes handoff{from{transform:translateX(0)}to{transform:translateX(calc(100cqw - 26px))}}
+.cm .panel{transition:transform .22s var(--ease),box-shadow .22s var(--ease)}
+.cm .panel:hover,.cm .panel:focus-within{transform:translateY(-2px);box-shadow:0 10px 26px rgba(44,36,64,.10)}
+
+/* evidence: findings + ladder */
+.ev-head{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:40px;align-items:start;margin-bottom:36px}
+.ladder{background:var(--slate);color:var(--purple-50);border-radius:14px;padding:20px 22px}
+.ladder .lab{color:var(--purple-200);display:block;margin-bottom:6px}
+.ladder h3{color:#fff;font-size:1.02rem;margin:0 0 12px}
+.rungs{display:grid;gap:7px}
+.rung{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:baseline;padding:9px 13px;border-radius:9px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.11)}
+.rung span{font-family:var(--font-m);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--purple-200)}
+.rung b{font-family:var(--font-h);font-weight:600;color:#fff;font-size:.95rem}
+.ladder p{margin:12px 0 0;font-size:.88rem;color:var(--purple-100)}
+.sub-head{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;margin:8px 0 22px;padding-top:26px;border-top:1px solid var(--line)}
+.sub-head h3{font-size:1.3rem;color:var(--purple-700);margin:0}
+.beliefs{display:grid;grid-template-columns:repeat(3,1fr);gap:28px 32px}
+.belief{background:var(--tint);border:1px solid var(--line);border-top:3px solid var(--purple-600);border-radius:10px;padding:20px 20px 18px}
+.belief .n{font-family:var(--font-m);font-size:.68rem;letter-spacing:.16em;color:#fff;background:var(--orange-strong);display:inline-block;padding:3px 9px 2px 11px;border-radius:999px;margin-bottom:10px}
+.belief h3{margin:0 0 8px;color:var(--purple-800)}
+.belief p{margin:0;font-size:.95rem}
+.belief .tag{display:block;font-family:var(--font-m);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--purple-600);margin:0 0 6px}
+.belief .dd{margin-top:14px;padding-top:12px;border-top:1px solid var(--purple-100)}
+.belief .dd p{color:var(--purple-800);font-weight:500}
+.src{display:block;margin-top:9px;font-family:var(--font-m);font-size:.78rem;letter-spacing:.06em;color:var(--ink-muted);line-height:1.5}
+
+/* success statement */
+.success{margin-top:44px;background:var(--slate);color:var(--purple-50);border-radius:16px;padding:clamp(26px,4vw,44px);
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:center}
+.success .lab{color:var(--purple-200);display:block;margin-bottom:8px}
+.success h2{color:#fff;font-size:clamp(1.7rem,3.4vw,2.6rem);margin:0 0 14px}
+.success p{color:var(--purple-100);margin:0;font-size:1.02rem;max-width:44ch}
+.success p strong{color:#fff;font-weight:500}
+.s-fig{margin:0}
+.track{position:relative;height:14px;border-radius:999px;background:rgba(255,255,255,.12);container-type:inline-size}
+.support{position:absolute;inset:0;border-radius:999px;background:linear-gradient(90deg,var(--purple-500),var(--purple-400));
+  transform-origin:left center;transform:scaleX(0)}
+.walker{position:absolute;top:50%;left:0;width:22px;height:22px;margin-top:-11px;border-radius:50%;background:var(--orange);
+  box-shadow:0 0 0 4px rgba(242,122,55,.25);transform:translateX(calc(100cqw - 22px))}
+.s-fig.play .support{animation:shrink 7s var(--ease) 1 both}
+.s-fig.play .walker{animation:walk 7s var(--ease) 1 both}
+@supports (animation-timeline: view()){
+  .support{animation:shrink linear both;animation-timeline:view();animation-range:entry 15% cover 60%}
+  .walker{animation:walk linear both;animation-timeline:view();animation-range:entry 15% cover 60%}
+}
+.stages{display:flex;justify-content:space-between;margin-top:14px;font-family:var(--font-m);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--purple-200)}
+@keyframes shrink{0%,18%{transform:scaleX(1)}30%,48%{transform:scaleX(.62)}60%,78%{transform:scaleX(.26)}90%,100%{transform:scaleX(0)}}
+@keyframes walk{0%,18%{transform:translateX(0)}30%,48%{transform:translateX(38cqw)}60%,78%{transform:translateX(72cqw)}90%,100%{transform:translateX(calc(100cqw - 22px))}}
+@media (prefers-reduced-motion:reduce){.support,.walker,.knob,.trace .line,.s-fig.play .support,.s-fig.play .walker{animation:none}.support{transform:scaleX(0)}.walker{transform:translateX(calc(100cqw - 22px))}.knob{transform:translateX(calc(100cqw - 26px))}.trace .line{stroke-dashoffset:0}}
+
+/* products */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent,var(--purple-600));border-radius:12px;padding:22px 20px;display:flex;flex-direction:column}
+.card .state{font-family:var(--font-m);font-size:.64rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:10px}
+.card h3{margin:0 0 6px;font-size:1.14rem}
+.card p{font-size:.94rem;margin:0 0 16px}
+.card .go{margin-top:auto;font-family:var(--font-h);font-weight:600;font-size:.93rem;color:var(--purple-700);text-decoration:none}
+.card .go:hover{color:var(--orange-strong)}
+
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.strip .lab{display:block;color:var(--purple-700);margin-bottom:8px}
+.strip p{margin:0;font-size:.92rem;color:var(--ink)}
+.strip a{font-family:var(--font-h);font-weight:600;text-decoration:none}
+.close-dark{background:var(--slate);color:var(--purple-50);position:relative;isolation:isolate;padding:clamp(60px,7.5vw,92px) 0}
+.close-dark::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.55;
+  background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:28px 28px}
+.close-dark::after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse at 22% 70%,rgba(86,69,127,.5),transparent 55%)}
+.close-band{max-width:64ch}
+.close-band .rule{background:var(--purple-200)}
+.close-band h2{color:#fff;max-width:22ch}
+.close-band p{color:var(--purple-100)}
+
+footer{border-top:1px solid var(--line);padding:24px 0;font-size:.88rem;color:var(--ink-muted)}
+footer .wrap{display:flex;gap:10px 26px;flex-wrap:wrap;align-items:center}
+footer a{color:var(--ink-muted)}
+footer .tag{font-family:var(--font-h);font-weight:600;color:var(--purple-700)}
+footer .tail{margin-left:auto}
+
+@media (max-width:760px){
+  .topbar .wrap{gap:14px}
+  .topbar .tail{display:none}
+  .menu{display:block;margin-left:auto}
+  .topbar nav{display:none}
+  .topbar:has(.menu[open]) nav{display:flex;flex-direction:column;gap:0;width:100%;order:5;border-top:1px solid var(--line);padding:6px 0 10px}
+  .topbar:has(.menu[open]) nav a{padding:12px 0;font-size:1rem}
+}
+@media (max-width:960px){
+  .frame-head,.q-grid,.ev-head{grid-template-columns:1fr;gap:26px}
+  .beliefs{grid-template-columns:1fr;gap:26px}
+  .cards,.cm,.success,.hero-grid,.strip{grid-template-columns:1fr}
+  .vs{grid-template-columns:1fr}.b .col-head,.b .row{border-left:0}.vs .row{min-height:0}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+</style>
+</head>
+<body>
+
+<!-- ICL home, draft v8.2, 29 Oct 2026 (v8.1: hero kicker and IgniteMath card kept as in v7.9, Azade's ruling;
+     v8.2: "Learning to think with AI, not just use it." is the headline, page title and footer tagline, with the
+     mission directly under the headline, labelled as the mission; Azade's ruling, pending the Core website-row change;
+     v8.3: IgniteBuild added to What we build as a short coming-soon card, and IgniteMath removed from the page and the nav, Azade's rulings; v8.4, 1 Nov 2026: the IgniteThinking card now leads to the IgniteThinking page, which is the product's landing page, and Log in to app.ignitecuriosity.ai is added to the header and footer, Azade's ruling. No copy or claim changed). Built on the 22 Sep Drive copy (v7.3) plus the v7.9 changes recorded in the
+     20 Oct review, then a claim-by-claim audit against Company Core v1.6, the live app and Evidence Base v1.1.
+     Six sections, no script dependency; nothing hidden at load. -->
+<div class="draft-banner">
+  DRAFT v8.4 &middot; FOR REVIEW &middot; 29 Oct 2026 claims audit against Company Core v1.6, the live app and Evidence Base v1.1. Chips mark what still needs a ruling or a page
+</div>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brandmark" href="/" aria-current="page">Ignite Curiosity Lab</a>
+    <details class="menu"><summary aria-label="Open menu"><svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true"><path d="M1 1h18M1 7h18M1 13h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Menu</summary></details>
+    <nav aria-label="Products and pages">
+      <a href="/ignitethinking/">IgniteThinking</a>
+      <a href="/igniteed/">IgniteEd</a>
+      <a href="/science/">The Science</a>
+      <a href="/about/">About</a>
+    </nav>
+    <span class="lab tail">A research-driven product lab</span>
+    <a class="login" href="https://app.ignitecuriosity.ai/">Log in</a>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+  <div>
+    <span class="kicker">A research-driven product lab &middot; Shaped by Stanford LEAD</span>
+    <h1>Learning to think with AI,<br><b>not just use it.</b></h1>
+    <p class="mission"><span class="mlab">Our mission</span>Ignite Curiosity Lab creates AI learning experiences that build independent reasoning skills in K-12 students, where AI guides their thinking instead of giving them answers.</p>
+    <p class="lede">As AI makes answers effortless, we design learning experiences in which the student does the reasoning: forms the idea, tests it, revises it and explains it. Grounded in cognitive and learning science and built around one question: <strong class="q">What thinking should remain with the learner?</strong></p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#build">See what we build</a>
+      <a class="btn btn-onphoto" href="/science/">Explore the science</a>
+    </div>
+  </div>
+
+  <figure class="trace" aria-label="A learner's thinking trace: from question to first idea, through a wrong turn and a revision, to insight and explanation. The system adds only a question and a scaffold along the way.">
+    <svg viewBox="0 0 640 410" role="img" aria-hidden="true">
+      <path class="ghost" d="M40 300 C120 282 150 200 210 190 C272 178 318 232 352 254 C408 290 420 346 362 350 C300 354 276 274 324 232 C382 185 440 150 500 140 C542 133 580 108 600 80"/>
+      <path class="line"  d="M40 300 C120 282 150 200 210 190 C272 178 318 232 352 254 C408 290 420 346 362 350 C300 354 276 274 324 232 C382 185 440 150 500 140 C542 133 580 108 600 80"/>
+      <path class="ai" d="M168 128 L204 182"/><circle class="aidot" cx="164" cy="124" r="4"/>
+      <text class="ai-t" x="60" y="118">AI: a question</text>
+      <path class="ai" d="M452 372 L392 346"/><circle class="aidot" cx="456" cy="374" r="4"/>
+      <text class="ai-t" x="468" y="380">AI: a scaffold</text>
+      <circle class="node" cx="40" cy="300" r="7"/><text x="22" y="334">Question</text>
+      <circle class="node" cx="210" cy="190" r="7"/><text x="196" y="170">First idea</text>
+      <circle class="ring" cx="366" cy="349" r="16"/><circle class="node turn" cx="366" cy="349" r="9"/><text x="296" y="386">Wrong turn</text>
+      <circle class="node" cx="324" cy="232" r="7"/><text x="246" y="222">Revise</text>
+      <circle class="node" cx="500" cy="140" r="7"/><text x="478" y="120">Insight</text>
+      <circle class="node end" cx="600" cy="80" r="8"/><text x="530" y="60">Explains why</text>
+    </svg>
+    <figcaption>The line is the learner&rsquo;s. The marks are ours.</figcaption>
+  </figure>
+  </div>
+</section>
+<div class="creds"><div class="wrap">
+  <span>NVIDIA Inception member</span>
+  <span>Stanford LEAD &middot; LISA Cohort 11 &middot; Me2We 2026 Top 10</span>
+  <span>Workshop and poster, Khan Lab School AI in Education Summit 2026 <span class="todo">new line, confirm</span></span>
+</div></div>
+
+<!-- 1 · the frame -->
+<section>
+  <div class="wrap">
+    <div class="frame-head">
+      <div><div class="rule" aria-hidden="true"></div><p class="lab" style="margin-bottom:12px">From prompts to pedagogy</p><h2 style="font-size:clamp(1.8rem,3.6vw,2.7rem)">We make pedagogy part of the architecture.</h2></div>
+      <p>A common approach in educational AI is to ask the model to follow pedagogical instructions. We go further: when a learning principle matters, we design the system around it.</p>
+    </div>
+    <div class="vs">
+      <div class="a">
+        <div class="col-head"><span class="tag">The default</span><h3>Prompt-level guidance</h3></div>
+        <div class="row">The model is instructed to follow a pedagogical rule.</div>
+        <div class="row">Reliability depends on model compliance and prompt robustness.</div>
+        <div class="row">Behavior can drift across prompts, models, and model updates.</div>
+      </div>
+      <div class="b">
+        <div class="col-head"><span class="tag">What we build</span><h3>System-level learning design</h3></div>
+        <div class="row">Critical constraints are <strong>enforced by the system</strong>, not requested of the model.</div>
+        <div class="row">Any model we use works inside explicit system boundaries, and <strong>it is never given the answer</strong>.</div>
+        <div class="row">Those constraints are <strong>checked directly</strong>: we test for answer leakage instead of assuming it away.</div>
+      </div>
+    </div>
+    <p class="boundary" style="margin-top:22px">When pedagogy is critical, we prefer enforceable constraints over model promises.</p>
+  </div>
+</section>
+
+<!-- 2 · the question -->
+<section class="tinted">
+  <div class="wrap q-grid">
+    <div>
+      <div class="rule" aria-hidden="true"></div>
+      <p class="bigq">Instead of asking what AI can do for the learner, we ask <em>what thinking must remain with the learner.</em></p>
+    </div>
+    <div>
+    <div class="handoff" aria-label="Responsibility moves from the system to the learner">
+      <span class="hl">System</span>
+      <div class="rail"><div class="knob"></div></div>
+      <span class="hl">Learner</span>
+    </div>
+    <div class="cm">
+      <div class="panel ai">
+        <h3>AI can support</h3>
+        <ul style="color:var(--purple-300)">
+          <li><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8.6l3.6 3.6L14 3.8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><span style="color:var(--ink)">Ask a question</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8.6l3.6 3.6L14 3.8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><span style="color:var(--ink)">Surface a pattern</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8.6l3.6 3.6L14 3.8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><span style="color:var(--ink)">Offer a scaffold</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8.6l3.6 3.6L14 3.8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><span style="color:var(--ink)">Prompt reflection</span></li>
+        </ul>
+      </div>
+      <div class="panel learner">
+        <h3>The learner must own</h3>
+        <ul style="color:var(--purple-600)">
+          <li><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8.6l3.6 3.6L14 3.8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><span style="color:var(--ink)">Form the hypothesis</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8.6l3.6 3.6L14 3.8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><span style="color:var(--ink)">Choose the approach</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8.6l3.6 3.6L14 3.8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><span style="color:var(--ink)">Make the mistake</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8.6l3.6 3.6L14 3.8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><span style="color:var(--ink)">Explain the reasoning</span></li>
+        </ul>
+      </div>
+      <p class="boundary">The boundary is the product.</p>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 · the evidence -->
+<section>
+  <div class="wrap">
+    <div class="ev-head">
+      <div>
+        <div class="rule" aria-hidden="true"></div>
+        <h2>Built on cognitive and learning science</h2>
+        <p class="muted" style="margin:14px 0 0;max-width:46ch">We use the research as a design input. It is not evidence that our products work; only our own pilots can be that. Every finding on this page resolves in our evidence base.</p>
+      </div>
+      <aside class="ladder">
+        <span class="lab">Our claims ladder</span>
+        <h3>Evidence before amplification</h3>
+        <div class="rungs">
+          <div class="rung"><span>Rung 1</span><b>Engagement</b></div>
+          <div class="rung"><span>Rung 2</span><b>Process</b></div>
+          <div class="rung"><span>Rung 3</span><b>Learning outcomes: change, not cause</b></div>
+        </div>
+        <p>We do not claim above the rung our data supports. Our first pilot opens in late November 2026, and a supervised research pilot follows in early 2027. Showing that scores changed is not the same as showing we caused it, and that needs a controlled comparison we have not yet run. <span class="todo">re-check the date at every deploy</span></p>
+      </aside>
+    </div>
+    <div class="sub-head">
+      <h3>Three findings, three design decisions</h3>
+    </div>
+    <div class="beliefs">
+      <div class="belief">
+        <span class="n">01</span>
+        <h3>Struggle is only productive by design</h3>
+        <span class="tag">Finding</span>
+        <p>Problem solving before instruction can deepen understanding and transfer, but the effect depends on age, task, guidance, and implementation.</p>
+        <span class="src">Kapur 2008, 2016 &middot; Sinha &amp; Kapur 2021, meta-analysis</span>
+        <div class="dd"><span class="tag">Design decision</span><p>We protect the learner&rsquo;s effort without assuming struggle itself teaches. We scaffold support and design each struggle to resolve in sense-making.</p></div>
+      </div>
+      <div class="belief">
+        <span class="n">02</span>
+        <h3>Assisted performance is not enough</h3>
+        <span class="tag">Finding</span>
+        <p>About 1,000 high-school math students in Turkey, randomized. With unrestricted GPT-4, practice performance improved, but later unaided exam performance was 17 percent lower than the no-AI control. A guided version that gave hints instead of answers showed no significant reduction.</p>
+        <span class="src">Bastani et al. 2025, PNAS</span>
+        <div class="dd"><span class="tag">Design decision</span><p>We measure what a learner can do unaided, and we never give the AI the answer, so the restraint does not rest on instructions to the model.</p></div>
+      </div>
+      <div class="belief">
+        <span class="n">03</span>
+        <h3>Support can create dependence</h3>
+        <span class="tag">Finding</span>
+        <p>1,625 university students across ten courses, randomized. For four weeks, students wrote peer feedback with AI prompts that flagged weak comments. When the prompts were withdrawn, their comments were flagged as low quality significantly more often. The prompts never wrote the feedback. The researchers concluded that students tended to rely on the assistance rather than learn from it.</p>
+        <span class="src">Darvishi et al. 2024, Computers &amp; Education</span>
+        <div class="dd"><span class="tag">Design decision</span><p>Support should work itself out of a job. We measure whether a learner needs less help over time, and still solves without it.</p></div>
+      </div>
+    </div>
+
+    <div class="success">
+      <div class="s-copy">
+        <span class="lab">What does success look like?</span>
+        <h2>The learner needs us less.</h2>
+        <p>Most software measures success by how often people come back. We ask a harder question: <strong>does the learner need less help as they go, and still solve without it?</strong></p>
+      </div>
+      <figure class="s-fig" aria-label="Support decreasing over time, from assisted to less assisted to independent">
+        <div class="track"><div class="support"></div><div class="walker"></div></div>
+        <div class="stages"><span>Assisted</span><span>Less assisted</span><span>Independent</span></div>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · products -->
+<section class="tinted" id="build">
+  <div class="wrap">
+    <div class="head prose"><div class="rule" aria-hidden="true"></div><h2>What we build</h2></div>
+    <div class="cards">
+      <article class="card" style="--accent:var(--coral)">
+        <span class="state">Founding Families beta &middot; late November 2026</span>
+        <h3>IgniteThinking</h3>
+        <p>A thinking app for grades 4 and 5 (ages 9 to 11), designed to build independent reasoning. Students work computational thinking puzzles and math puzzles through a design thinking process, and the guide is never given the answer.</p>
+        <a class="go" href="/ignitethinking/">See IgniteThinking &rarr;</a>
+      </article>
+      <article class="card" style="--accent:var(--purple-400)">
+        <span class="state">In preparation</span>
+        <h3>IgniteEd</h3>
+        <p>Practical AI literacy for educators and school teams, held to the same rule as everything we make: we claim only what our data supports.</p>
+        <a class="go" href="/igniteed/">Visit IgniteEd &rarr;</a>
+      </article>
+      <article class="card" style="--accent:var(--purple-600)">
+        <span class="state">Coming soon</span>
+        <h3>IgniteBuild</h3>
+        <p>Where future builders ship. For high schools. Stay tuned.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · commitments (warm white) -->
+<section>
+  <div class="wrap">
+    <div class="strip" aria-label="What we hold ourselves to">
+      <div><span class="lab">Human-led, AI-supported</span><p>Human judgment stays central. Teachers direct the tools they use in class, and in learner-facing experiences the learner owns the reasoning. AI supports both. It replaces neither.</p></div>
+      <div><span class="lab">Explainable by design</span><p>Every AI intervention has a pedagogical purpose we can name. Where the system steps in, we design that step to be visible to the teacher or parent, not hidden inside the experience.</p></div>
+      <div><span class="lab">Privacy is part of the architecture</span><p>We minimize the data we collect about a learner, define clear retention boundaries, never sell or rent it, and design for age-appropriate privacy from the start. <a href="/privacy/">Our privacy approach &rarr;</a> <span class="todo">blocker: page must exist before launch</span></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · close (slate, back to the hero) -->
+<section class="close-dark">
+  <div class="wrap">
+    <div class="close-band">
+      <div class="rule" aria-hidden="true"></div>
+      <h2>Build AI that leaves people more capable than it found them.</h2>
+      <p class="prose" style="margin:14px 0 0">That is the standard we hold our products, our research, and our partnerships to.</p>
+      <div class="cta-row" style="margin-top:24px">
+        <a class="btn btn-primary" href="mailto:hello@ignitecuriosity.ai">Partner with us</a>
+        <a class="btn btn-onphoto" href="#build">Explore our products</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<script>
+/* Motion only. Nothing on this page depends on this script; without it the independence figure rests in its final state.
+   Where the browser drives the figure from scroll, this does nothing. Elsewhere it plays the figure once when it enters view. */
+(function(){
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  if(window.CSS&&CSS.supports&&CSS.supports('animation-timeline: view()'))return;
+  var fig=document.querySelector('.s-fig');if(!fig||!('IntersectionObserver' in window))return;
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){fig.classList.add('play');io.disconnect()}})},{threshold:.35});
+  io.observe(fig);
+})();
+</script>
+
+<footer>
+  <div class="wrap">
+    <span class="tag">Learning to think with AI, not just use it.</span>
+    <span>&copy; 2026 Ignite Curiosity Lab</span>
+    <a href="/privacy/">Privacy notice <span class="todo">blocker: needs a real page</span></a>
+    <a href="mailto:hello@ignitecuriosity.ai">Contact</a>
+    <a href="https://app.ignitecuriosity.ai/">Log in</a>
+    <span class="tail lab">Draft v8.4 &middot; 1 Nov 2026</span>
+  </div>
+</footer>
+</body>
+</html>
