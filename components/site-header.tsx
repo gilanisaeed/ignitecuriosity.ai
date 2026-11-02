@@ -1,86 +1,51 @@
-"use client"
-
-import { useState } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Menu, X } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
+import styles from "./site-chrome.module.css"
 
-const navLinks = [
-  { href: "/igniteed", label: "IgniteEd" },
-  { href: "/science", label: "The Science" },
-  { href: "/about", label: "About Us" },
-]
+// Ported from the 1 Nov 2026 drafts' <header class="topbar">
+// (docs/handoff-2026-11-01/source/). Markup and copy as in the drafts;
+// the <details> menu works without JavaScript.
 
-export function SiteHeader() {
-  const [open, setOpen] = useState(false)
-  const pathname = usePathname()
+const navItems = [
+  { key: "ignitethinking", href: "/ignitethinking/", label: "IgniteThinking" },
+  { key: "igniteed", href: "/igniteed/", label: "IgniteEd" },
+  { key: "science", href: "/science/", label: "The Science" },
+  { key: "about", href: "/about/", label: "About" },
+] as const
 
-  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`)
+type SiteHeaderProps = {
+  /** Which nav link carries aria-current="page"; "home" puts it on the brandmark. */
+  current?: "home" | "ignitethinking" | "igniteed" | "science" | "about"
+  /** The small mono label right of the nav. */
+  tail?: string
+}
 
+export function SiteHeader({ current, tail = "A research-driven product lab" }: SiteHeaderProps) {
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between px-6 md:px-12">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="font-heading text-xl font-bold tracking-tight text-primary">Ignite Curiosity Lab</span>
+    <header className={styles.topbar}>
+      <div className={styles.wrap}>
+        <Link href="/" className={styles.brandmark} aria-current={current === "home" ? "page" : undefined}>
+          Ignite Curiosity Lab
         </Link>
-
-        <nav className="hidden md:flex items-center gap-8 text-sm font-bold">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              aria-current={isActive(link.href) ? "page" : undefined}
-              className={cn(
-                "relative transition-colors hover:text-primary",
-                "after:absolute after:-bottom-1.5 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:bg-primary after:transition-transform hover:after:scale-x-100",
-                isActive(link.href) ? "text-primary after:scale-x-100" : "text-muted-foreground",
-              )}
-            >
-              {link.label}
+        <details className={styles.menu}>
+          <summary aria-label="Open menu">
+            <svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true">
+              <path d="M1 1h18M1 7h18M1 13h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+            Menu
+          </summary>
+        </details>
+        <nav aria-label="Products and pages">
+          {navItems.map((item) => (
+            <Link key={item.key} href={item.href} aria-current={current === item.key ? "page" : undefined}>
+              {item.label}
             </Link>
           ))}
         </nav>
-
-        <div className="hidden md:flex items-center gap-4">
-          <Button className="bg-secondary text-secondary-foreground hover:bg-secondary/90">Request a Demo</Button>
-        </div>
-
-        <button
-          type="button"
-          className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-foreground hover:bg-muted transition-colors"
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
+        <span className={`${styles.lab} ${styles.tail}`}>{tail}</span>
+        <a className={styles.login} href="https://app.ignitecuriosity.ai/">
+          Log in
+        </a>
       </div>
-
-      {open && (
-        <div className="md:hidden border-t bg-background">
-          <nav className="container flex flex-col gap-1 px-6 py-4">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                aria-current={isActive(link.href) ? "page" : undefined}
-                className={cn(
-                  "rounded-md px-3 py-3 text-base font-bold transition-colors hover:bg-muted hover:text-primary",
-                  isActive(link.href) ? "bg-muted text-primary" : "text-muted-foreground",
-                )}
-                onClick={() => setOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
-            <Button className="mt-2 w-full bg-secondary text-secondary-foreground hover:bg-secondary/90">
-              Request a Demo
-            </Button>
-          </nav>
-        </div>
-      )}
     </header>
   )
 }

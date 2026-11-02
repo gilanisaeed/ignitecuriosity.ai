@@ -6,7 +6,7 @@ import { ProficiencyChart, BurnoutGauge } from "@/components/science/crisis-char
 export default function SciencePage() {
   return (
     <div className="flex min-h-screen flex-col">
-      <SiteHeader />
+      <SiteHeader current="science" />
       <main className="flex-1">
         {/* Section 1: The Crisis */}
         <section className="py-20 bg-muted/30">
