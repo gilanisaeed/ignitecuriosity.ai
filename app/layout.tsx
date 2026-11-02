@@ -1,7 +1,6 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
 import { Montserrat, Roboto, Roboto_Mono } from "next/font/google"
-import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
 const montserrat = Montserrat({
@@ -29,40 +28,31 @@ const robotoMono = Roboto_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://ignitecuriosity.ai"),
   title: {
-    default: "Ignite Curiosity Lab — Teacher-Directed AI for Mathematical Reasoning",
+    default: "Ignite Curiosity Lab | Learning to think with AI, not just use it",
     template: "%s | Ignite Curiosity Lab",
   },
   description:
-    "Ignite Curiosity Lab builds teacher-directed learning technology grounded in cognitive and learning science. Meet IgniteMath: the alternative to the answer engine that turns passive consumption into active reasoning.",
-  keywords: [
-    "AI in education",
-    "teacher-directed AI",
-    "math education",
-    "IgniteMath",
-    "responsible AI",
-    "mathematical reasoning",
-    "EdTech",
-  ],
+    "Ignite Curiosity Lab creates AI learning experiences that build independent reasoning skills in K-12 students, where AI guides their thinking instead of giving them answers.",
+  keywords: ["AI in education", "math education", "responsible AI", "mathematical reasoning", "EdTech"],
   authors: [{ name: "Ignite Curiosity Lab" }],
   openGraph: {
     type: "website",
-    title: "Ignite Curiosity Lab — Teacher-Directed AI for Mathematical Reasoning",
+    title: "Ignite Curiosity Lab | Learning to think with AI, not just use it",
     description:
-      "The alternative to the answer engine. Teacher-directed AI that turns passive consumption into active reasoning.",
+      "Ignite Curiosity Lab creates AI learning experiences that build independent reasoning skills in K-12 students, where AI guides their thinking instead of giving them answers.",
     siteName: "Ignite Curiosity Lab",
     images: [{ url: "/images/icl-mainpage.jpg", width: 1280, height: 720, alt: "Ignite Curiosity Lab" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ignite Curiosity Lab — Teacher-Directed AI for Mathematical Reasoning",
+    title: "Ignite Curiosity Lab | Learning to think with AI, not just use it",
     description:
-      "The alternative to the answer engine. Teacher-directed AI that turns passive consumption into active reasoning.",
+      "Ignite Curiosity Lab creates AI learning experiences that build independent reasoning skills in K-12 students, where AI guides their thinking instead of giving them answers.",
     images: ["/images/icl-mainpage.jpg"],
   },
   icons: {
     icon: "/icon.svg",
   },
-    generator: 'v0.app'
 }
 
 export const viewport: Viewport = {
@@ -82,7 +72,6 @@ export default function RootLayout({
         className={`${montserrat.variable} ${roboto.variable} ${robotoMono.variable} font-sans antialiased`}
       >
         {children}
-        <Analytics />
       </body>
     </html>
   )
