@@ -72,7 +72,9 @@
 .page p {
   margin: 0 0 1em;
 }
-.page a {
+/* :where() keeps this at the bare-element specificity the draft's `a` rule
+   had, so .btn, .go and the other link styles override it as in the draft */
+.page :where(a) {
   color: var(--purple-600);
   text-decoration: underline;
 }
