@@ -17,11 +17,13 @@ type SiteHeaderProps = {
   current?: "home" | "ignitethinking" | "igniteed" | "science" | "about"
   /** The small mono label right of the nav. */
   tail?: string
+  /** "white" for pages on the white base (IgniteThinking v3.21). */
+  tone?: "white"
 }
 
-export function SiteHeader({ current, tail = "A research-driven product lab" }: SiteHeaderProps) {
+export function SiteHeader({ current, tail = "A research-driven product lab", tone }: SiteHeaderProps) {
   return (
-    <header className={styles.topbar}>
+    <header className={tone ? `${styles.topbar} ${styles[tone]}` : styles.topbar}>
       <div className={styles.wrap}>
         <Link href="/" className={styles.brandmark} aria-current={current === "home" ? "page" : undefined}>
           Ignite Curiosity Lab

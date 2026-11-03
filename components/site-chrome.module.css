@@ -155,6 +155,24 @@
   color: var(--purple-700);
 }
 
+/* IgniteThinking v3.21 colour system: a white page under the header, and
+   the footer in deep purple (purple-800 #362C4F, text purple-100 #E3DFEA) */
+.topbar.white {
+  --bg: #ffffff;
+}
+.footer.deep {
+  background: #362c4f;
+  border-top: 0;
+  color: #e3dfea;
+  padding: 28px 0;
+}
+.footer.deep a {
+  color: #e3dfea;
+}
+.footer.deep .tag {
+  color: #ffffff;
+}
+
 @media (max-width: 760px) {
   .topbar .wrap {
     gap: 14px;

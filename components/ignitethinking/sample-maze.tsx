@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react"
 import styles from "@/app/ignitethinking/page.module.css"
 
 // The playable sample maze, ported from the draft's <script> in
-// docs/handoff-2026-11-01/source/IgniteThinking-Page-v3_4.html with the
+// docs/handoff-2026-11-03/source/IgniteThinking-Page-v3_21.html with the
 // logic as written. It is a sample written only for the website and is NOT
 // one of the app's puzzles; nothing here is a stored answer: a walk is
 // checked by following the arrows. The guide's help is written in advance
@@ -45,7 +45,7 @@ export function SampleMaze() {
     const walkBtn = root.querySelector("#walk") as HTMLButtonElement
     const nudgeBtn = root.querySelector("#nudge") as HTMLButtonElement
     const resetBtn = root.querySelector("#reset") as HTMLButtonElement
-    const whyEl = root.querySelector("#why") as HTMLParagraphElement
+    const whyEl = root.querySelector("#why-box") as HTMLParagraphElement
     const chipEl = root.querySelector("#trychip") as HTMLButtonElement
     const sparkEl = root.querySelector(`.${styles.spark}`) as SVGElement | null
 
@@ -207,7 +207,9 @@ export function SampleMaze() {
             " steps, and you found the fix, not me. Now ask yourself: why did that one square matter, and not the others?",
         )
       } else if (!changed) {
-        speak("The walk came back to a square it had already visited, so it would go round forever. Which square starts the circle?")
+        speak(
+          "The walk came back to a square it had already visited, so it would go round forever. Which square starts the circle?",
+        )
       } else {
         speak("Still a circle. Try a different arrow, or turn this one another way, and walk again.")
       }
@@ -285,11 +287,13 @@ export function SampleMaze() {
 
     let sparkAnim: Animation | undefined
     if (!reduce && sparkEl && "animate" in sparkEl) {
-      sparkAnim = sparkEl.animate([{ opacity: 1 }, { opacity: 0.72 }, { opacity: 1 }], {
-        duration: 3200,
-        iterations: Infinity,
-        easing: "ease-in-out",
-      })
+      sparkAnim = sparkEl.animate(
+        [
+          { opacity: 0.4, transform: "scale(.86)" },
+          { opacity: 1, transform: "none" },
+        ],
+        { duration: 520, iterations: 1, easing: "cubic-bezier(.34,1.4,.64,1)" },
+      )
     }
 
     return () => {
@@ -355,7 +359,7 @@ export function SampleMaze() {
             There is no box to ask for the answer. Why?
           </button>
         </div>
-        <p className={styles.why} id="why">
+        <p className={styles.why} id="why-box">
           <b>We do not ask the guide to keep the answer secret. The guide is never given it.</b> And there is no chat
           box, here or in the app, so there is nowhere to ask and nothing to talk out of. In the app, every hint is
           written in advance, not generated on the spot.
