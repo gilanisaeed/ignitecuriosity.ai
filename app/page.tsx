@@ -5,7 +5,7 @@ import { SiteFooter } from "@/components/site-footer"
 import { SuccessFigure } from "@/components/home/success-figure"
 import styles from "./page.module.css"
 
-// Ported from docs/handoff-2026-11-01/source/ICL-Home-Philosophy-v8_4.html.
+// Ported from docs/handoff-2026-11-03/source/ICL-Home-Philosophy-v8_13.html.
 // Copy is final and audited (handoff rule 3): port verbatim, no edits.
 // Review-only elements (draft banner, todo chips, draft footer tail,
 // version-history comments) do not ship (handoff 4.2).
@@ -21,7 +21,11 @@ function Check() {
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col">
-      <SiteHeader current="home" />
+      <div className={styles.announce}>
+        IgniteThinking Founding Families beta · opens late November 2026
+        <Link href="/ignitethinking/">See IgniteThinking</Link>
+      </div>
+      <SiteHeader current="home" tone="deep" />
       <main className={styles.page}>
         <section className={styles.hero}>
           <div className={`${styles.wrap} ${styles["hero-grid"]}`}>
@@ -40,15 +44,16 @@ export default function Home() {
               <p className={styles.lede}>
                 As AI makes answers effortless, we design learning experiences in which the student does the reasoning:
                 forms the idea, tests it, revises it and explains it. Grounded in cognitive and learning science and
-                built around one question: <strong className={styles.q}>What thinking should remain with the learner?</strong>
+                built around one question:{" "}
+                <strong className={styles.q}>What thinking should remain with the learner?</strong>
               </p>
               <div className={styles["cta-row"]}>
                 <a className={`${styles.btn} ${styles["btn-primary"]}`} href="#build">
                   See what we build
                 </a>
-                <Link className={`${styles.btn} ${styles["btn-onphoto"]}`} href="/science/">
+                <a className={`${styles.btn} ${styles["btn-onphoto"]}`} href="#science">
                   Explore the science
-                </Link>
+                </a>
               </div>
             </div>
 
@@ -76,18 +81,30 @@ export default function Home() {
                   AI: a scaffold
                 </text>
                 <circle className={styles.node} cx="40" cy="300" r="7" />
-                <text x="22" y="334">Question</text>
+                <text x="22" y="334">
+                  Question
+                </text>
                 <circle className={styles.node} cx="210" cy="190" r="7" />
-                <text x="196" y="170">First idea</text>
+                <text x="196" y="170">
+                  First idea
+                </text>
                 <circle className={styles.ring} cx="366" cy="349" r="16" />
                 <circle className={`${styles.node} ${styles.turn}`} cx="366" cy="349" r="9" />
-                <text x="296" y="386">Wrong turn</text>
+                <text x="296" y="386">
+                  Wrong turn
+                </text>
                 <circle className={styles.node} cx="324" cy="232" r="7" />
-                <text x="246" y="222">Revise</text>
+                <text x="246" y="222">
+                  Revise
+                </text>
                 <circle className={styles.node} cx="500" cy="140" r="7" />
-                <text x="478" y="120">Insight</text>
+                <text x="478" y="120">
+                  Insight
+                </text>
                 <circle className={`${styles.node} ${styles.end}`} cx="600" cy="80" r="8" />
-                <text x="530" y="60">Explains why</text>
+                <text x="530" y="60">
+                  Explains why
+                </text>
               </svg>
               <figcaption>The line is the learner&rsquo;s. The marks are ours.</figcaption>
             </figure>
@@ -95,8 +112,11 @@ export default function Home() {
         </section>
         <div className={styles.creds}>
           <div className={styles.wrap}>
-            <span>NVIDIA Inception member</span>
-            <span>Stanford LEAD · LISA Cohort 11 · Me2We 2026 Top 10</span>
+            <span>
+              <span className={styles.ci}>NVIDIA Inception</span> · <span className={styles.ci}>Stanford LEAD</span> ·{" "}
+              <span className={styles.ci}>LISA Cohort 11</span> ·{" "}
+              <span className={styles.ci}>Me2We 2026 Top-10 (Stanford GSB)</span>
+            </span>
             <span>Workshop and poster, Khan Lab School AI in Education Summit 2026</span>
           </div>
         </div>
@@ -106,11 +126,8 @@ export default function Home() {
           <div className={styles.wrap}>
             <div className={styles["frame-head"]}>
               <div>
-                <div className={styles.rule} aria-hidden="true"></div>
-                <p className={styles.lab} style={{ marginBottom: 12 }}>
-                  From prompts to pedagogy
-                </p>
-                <h2 style={{ fontSize: "clamp(1.8rem,3.6vw,2.7rem)" }}>We make pedagogy part of the architecture.</h2>
+                <span className={`${styles.lab} ${styles.eyebrow}`}>From prompts to pedagogy</span>
+                <h2>We make pedagogy part of the architecture.</h2>
               </div>
               <p>
                 A common approach in educational AI is to ask the model to follow pedagogical instructions. We go
@@ -136,7 +153,8 @@ export default function Home() {
                   Critical constraints are <strong>enforced by the system</strong>, not requested of the model.
                 </div>
                 <div className={styles.row}>
-                  Any model we use works inside explicit system boundaries, and <strong>it is never given the answer</strong>.
+                  Any model we use works inside explicit system boundaries, and{" "}
+                  <strong>it is never given the answer</strong>.
                 </div>
                 <div className={styles.row}>
                   Those constraints are <strong>checked directly</strong>: we test for answer leakage instead of
@@ -151,12 +169,13 @@ export default function Home() {
         </section>
 
         {/* 2 · the question */}
-        <section className={styles.tinted}>
+        <section className={styles.dark}>
           <div className={`${styles.wrap} ${styles["q-grid"]}`}>
             <div>
-              <div className={styles.rule} aria-hidden="true"></div>
+              <span className={`${styles.lab} ${styles.eyebrow}`}>The question we ask</span>
               <p className={styles.bigq}>
-                Instead of asking what AI can do for the learner, we ask <em>what thinking must remain with the learner.</em>
+                Instead of asking what AI can do for the learner, we ask{" "}
+                <em>what thinking must remain with the learner.</em>
               </p>
             </div>
             <div>
@@ -217,11 +236,11 @@ export default function Home() {
         </section>
 
         {/* 3 · the evidence */}
-        <section>
+        <section id="science">
           <div className={styles.wrap}>
             <div className={styles["ev-head"]}>
               <div>
-                <div className={styles.rule} aria-hidden="true"></div>
+                <span className={`${styles.lab} ${styles.eyebrow}`}>The science</span>
                 <h2>Built on cognitive and learning science</h2>
                 <p className={styles.muted} style={{ margin: "14px 0 0", maxWidth: "46ch" }}>
                   We use the research as a design input. It is not evidence that our products work; only our own pilots
@@ -286,8 +305,8 @@ export default function Home() {
                 <div className={styles.dd}>
                   <span className={styles.tag}>Design decision</span>
                   <p>
-                    We measure what a learner can do unaided, and we never give the AI the answer, so the restraint
-                    does not rest on instructions to the model.
+                    We measure what a learner can do unaided, and we never give the AI the answer, so the restraint does
+                    not rest on instructions to the model.
                   </p>
                 </div>
               </div>
@@ -296,24 +315,24 @@ export default function Home() {
                 <h3>Support can create dependence</h3>
                 <span className={styles.tag}>Finding</span>
                 <p>
-                  1,625 university students across ten courses, randomized. For four weeks, students wrote peer
-                  feedback with AI prompts that flagged weak comments. When the prompts were withdrawn, their comments
-                  were flagged as low quality significantly more often. The prompts never wrote the feedback. The
-                  researchers concluded that students tended to rely on the assistance rather than learn from it.
+                  1,625 university students across ten courses, randomized. For four weeks, students wrote peer feedback
+                  with AI prompts that flagged weak comments. When the prompts were withdrawn, their comments were
+                  flagged as low quality significantly more often. The prompts never wrote the feedback. The researchers
+                  concluded that students tended to rely on the assistance rather than learn from it.
                 </p>
                 <span className={styles.src}>Darvishi et al. 2024, Computers &amp; Education</span>
                 <div className={styles.dd}>
                   <span className={styles.tag}>Design decision</span>
                   <p>
-                    Support should work itself out of a job. We measure whether a learner needs less help over time,
-                    and still solves without it.
+                    Support should work itself out of a job. We measure whether a learner needs less help over time, and
+                    still solves without it.
                   </p>
                 </div>
               </div>
             </div>
 
             <div className={styles.success}>
-              <div>
+              <div className={styles["s-copy"]}>
                 <span className={styles.lab}>What does success look like?</span>
                 <h2>The learner needs us less.</h2>
                 <p>
@@ -327,10 +346,10 @@ export default function Home() {
         </section>
 
         {/* 4 · products */}
-        <section className={styles.tinted} id="build">
+        <section className={styles.dark} id="build">
           <div className={styles.wrap}>
             <div className={`${styles.head} ${styles.prose}`}>
-              <div className={styles.rule} aria-hidden="true"></div>
+              <span className={`${styles.lab} ${styles.eyebrow}`}>Our products</span>
               <h2>What we build</h2>
             </div>
             <div className={styles.cards}>
@@ -347,7 +366,6 @@ export default function Home() {
                 </Link>
               </article>
               <article className={styles.card} style={{ "--accent": "var(--purple-400)" } as CSSProperties}>
-                <span className={styles.state}>In preparation</span>
                 <h3>IgniteEd</h3>
                 <p>
                   Practical AI literacy for educators and school teams, held to the same rule as everything we make: we
@@ -366,7 +384,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 5 · commitments (warm white) */}
+        {/* 5 · commitments */}
         <section>
           <div className={styles.wrap}>
             <div className={styles.strip} aria-label="What we hold ourselves to">
@@ -380,15 +398,15 @@ export default function Home() {
               <div>
                 <span className={styles.lab}>Explainable by design</span>
                 <p>
-                  Every AI intervention has a pedagogical purpose we can name. Where the system steps in, we design
-                  that step to be visible to the teacher or parent, not hidden inside the experience.
+                  Every AI intervention has a pedagogical purpose we can name. Where the system steps in, we design that
+                  step to be visible to the teacher or parent, not hidden inside the experience.
                 </p>
               </div>
               <div>
                 <span className={styles.lab}>Privacy is part of the architecture</span>
                 <p>
-                  We minimize the data we collect about a learner, define clear retention boundaries, never sell or
-                  rent it, and design for age-appropriate privacy from the start.{" "}
+                  We minimize the data we collect about a learner, define clear retention boundaries, never sell or rent
+                  it, and design for age-appropriate privacy from the start.{" "}
                   <Link href="/privacy/">Our privacy approach &rarr;</Link>
                 </p>
               </div>
@@ -396,20 +414,20 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 6 · close (slate, back to the hero) */}
+        {/* 6 · close (orange band) */}
         <section className={styles["close-dark"]}>
           <div className={styles.wrap}>
             <div className={styles["close-band"]}>
-              <div className={styles.rule} aria-hidden="true"></div>
+              <span className={`${styles.lab} ${styles.eyebrow}`}>Work with us</span>
               <h2>Build AI that leaves people more capable than it found them.</h2>
               <p className={styles.prose} style={{ margin: "14px 0 0" }}>
                 That is the standard we hold our products, our research, and our partnerships to.
               </p>
               <div className={styles["cta-row"]} style={{ marginTop: 24 }}>
-                <a className={`${styles.btn} ${styles["btn-primary"]}`} href="mailto:hello@ignitecuriosity.ai">
+                <a className={`${styles.btn} ${styles["btn-onorange"]}`} href="mailto:hello@ignitecuriosity.ai">
                   Partner with us
                 </a>
-                <a className={`${styles.btn} ${styles["btn-onphoto"]}`} href="#build">
+                <a className={`${styles.btn} ${styles["btn-onorange-ghost"]}`} href="#build">
                   Explore our products
                 </a>
               </div>
@@ -417,7 +435,7 @@ export default function Home() {
           </div>
         </section>
       </main>
-      <SiteFooter />
+      <SiteFooter tone="deep" />
     </div>
   )
 }

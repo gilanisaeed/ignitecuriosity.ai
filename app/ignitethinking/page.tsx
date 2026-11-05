@@ -355,9 +355,8 @@ export default function IgniteThinkingPage() {
                 From the Common Core Standards for Mathematical Practice: how mathematicians think, not what they know.
               </p>
             </div>
-            {/* the draft links /#science, which the home page does not have yet; /science/ is the live page */}
             <p style={{ margin: 0 }}>
-              <Link href="/science/">How learning science shapes what we build &rarr;</Link>
+              <Link href="/#science">How learning science shapes what we build &rarr;</Link>
             </p>
           </div>
         </section>

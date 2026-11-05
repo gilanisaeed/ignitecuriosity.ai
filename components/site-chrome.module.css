@@ -1,5 +1,8 @@
 /* Shared site chrome, ported from the 1 Nov 2026 drafts
-   (docs/handoff-2026-11-01/source/: home v8.4 and IgniteThinking v3.4).
+   (docs/handoff-2026-11-01/source/: home v8.4 and IgniteThinking v3.4),
+   updated to the 3 Nov drafts (docs/handoff-2026-11-03/source/: home v8.13
+   and IgniteThinking v3.21): 44 px brandmark and footer links, and the
+   deep purple header and footer tones.
    Class names, values and media queries as in the drafts' <style> blocks;
    the chrome CSS is identical in both drafts, except the mobile
    aria-current rule, which only the IgniteThinking draft carries.
@@ -57,6 +60,9 @@
   flex-wrap: wrap;
 }
 .brandmark {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   font-family: var(--font-h);
   font-weight: 700;
   font-size: 0.94rem;
@@ -143,6 +149,9 @@
   align-items: center;
 }
 .footer a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: var(--ink-muted);
   /* the drafts rely on browser defaults that Tailwind preflight and the
      repo's global `footer a` rule remove or change: restore them */
@@ -155,10 +164,40 @@
   color: var(--purple-700);
 }
 
-/* IgniteThinking v3.21 colour system: a white page under the header, and
-   the footer in deep purple (purple-800 #362C4F, text purple-100 #E3DFEA) */
+/* The 3 Nov colour system. IgniteThinking v3.21: a white page under the
+   header. Home v8.13: a deep purple header (purple-800 #362C4F; links
+   purple-100 #E3DFEA, tail purple-200 #BFB8CE) with an orange Log in
+   (orange-strong #C0531F, hover #AC4B1F). Both: the deep purple footer. */
 .topbar.white {
   --bg: #ffffff;
+}
+.topbar.deep {
+  background: #362c4f;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.topbar.deep .brandmark {
+  color: #ffffff;
+}
+.topbar.deep nav a {
+  color: #e3dfea;
+}
+.topbar.deep nav a:hover {
+  color: #ffffff;
+}
+.topbar.deep .tail {
+  color: #bfb8ce;
+}
+.topbar.deep .menu summary {
+  color: #ffffff;
+}
+.topbar.deep .login {
+  background: #c0531f;
+  border-color: #c0531f;
+  color: #ffffff;
+}
+.topbar.deep .login:hover {
+  background: #ac4b1f;
+  border-color: #ac4b1f;
 }
 .footer.deep {
   background: #362c4f;
@@ -204,6 +243,9 @@
     box-shadow: none;
     border-left: 3px solid var(--purple-600);
     padding-left: 10px;
+  }
+  .topbar.deep:has(.menu[open]) nav {
+    border-top-color: rgba(255, 255, 255, 0.14);
   }
 }
 

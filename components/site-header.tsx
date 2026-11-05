@@ -3,12 +3,13 @@ import styles from "./site-chrome.module.css"
 
 // Ported from the 1 Nov 2026 drafts' <header class="topbar">
 // (docs/handoff-2026-11-01/source/). Markup and copy as in the drafts;
-// the <details> menu works without JavaScript.
+// the <details> menu works without JavaScript. The 3 Nov drafts take The
+// Science out of the main menu (Azade, 23 Sep ruling); the page stays at
+// /science/ and the home page carries the science section (#science).
 
 const navItems = [
   { key: "ignitethinking", href: "/ignitethinking/", label: "IgniteThinking" },
   { key: "igniteed", href: "/igniteed/", label: "IgniteEd" },
-  { key: "science", href: "/science/", label: "The Science" },
   { key: "about", href: "/about/", label: "About" },
 ] as const
 
@@ -17,8 +18,8 @@ type SiteHeaderProps = {
   current?: "home" | "ignitethinking" | "igniteed" | "science" | "about"
   /** The small mono label right of the nav. */
   tail?: string
-  /** "white" for pages on the white base (IgniteThinking v3.21). */
-  tone?: "white"
+  /** "white" for pages on the white base (IgniteThinking v3.21); "deep" for the deep purple header (home v8.13). */
+  tone?: "white" | "deep"
 }
 
 export function SiteHeader({ current, tail = "A research-driven product lab", tone }: SiteHeaderProps) {
