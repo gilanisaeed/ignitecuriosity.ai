@@ -1,9 +1,14 @@
-/* Home page, ported from docs/handoff-2026-11-01/source/ICL-Home-Philosophy-v8_4.html.
+/* Home page, ported from docs/handoff-2026-11-10/source/ICL-Home-Philosophy-v8_20.html
+   (first ported from v8.4 in docs/handoff-2026-11-01/source/).
    Class names, values and media queries as in the draft's <style> block; the
    chrome (.topbar/.login/.menu/footer) lives in components/site-chrome.module.css,
    and the review-only .todo/.draft-banner rules do not ship (handoff 4.2).
    Element selectors are scoped under .page because CSS Modules cannot target
-   :root or bare elements; fonts come from the next/font variables. */
+   :root or bare elements; fonts come from the next/font variables.
+   The draft layers its colour system as override blocks (v8.8 to v8.20) at
+   the end of its <style>; they are kept in that order at the end of this file.
+   Where the draft overrides a bare `h2` rule, the override is folded into the
+   base `.page h2` rule instead, so the module keeps the draft's cascade. */
 
 .page {
   --purple-900: #2a223d;
@@ -60,9 +65,12 @@
   letter-spacing: -0.015em;
 }
 .page h2 {
-  font-weight: 600;
-  font-size: clamp(1.7rem, 3.1vw, 2.4rem);
-  line-height: 1.14;
+  /* v8.8 and v8.11 values (the draft's later bare `h2` overrides) */
+  font-weight: 700;
+  font-size: clamp(2rem, 4.2vw, 3.3rem);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: var(--purple-800);
 }
 .page h3 {
   font-weight: 600;
@@ -104,14 +112,18 @@
 .muted {
   color: var(--ink-muted);
 }
+/* The draft's purple-500 ring is under 3:1 on the dark and orange grounds
+   (2.15 on slate/purple-800, 1.37 on purple-600, 1.29 on orange-strong),
+   so those grounds set --focus-ring to white (12.88, 7.9, 4.67). */
 .page :where(a, button, [tabindex]):focus-visible {
-  outline: 3px solid var(--purple-500);
+  outline: 3px solid var(--focus-ring, var(--purple-500));
   outline-offset: 3px;
   border-radius: 4px;
 }
 
 /* hero: slate ground, faint grid, the thinking trace on the right */
 .hero {
+  --focus-ring: #ffffff;
   position: relative;
   isolation: isolate;
   background: var(--slate);
@@ -337,9 +349,20 @@
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.62);
 }
+.creds .ci {
+  white-space: nowrap;
+}
 
 .page section {
   padding: clamp(52px, 6.5vw, 80px) 0;
+}
+/* the draft's bare `section` rule loses to .hero and .close-dark there;
+   the scoped `.page section` would win, so restore their own padding */
+.page section.hero {
+  padding: clamp(56px, 7vw, 88px) 0;
+}
+.page section.close-dark {
+  padding: clamp(60px, 7.5vw, 92px) 0;
 }
 .page section.tinted {
   background: var(--tint);
@@ -432,7 +455,8 @@
   gap: 48px;
   align-items: center;
 }
-.bigq {
+/* .page-prefixed so the draft's own margins beat the scoped `.page p` reset */
+.page .bigq {
   font-family: var(--font-h);
   font-weight: 600;
   font-size: clamp(1.6rem, 3.2vw, 2.5rem);
@@ -483,7 +507,7 @@
 .panel li svg {
   margin-top: 5px;
 }
-.boundary {
+.page .boundary {
   grid-column: 1/-1;
   margin: 4px 0 0;
   text-align: center;
@@ -862,6 +886,10 @@
 }
 .card .go {
   margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  min-height: 44px;
   font-family: var(--font-h);
   font-weight: 600;
   font-size: 0.93rem;
@@ -893,6 +921,7 @@
   text-decoration: none;
 }
 .close-dark {
+  --focus-ring: #ffffff;
   background: var(--slate);
   color: var(--purple-50);
   position: relative;
@@ -966,4 +995,330 @@
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;
   }
+}
+
+/* ===== v8.8 colour system (Azade, 3 Nov 2026), matching IgniteThinking page v3.20 =====
+   White base; deep purple hero and claims ladder; orange for buttons, labels and the closing band.
+   Contrast: white on purple-800 12.88, purple-200 on purple-800 6.73, orange-strong on white 4.67,
+   orange-hover on lavender 4.79, white on orange-strong 4.67, purple-800 on white 12.88. */
+.page {
+  --bg: #ffffff;
+}
+.lab.eyebrow {
+  display: block;
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  color: var(--orange-strong);
+  margin: 0 0 14px;
+}
+.tinted .lab.eyebrow {
+  color: var(--orange-hover);
+}
+.hero {
+  background: var(--purple-800);
+}
+.hero::after {
+  background: radial-gradient(ellipse at 18% 45%, rgba(86, 69, 127, 0.55), transparent 55%);
+}
+.trace .node {
+  fill: var(--purple-800);
+}
+.creds {
+  background: var(--purple-900);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 18px 0;
+}
+.creds span {
+  color: var(--purple-200);
+}
+.ladder {
+  background: var(--purple-800);
+}
+/* v8.9: findings cards and the success card go white with orange edges; the question's key phrase in orange. */
+.belief {
+  background: var(--surface);
+  border-top: 3px solid var(--orange);
+}
+.success {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--orange);
+  color: var(--ink);
+}
+.success .lab {
+  color: var(--orange-strong);
+}
+.success h2 {
+  color: var(--purple-700);
+}
+.success p {
+  color: var(--ink-muted);
+}
+.success p strong {
+  color: var(--purple-800);
+}
+.track {
+  background: var(--purple-50);
+}
+.success .stages {
+  color: var(--ink-muted);
+}
+.page .bigq {
+  color: var(--purple-700);
+}
+.bigq em {
+  color: var(--orange-hover);
+}
+/* closing orange band */
+.close-dark {
+  background: var(--orange-strong);
+}
+.close-dark::before,
+.close-dark::after {
+  display: none;
+}
+.close-band h2 {
+  color: #ffffff;
+}
+.close-band p {
+  color: #ffffff;
+}
+.close-band .lab.eyebrow {
+  color: #ffffff;
+}
+.btn-onorange {
+  background: #ffffff;
+  color: var(--purple-800);
+}
+.btn-onorange:hover {
+  background: var(--purple-50);
+  transform: translateY(-1px);
+}
+.btn-onorange-ghost {
+  background: transparent;
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.75);
+}
+.btn-onorange-ghost:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+/* ===== v8.11: colour order of fundingbreakthroughlab.org, in Ignite colours (Azade, 3 Nov 2026) =====
+   Deep purple (purple-800) and white sections alternating; Curiosity Purple cards with orange pills on
+   the dark sections; plain white bordered cards on white. (Announcement bar, header and footer: see
+   components/site-chrome.module.css, tone="dark".)
+   Contrast: white on purple-800 12.88, purple-100 on purple-800 9.82, orange on purple-800 4.67,
+   white on #56457F 8.22, purple-100 on #56457F 6.27. */
+/* mid-tone band under the hero */
+.creds {
+  background: var(--purple-600);
+  border-top: 0;
+  padding: 22px 0;
+}
+.creds span {
+  color: var(--purple-100);
+}
+/* dark sections */
+.page section.dark {
+  background: var(--purple-800);
+  border: 0;
+  color: var(--purple-100);
+}
+.page section.dark h2 {
+  color: #ffffff;
+}
+.page section.dark .lab.eyebrow {
+  color: var(--orange);
+}
+.page section.dark .bigq {
+  color: #ffffff;
+}
+.page section.dark .bigq em {
+  color: var(--orange);
+}
+.page section.dark .handoff .hl {
+  color: var(--purple-200);
+}
+.page section.dark .rail {
+  background: rgba(255, 255, 255, 0.18);
+}
+.page section.dark .panel {
+  background: var(--purple-600);
+  border: 0;
+}
+.page section.dark .panel.ai {
+  border-top: 3px solid var(--purple-200);
+}
+.page section.dark .panel.learner {
+  border-top: 3px solid var(--orange);
+}
+.page section.dark .panel h3 {
+  color: #ffffff;
+}
+.page section.dark .panel li span {
+  color: #ffffff !important;
+}
+.page section.dark .panel.ai ul {
+  color: var(--purple-200) !important;
+}
+.page section.dark .panel.learner ul {
+  color: #ffffff !important;
+}
+.page section.dark .boundary {
+  color: #ffffff;
+}
+.page section.dark .card {
+  background: var(--purple-600);
+  border: 0;
+  --focus-ring: #ffffff;
+}
+.page section.dark .card h3 {
+  color: #ffffff;
+}
+.page section.dark .card p {
+  color: var(--purple-100);
+}
+.page section.dark .card .state {
+  align-self: flex-start;
+  background: var(--orange-strong);
+  color: #ffffff;
+  padding: 5px 11px 4px;
+  border-radius: 999px;
+}
+.page section.dark .card .go {
+  color: #ffffff;
+}
+.page section.dark .card .go:hover {
+  color: var(--orange-50);
+}
+/* white sections: plain white bordered cards */
+.belief {
+  border: 1px solid var(--line);
+}
+.success {
+  border: 1px solid var(--line);
+}
+.sub-head h3 {
+  color: var(--purple-800);
+}
+/* v8.12: orange top line; the finding on white; the design decision as a lavender panel filling the
+   bottom of each card, aligned across the three. Tag orange-hover on lavender 4.79. */
+.belief {
+  display: flex;
+  flex-direction: column;
+  border-top: 4px solid var(--orange);
+  padding-bottom: 0;
+  overflow: hidden;
+}
+.belief .n {
+  align-self: flex-start;
+}
+.belief .src {
+  margin-bottom: 18px;
+}
+.belief .dd {
+  margin: auto -20px 0;
+  padding: 16px 20px 20px;
+  background: var(--tint);
+  border-top: 0;
+}
+.belief .dd .tag {
+  color: var(--orange-hover);
+}
+.belief .dd p {
+  color: var(--purple-800);
+}
+/* v8.13: "The learner needs us less" on a lavender card. Label orange-hover on lavender 4.79; body
+   ink-muted 4.55; the track goes white so it still shows on lavender. */
+.success {
+  background: var(--tint);
+  border-color: var(--line);
+}
+.success .lab {
+  color: var(--orange-hover);
+}
+.track {
+  background: #ffffff;
+  box-shadow: inset 0 0 0 1px var(--purple-100);
+}
+/* v8.17: three doors in the closing band, one per kind of visitor (white on orange-strong 4.67) */
+.doors {
+  list-style: none;
+  margin: 34px 0 0;
+  padding: 26px 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px 32px;
+}
+.doors .lab {
+  display: block;
+  margin-bottom: 6px;
+  color: #ffffff;
+}
+.doors p {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: #ffffff;
+}
+.doors a {
+  display: inline-block;
+  padding: 11px 0;
+  font-weight: 600;
+  color: #ffffff;
+}
+@media (max-width: 760px) {
+  .doors {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== v8.19: Curiosity Teal means "this is evidence" (Azade, 10 Nov 2026) =====
+   Teal has one job, in the science section only: the section label, the top line and number badges of the three findings
+   cards, and the "Finding" label. Orange keeps "our action" (the Design decision label, buttons); purple keeps structure.
+   --teal #2F8CA8 (Curiosity Teal; lines only, 3.86 on white) and --teal-strong #0F7C9C (text and fills; 4.79 on white,
+   white on it 4.79), added to the design system the same day. Teal is not used on the purple sections. */
+.page {
+  --teal: #2f8ca8;
+  --teal-strong: #0f7c9c;
+}
+.page :global(#science) .lab.eyebrow {
+  color: var(--teal-strong);
+}
+.belief {
+  border-top-color: var(--teal);
+}
+.belief .n {
+  background: var(--teal-strong);
+}
+.belief > .tag {
+  color: var(--teal-strong);
+}
+
+/* v8.20: "The learner needs us less" card in teal (Azade, 10 Nov 2026): teal-strong fill, white text (4.79).
+   The walker stays orange (the learner), ringed in white so it reads on teal. */
+.success {
+  background: var(--teal-strong);
+  border-color: var(--teal-strong);
+  color: #ffffff;
+}
+.success .lab,
+.success h2,
+.success p,
+.success p strong,
+.success .stages {
+  color: #ffffff;
+}
+.success p strong {
+  font-weight: 600;
+}
+.success .track {
+  background: rgba(255, 255, 255, 0.35);
+}
+.success .support {
+  background: #ffffff;
+}
+.success .walker {
+  box-shadow: 0 0 0 4px #ffffff;
 }

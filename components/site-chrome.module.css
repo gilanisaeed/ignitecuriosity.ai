@@ -1,24 +1,30 @@
-/* Shared site chrome, ported from the 1 Nov 2026 drafts
-   (docs/handoff-2026-11-01/source/: home v8.4 and IgniteThinking v3.4).
-   Class names, values and media queries as in the drafts' <style> blocks;
-   the chrome CSS is identical in both drafts, except the mobile
-   aria-current rule, which only the IgniteThinking draft carries.
+/* Shared site chrome, used on every page outside IgniteEd. Ported from
+   home draft v8.17 (docs/handoff-2026-11-10/source/): orange announcement
+   bar, deep purple header with an orange Log in, deep purple footer.
+   Applied site-wide on Azade's ruling, 10 Nov 2026 (the v8.4/v3.4 light
+   chrome is retired). Class names and values as in the draft's <style>
+   block, with its later override layers folded into the base rules.
    Fonts come from the next/font variables set in app/layout.tsx.
-   Tokens live on .topbar/.footer because CSS Modules cannot target :root. */
+   Tokens live on the root classes because CSS Modules cannot target :root.
+   Contrast: white on purple-800 12.88, purple-100 on purple-800 9.82,
+   purple-200 on purple-800 6.73, white on orange-strong 4.67. */
 
 .topbar,
-.footer {
-  --purple-700: #453765;
+.footer,
+.announce {
+  --purple-800: #362c4f;
   --purple-600: #56457f;
   --purple-500: #6a5b8e;
-  --bg: #fbf8f3;
-  --tint: #efedf5;
-  --ink: #2c2a33;
-  --ink-muted: #6e6a75;
-  --line: #e3dfea;
+  --purple-200: #bfb8ce;
+  --purple-100: #e3dfea;
+  --orange: #f27a37;
+  --orange-strong: #c0531f;
+  --orange-hover: #ac4b1f;
   --font-h: var(--font-heading), "Helvetica Neue", Arial, sans-serif;
   --font-m: var(--font-mono), ui-monospace, "SF Mono", Menlo, monospace;
   --ease: cubic-bezier(0.2, 0.6, 0.3, 1);
+  /* the drafts' body line-height (the repo's global body sets 1.5) */
+  line-height: 1.6;
 }
 
 .wrap {
@@ -33,21 +39,46 @@
   font-size: 0.72rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--ink-muted);
 }
 
+/* focus ring: white, since the drafts' purple-500 ring is under 3:1 on
+   every chrome ground (2.15 on purple-800, 1.29 on orange-strong).
+   White: 12.88 on purple-800, 4.67 on orange-strong. */
+.announce a:focus-visible,
 .topbar :where(a, summary):focus-visible,
 .footer :where(a):focus-visible {
-  outline: 3px solid var(--purple-500);
+  outline: 3px solid #ffffff;
   outline-offset: 3px;
   border-radius: 4px;
 }
 
+/* announcement bar */
+.announce {
+  background: var(--orange-strong);
+  color: #ffffff;
+  text-align: center;
+  font-family: var(--font-h);
+  font-weight: 600;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  padding: 10px 16px;
+}
+.announce a {
+  color: #ffffff;
+  text-decoration: underline;
+  margin-left: 10px;
+  display: inline-block;
+  padding: 13px 4px;
+  margin-top: -13px;
+  margin-bottom: -13px;
+}
+
+/* header */
 .topbar {
   position: relative;
   z-index: 5;
-  background: var(--bg);
-  border-bottom: 1px solid var(--line);
+  background: var(--purple-800);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 .topbar .wrap {
   display: flex;
@@ -57,10 +88,13 @@
   flex-wrap: wrap;
 }
 .brandmark {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   font-family: var(--font-h);
   font-weight: 700;
   font-size: 0.94rem;
-  color: var(--purple-700);
+  color: #ffffff;
   text-decoration: none;
 }
 .topbar nav {
@@ -71,39 +105,44 @@
 .topbar nav a {
   font-size: 0.93rem;
   font-weight: 500;
-  color: var(--ink);
+  color: var(--purple-100);
   text-decoration: none;
   padding: 10px 0;
   transition: color 0.18s var(--ease);
 }
 .topbar nav a:hover {
-  color: var(--purple-600);
+  color: #ffffff;
 }
+/* current page: the draft has none in its menu (home marks the brandmark);
+   white text and an orange underline, the dark sections' accent */
 .topbar nav a[aria-current] {
-  color: var(--purple-700);
+  color: #ffffff;
   font-weight: 600;
-  box-shadow: inset 0 -2px 0 var(--purple-600);
+  box-shadow: inset 0 -2px 0 var(--orange);
 }
 .topbar .tail {
   margin-left: auto;
+  color: var(--purple-200);
 }
 .login {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
   padding: 0 18px;
-  border: 1.5px solid var(--purple-600);
+  background: var(--orange-strong);
+  border: 1.5px solid var(--orange-strong);
   border-radius: 999px;
   font-family: var(--font-h);
   font-weight: 600;
   font-size: 0.9rem;
-  color: var(--purple-700);
+  color: #ffffff;
   text-decoration: none;
   white-space: nowrap;
   transition: background-color 0.18s var(--ease);
 }
 .login:hover {
-  background: var(--tint);
+  background: var(--orange-hover);
+  border-color: var(--orange-hover);
 }
 .menu {
   display: none;
@@ -119,7 +158,7 @@
   font-family: var(--font-h);
   font-weight: 600;
   font-size: 0.9rem;
-  color: var(--purple-700);
+  color: #ffffff;
   padding: 0 4px;
 }
 .menu summary::-webkit-details-marker {
@@ -129,12 +168,12 @@
   display: block;
 }
 
+/* footer */
 .footer {
-  border-top: 1px solid var(--line);
-  padding: 24px 0;
+  background: var(--purple-800);
+  padding: 28px 0;
   font-size: 0.88rem;
-  color: var(--ink-muted);
-  background: var(--bg);
+  color: var(--purple-100);
 }
 .footer .wrap {
   display: flex;
@@ -143,7 +182,10 @@
   align-items: center;
 }
 .footer a {
-  color: var(--ink-muted);
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--purple-100);
   /* the drafts rely on browser defaults that Tailwind preflight and the
      repo's global `footer a` rule remove or change: restore them */
   text-decoration: underline;
@@ -152,7 +194,7 @@
 .footer .tag {
   font-family: var(--font-h);
   font-weight: 600;
-  color: var(--purple-700);
+  color: #ffffff;
 }
 
 @media (max-width: 760px) {
@@ -175,7 +217,7 @@
     gap: 0;
     width: 100%;
     order: 5;
-    border-top: 1px solid var(--line);
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
     padding: 6px 0 10px;
   }
   .topbar:has(.menu[open]) nav a {
@@ -184,7 +226,7 @@
   }
   .topbar:has(.menu[open]) nav a[aria-current] {
     box-shadow: none;
-    border-left: 3px solid var(--purple-600);
+    border-left: 3px solid var(--orange);
     padding-left: 10px;
   }
 }
