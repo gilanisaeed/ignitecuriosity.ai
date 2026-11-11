@@ -1,11 +1,11 @@
-/* Home page, ported from docs/handoff-2026-11-10/source/ICL-Home-Philosophy-v8_17.html
+/* Home page, ported from docs/handoff-2026-11-10/source/ICL-Home-Philosophy-v8_20.html
    (first ported from v8.4 in docs/handoff-2026-11-01/source/).
    Class names, values and media queries as in the draft's <style> block; the
    chrome (.topbar/.login/.menu/footer) lives in components/site-chrome.module.css,
    and the review-only .todo/.draft-banner rules do not ship (handoff 4.2).
    Element selectors are scoped under .page because CSS Modules cannot target
    :root or bare elements; fonts come from the next/font variables.
-   The draft layers its colour system as override blocks (v8.8 to v8.17) at
+   The draft layers its colour system as override blocks (v8.8 to v8.20) at
    the end of its <style>; they are kept in that order at the end of this file.
    Where the draft overrides a bare `h2` rule, the override is folded into the
    base `.page h2` rule instead, so the module keeps the draft's cascade. */
@@ -1266,4 +1266,53 @@
   .doors {
     grid-template-columns: 1fr;
   }
+}
+
+/* ===== v8.19: Curiosity Teal means "this is evidence" (Azade, 10 Nov 2026) =====
+   Teal has one job, in the science section only: the section label, the top line and number badges of the three findings
+   cards, and the "Finding" label. Orange keeps "our action" (the Design decision label, buttons); purple keeps structure.
+   --teal #2F8CA8 (Curiosity Teal; lines only, 3.86 on white) and --teal-strong #0F7C9C (text and fills; 4.79 on white,
+   white on it 4.79), added to the design system the same day. Teal is not used on the purple sections. */
+.page {
+  --teal: #2f8ca8;
+  --teal-strong: #0f7c9c;
+}
+.page :global(#science) .lab.eyebrow {
+  color: var(--teal-strong);
+}
+.belief {
+  border-top-color: var(--teal);
+}
+.belief .n {
+  background: var(--teal-strong);
+}
+.belief > .tag {
+  color: var(--teal-strong);
+}
+
+/* v8.20: "The learner needs us less" card in teal (Azade, 10 Nov 2026): teal-strong fill, white text (4.79).
+   The walker stays orange (the learner), ringed in white so it reads on teal. */
+.success {
+  background: var(--teal-strong);
+  border-color: var(--teal-strong);
+  color: #ffffff;
+}
+.success .lab,
+.success h2,
+.success p,
+.success p strong,
+.success .stages {
+  color: #ffffff;
+}
+.success p strong {
+  font-weight: 600;
+}
+.success .track {
+  background: rgba(255, 255, 255, 0.35);
+}
+.success .support {
+  background: #ffffff;
+}
+.success .walker {
+  box-shadow: 0 0 0 4px #ffffff;
 }

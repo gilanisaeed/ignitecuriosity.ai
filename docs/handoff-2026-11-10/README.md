@@ -1,7 +1,10 @@
-# Home draft v8.17 and IgniteThinking draft v3.34 (10 Nov 2026)
+# Home draft v8.20 and IgniteThinking draft v3.34 (10 Nov 2026)
 
-`source/ICL-Home-Philosophy-v8_17.html` is the visual and copy source of truth
-for `/`, superseding `../handoff-2026-11-01/source/ICL-Home-Philosophy-v8_4.html`.
+`source/ICL-Home-Philosophy-v8_20.html` is the visual and copy source of truth
+for `/`, superseding v8.17 (kept alongside for the diff) and
+`../handoff-2026-11-01/source/ICL-Home-Philosophy-v8_4.html`. v8.18 adds the
+Instagram and LinkedIn footer links (shown site-wide, since the footer is
+shared); v8.19 and v8.20 bring Curiosity Teal to the science section.
 `source/IgniteThinking-Page-v3_34.html` is the source for `/ignitethinking/`,
 superseding `../handoff-2026-11-01/source/IgniteThinking-Page-v3_4.html`. Its
 three screenshots are embedded in the draft; the site serves them from
@@ -11,7 +14,7 @@ The rules in `../handoff-2026-11-01/HANDOFF.md` still apply: copy is ported
 verbatim, and the review-only elements (draft banner, todo chips, the draft
 footer tail, version-history comments) do not ship.
 
-Todo chips left in home v8.17 (not shipped, still open):
+Todo chips left in home v8.20 (not shipped, still open):
 
 - "re-check the date at every deploy" (late November beta date, claims ladder)
 - "blocker: page must exist before launch" (privacy link in the commitments strip)

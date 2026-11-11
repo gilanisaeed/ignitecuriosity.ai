@@ -5,7 +5,7 @@ import { SiteFooter } from "@/components/site-footer"
 import { SuccessFigure } from "@/components/home/success-figure"
 import styles from "./page.module.css"
 
-// Ported from docs/handoff-2026-11-10/source/ICL-Home-Philosophy-v8_17.html
+// Ported from docs/handoff-2026-11-10/source/ICL-Home-Philosophy-v8_20.html
 // (first ported from v8.4, docs/handoff-2026-11-01/source/).
 // Copy is final and audited (handoff rule 3): port verbatim, no edits.
 // Review-only elements (draft banner, todo chips, draft footer tail,
