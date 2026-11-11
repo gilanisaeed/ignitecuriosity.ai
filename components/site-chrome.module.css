@@ -41,10 +41,13 @@
   text-transform: uppercase;
 }
 
+/* focus ring: white, since the drafts' purple-500 ring is under 3:1 on
+   every chrome ground (2.15 on purple-800, 1.29 on orange-strong).
+   White: 12.88 on purple-800, 4.67 on orange-strong. */
 .announce a:focus-visible,
 .topbar :where(a, summary):focus-visible,
 .footer :where(a):focus-visible {
-  outline: 3px solid var(--purple-500);
+  outline: 3px solid #ffffff;
   outline-offset: 3px;
   border-radius: 4px;
 }

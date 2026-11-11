@@ -158,8 +158,11 @@
 .tinted .muted {
   color:var(--ink-muted-tint);
 }
+/* The draft's purple-500 ring is 2.15:1 on the purple-800 hero, under
+   3:1, so the hero sets --focus-ring to white (12.88); the sample maze
+   inside it is a light card and keeps purple-500. */
 :where(.page) :where(a,button,input,[tabindex]):focus-visible {
-  outline:3px solid var(--purple-500);
+  outline:3px solid var(--focus-ring, var(--purple-500));
   outline-offset:3px;
   border-radius:4px;
 }
@@ -645,6 +648,7 @@
 }
 /* hero */
 .hero {
+  --focus-ring:#ffffff;
   position:relative;
   isolation:isolate;
   background:var(--slate);
@@ -803,6 +807,7 @@
 }
 /* ---- the demo: the product, in its own skin ---- */
 .demo {
+  --focus-ring:var(--purple-500);
   background:var(--app-paper);
   border:1px solid var(--line);
   border-radius:16px;

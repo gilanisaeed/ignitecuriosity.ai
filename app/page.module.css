@@ -112,14 +112,18 @@
 .muted {
   color: var(--ink-muted);
 }
+/* The draft's purple-500 ring is under 3:1 on the dark and orange grounds
+   (2.15 on slate/purple-800, 1.37 on purple-600, 1.29 on orange-strong),
+   so those grounds set --focus-ring to white (12.88, 7.9, 4.67). */
 .page :where(a, button, [tabindex]):focus-visible {
-  outline: 3px solid var(--purple-500);
+  outline: 3px solid var(--focus-ring, var(--purple-500));
   outline-offset: 3px;
   border-radius: 4px;
 }
 
 /* hero: slate ground, faint grid, the thinking trace on the right */
 .hero {
+  --focus-ring: #ffffff;
   position: relative;
   isolation: isolate;
   background: var(--slate);
@@ -917,6 +921,7 @@
   text-decoration: none;
 }
 .close-dark {
+  --focus-ring: #ffffff;
   background: var(--slate);
   color: var(--purple-50);
   position: relative;
@@ -1165,6 +1170,7 @@
 .page section.dark .card {
   background: var(--purple-600);
   border: 0;
+  --focus-ring: #ffffff;
 }
 .page section.dark .card h3 {
   color: #ffffff;
