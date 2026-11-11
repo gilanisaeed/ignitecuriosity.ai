@@ -18,8 +18,9 @@ type SiteHeaderProps = {
   current?: "home" | "ignitethinking" | "igniteed" | "science" | "about"
   /** The small mono label right of the nav. */
   tail?: string
-  /** Home v8.11+: the orange announcement bar above the header. */
-  announce?: boolean
+  /** The orange announcement bar above the header (home v8.11+, IgniteThinking v3.22+).
+      `true` links to the IgniteThinking page; pass a link to point it elsewhere. */
+  announce?: boolean | { href: string; label: string }
 }
 
 export function SiteHeader({
@@ -27,12 +28,13 @@ export function SiteHeader({
   tail = "A research-driven product lab",
   announce = false,
 }: SiteHeaderProps) {
+  const announceLink = announce === true ? { href: "/ignitethinking/", label: "See IgniteThinking" } : announce
   return (
     <>
-      {announce && (
+      {announceLink && (
         <div className={styles.announce}>
           IgniteThinking Founding Families beta &middot; opens late November 2026
-          <Link href="/ignitethinking/">See IgniteThinking</Link>
+          <Link href={announceLink.href}>{announceLink.label}</Link>
         </div>
       )}
       <header className={styles.topbar}>

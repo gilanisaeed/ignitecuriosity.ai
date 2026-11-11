@@ -22,7 +22,7 @@ Outputs a fully static site to `out/`. The build does not fail on type errors (`
 ## Site structure
 
 - **Home** — `/`, ported from home draft v8.17 (10 Nov 2026, `docs/handoff-2026-11-10/`), first ported from the 1 Nov 2026 handoff (v8.4)
-- **IgniteThinking** — `/ignitethinking/`, the product's public landing page (draft v3.4); the login lives at [app.ignitecuriosity.ai](https://app.ignitecuriosity.ai)
+- **IgniteThinking** — `/ignitethinking/`, the product's public landing page (draft v3.34, 10 Nov 2026, `docs/handoff-2026-11-10/`); the login lives at [app.ignitecuriosity.ai](https://app.ignitecuriosity.ai)
 - **IgniteEd** — `/igniteed/` (with `/program`, `/impact`, `/about`, `/pricing`, `/readiness-review` subpages), components in `components/igniteed/`, assets in `public/igniteed/`
 - **The Science** — `/science/` · **About** — `/about/` · **Privacy** — `/privacy/` (placeholder until counsel approves the notice)
 - IgniteMath has been removed from the site; fresh content comes later.

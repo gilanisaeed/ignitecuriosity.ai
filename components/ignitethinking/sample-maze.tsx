@@ -4,11 +4,14 @@ import { useEffect, useRef } from "react"
 import styles from "@/app/ignitethinking/page.module.css"
 
 // The playable sample maze, ported from the draft's <script> in
-// docs/handoff-2026-11-01/source/IgniteThinking-Page-v3_4.html with the
+// docs/handoff-2026-11-10/source/IgniteThinking-Page-v3_34.html with the
 // logic as written. It is a sample written only for the website and is NOT
 // one of the app's puzzles; nothing here is a stored answer: a walk is
 // checked by following the arrows. The guide's help is written in advance
-// and never receives the answer, only how many walks there have been.
+// and never receives the answer, only how many walks and attempts there
+// have been. v3.25: the first hint opens after one walk, each further hint
+// only after an attempt (a walk with a changed arrow), as in the app; Start
+// over cancels a walk in progress.
 // Without JavaScript the grid stays empty, exactly as in the draft file.
 
 type Dir = "R" | "D" | "L" | "U"
@@ -45,24 +48,27 @@ export function SampleMaze() {
     const walkBtn = root.querySelector("#walk") as HTMLButtonElement
     const nudgeBtn = root.querySelector("#nudge") as HTMLButtonElement
     const resetBtn = root.querySelector("#reset") as HTMLButtonElement
-    const whyEl = root.querySelector("#why") as HTMLParagraphElement
+    const whyEl = root.querySelector("#why-box") as HTMLParagraphElement
     const chipEl = root.querySelector("#trychip") as HTMLButtonElement
     const sparkEl = root.querySelector(`.${styles.spark}`) as SVGElement | null
 
     let grid: (Dir | null)[][]
     let changed: { r: number; c: number } | null
     let walks: number
+    let attempts: number
     let solved: boolean
     let busy: boolean
     let hintIndex = 0
     let walkTimer: ReturnType<typeof setTimeout> | undefined
+    let gen = 0
 
     const guide = {
       opening: OPENING,
-      nudge(w: number) {
+      nudge(w: number, a: number) {
         if (w === 0) return "Try one walk first. Press Walk the path and watch where it goes."
-        if (hintIndex < HINTS.length) return HINTS[hintIndex++]
-        return "That is all the help I have for this maze. The last move is yours."
+        if (hintIndex >= HINTS.length) return "That is all the help I have for this maze. The last move is yours."
+        if (hintIndex > a) return "Change one arrow and walk again first. After that try, I can help a little more."
+        return HINTS[hintIndex++]
       },
       reset() {
         hintIndex = 0
@@ -192,6 +198,7 @@ export function SampleMaze() {
     function finish(res: Sim) {
       busy = false
       walks++
+      if (changed) attempts++
       const steps = res.path.length - 1
       route.textContent =
         "Your walk: " +
@@ -242,7 +249,9 @@ export function SampleMaze() {
       }
       busy = true
       let i = 0
+      const my = gen
       const next = () => {
+        if (my !== gen) return /* Start over was pressed: this walk belongs to the old board */
         mark(res.path[i], i, i === res.path.length - 1, res)
         i++
         if (i < res.path.length) walkTimer = setTimeout(next, 280)
@@ -251,13 +260,17 @@ export function SampleMaze() {
       next()
     }
     const onNudge = () => {
-      if (!solved && !busy) speak(guide.nudge(walks))
+      if (!solved && !busy) speak(guide.nudge(walks, attempts))
     }
 
     function init() {
       grid = START.map((row) => row.slice())
+      gen++
+      if (walkTimer) clearTimeout(walkTimer)
+      walkTimer = undefined
       changed = null
       walks = 0
+      attempts = 0
       solved = false
       busy = false
       guide.reset()
@@ -285,11 +298,13 @@ export function SampleMaze() {
 
     let sparkAnim: Animation | undefined
     if (!reduce && sparkEl && "animate" in sparkEl) {
-      sparkAnim = sparkEl.animate([{ opacity: 1 }, { opacity: 0.72 }, { opacity: 1 }], {
-        duration: 3200,
-        iterations: Infinity,
-        easing: "ease-in-out",
-      })
+      sparkAnim = sparkEl.animate(
+        [
+          { opacity: 0.4, transform: "scale(.86)" },
+          { opacity: 1, transform: "none" },
+        ],
+        { duration: 520, iterations: 1, easing: "cubic-bezier(.34,1.4,.64,1)" },
+      )
     }
 
     return () => {
@@ -311,8 +326,9 @@ export function SampleMaze() {
       </div>
       <div className={styles["demo-body"]}>
         <p className={styles.q}>
-          Start at the flag. On each square you must go the way its arrow points. Right now the walk goes round in
-          circles and never reaches the House. You may change <strong>one</strong> arrow. Which one opens the path?
+          Start on the square marked Start. On each square you must go the way its arrow points. Right now the walk
+          goes round in circles and never reaches the House. You may change <strong>one</strong> arrow. Which one
+          opens the path?
         </p>
         <div className={styles["maze-wrap"]}>
           <div
@@ -322,7 +338,7 @@ export function SampleMaze() {
             aria-label="Arrow maze, 3 squares by 3. Start is top left, the House is bottom right."
           ></div>
         </div>
-        <p className={styles["map-cap"]}>Tap a square to turn its arrow. Then walk the path.</p>
+        <p className={styles["map-cap"]}>Walk the path first. Then tap one square to turn its arrow, and walk again.</p>
         <div className={styles.controls}>
           <button className={`${styles.abtn} ${styles["abtn-pri"]}`} type="button" id="walk">
             Walk the path
@@ -355,10 +371,9 @@ export function SampleMaze() {
             There is no box to ask for the answer. Why?
           </button>
         </div>
-        <p className={styles.why} id="why">
-          <b>We do not ask the guide to keep the answer secret. The guide is never given it.</b> And there is no chat
-          box, here or in the app, so there is nowhere to ask and nothing to talk out of. In the app, every hint is
-          written in advance, not generated on the spot.
+        <p className={styles.why} id="why-box">
+          <b>We do not ask the guide to keep the answer secret. The guide is never given it.</b> There is no chat box,
+          here or in the app, so there is nowhere to ask. In the app, every hint is written and reviewed by educators.
         </p>
         <p className={styles["aside-note"]}>
           A sample maze written for this page, in the style of the app&rsquo;s Explorer puzzles. It runs in your
