@@ -1,13 +1,18 @@
 import Link from "next/link"
 import styles from "./site-chrome.module.css"
 
-// Ported from the 1 Nov 2026 drafts' <footer>
-// (docs/handoff-2026-11-01/source/). The drafts' "Draft v…" tail label is
-// review-only and does not ship (handoff section 4.2).
+// Ported from the drafts' <footer> (docs/handoff-2026-11-01/source/; the
+// dark tone from home v8.17 in docs/handoff-2026-11-10/source/). The drafts'
+// "Draft v…" tail label is review-only and does not ship (handoff section 4.2).
 
-export function SiteFooter() {
+type SiteFooterProps = {
+  /** "dark": home v8.17's deep purple footer. */
+  tone?: "light" | "dark"
+}
+
+export function SiteFooter({ tone = "light" }: SiteFooterProps) {
   return (
-    <footer className={styles.footer}>
+    <footer className={`${styles.footer}${tone === "dark" ? ` ${styles.dark}` : ""}`}>
       <div className={styles.wrap}>
         <span className={styles.tag}>Learning to think with AI, not just use it.</span>
         <span>&copy; 2026 Ignite Curiosity Lab</span>

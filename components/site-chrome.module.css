@@ -1,5 +1,7 @@
 /* Shared site chrome, ported from the 1 Nov 2026 drafts
-   (docs/handoff-2026-11-01/source/: home v8.4 and IgniteThinking v3.4).
+   (docs/handoff-2026-11-01/source/: home v8.4 and IgniteThinking v3.4),
+   with the 44 px brandmark and footer-link targets and the opt-in dark tone
+   and announcement bar from home v8.17 (docs/handoff-2026-11-10/source/).
    Class names, values and media queries as in the drafts' <style> blocks;
    the chrome CSS is identical in both drafts, except the mobile
    aria-current rule, which only the IgniteThinking draft carries.
@@ -7,10 +9,16 @@
    Tokens live on .topbar/.footer because CSS Modules cannot target :root. */
 
 .topbar,
-.footer {
+.footer,
+.announce {
+  --purple-800: #362c4f;
   --purple-700: #453765;
   --purple-600: #56457f;
   --purple-500: #6a5b8e;
+  --purple-200: #bfb8ce;
+  --purple-100: #e3dfea;
+  --orange-strong: #c0531f;
+  --orange-hover: #ac4b1f;
   --bg: #fbf8f3;
   --tint: #efedf5;
   --ink: #2c2a33;
@@ -19,6 +27,8 @@
   --font-h: var(--font-heading), "Helvetica Neue", Arial, sans-serif;
   --font-m: var(--font-mono), ui-monospace, "SF Mono", Menlo, monospace;
   --ease: cubic-bezier(0.2, 0.6, 0.3, 1);
+  /* the drafts' body line-height (the repo's global body sets 1.5) */
+  line-height: 1.6;
 }
 
 .wrap {
@@ -57,6 +67,9 @@
   flex-wrap: wrap;
 }
 .brandmark {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   font-family: var(--font-h);
   font-weight: 700;
   font-size: 0.94rem;
@@ -143,6 +156,9 @@
   align-items: center;
 }
 .footer a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: var(--ink-muted);
   /* the drafts rely on browser defaults that Tailwind preflight and the
      repo's global `footer a` rule remove or change: restore them */
@@ -187,6 +203,82 @@
     border-left: 3px solid var(--purple-600);
     padding-left: 10px;
   }
+}
+
+/* ===== home v8.11+ (v8.17): orange announcement bar, deep purple header
+   with an orange Log in, deep purple footer. Opt-in via tone="dark" so the
+   pages still on the v3.4/v8.4 drafts keep their light chrome.
+   Contrast: white on purple-800 12.88, purple-100 on purple-800 9.82,
+   white on orange-strong 4.67. */
+.announce {
+  background: var(--orange-strong);
+  color: #ffffff;
+  text-align: center;
+  font-family: var(--font-h);
+  font-weight: 600;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  padding: 10px 16px;
+}
+.announce a {
+  color: #ffffff;
+  text-decoration: underline;
+  margin-left: 10px;
+  display: inline-block;
+  padding: 13px 4px;
+  margin-top: -13px;
+  margin-bottom: -13px;
+}
+.announce a:focus-visible {
+  outline: 3px solid var(--purple-500);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.topbar.dark {
+  background: var(--purple-800);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.topbar.dark .brandmark {
+  color: #ffffff;
+}
+.topbar.dark nav a {
+  color: var(--purple-100);
+}
+.topbar.dark nav a:hover,
+.topbar.dark nav a[aria-current] {
+  color: #ffffff;
+}
+.topbar.dark .tail {
+  color: var(--purple-200);
+}
+.topbar.dark .menu summary {
+  color: #ffffff;
+}
+.topbar.dark .login {
+  background: var(--orange-strong);
+  border-color: var(--orange-strong);
+  color: #ffffff;
+}
+.topbar.dark .login:hover {
+  background: var(--orange-hover);
+  border-color: var(--orange-hover);
+}
+@media (max-width: 760px) {
+  .topbar.dark:has(.menu[open]) nav {
+    border-top-color: rgba(255, 255, 255, 0.14);
+  }
+}
+.footer.dark {
+  background: var(--purple-800);
+  border-top: 0;
+  color: var(--purple-100);
+  padding: 28px 0;
+}
+.footer.dark a {
+  color: var(--purple-100);
+}
+.footer.dark .tag {
+  color: #ffffff;
 }
 
 @media (prefers-reduced-motion: reduce) {
