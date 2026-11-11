@@ -22,7 +22,7 @@ function Check() {
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col">
-      <SiteHeader current="home" tone="dark" hideScience announce />
+      <SiteHeader current="home" announce />
       <main className={styles.page}>
         <section className={styles.hero}>
           <div className={`${styles.wrap} ${styles["hero-grid"]}`}>
@@ -440,7 +440,7 @@ export default function Home() {
           </div>
         </section>
       </main>
-      <SiteFooter tone="dark" />
+      <SiteFooter />
     </div>
   )
 }

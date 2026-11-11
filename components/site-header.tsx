@@ -1,16 +1,15 @@
 import Link from "next/link"
 import styles from "./site-chrome.module.css"
 
-// Ported from the drafts' <header class="topbar">
-// (docs/handoff-2026-11-01/source/ and, for the dark tone, the announcement
-// bar and the menu without The Science, docs/handoff-2026-11-10/source/
-// home v8.17). Markup and copy as in the drafts; the <details> menu works
-// without JavaScript.
+// Ported from home draft v8.17's <header class="topbar"> and announcement
+// bar (docs/handoff-2026-11-10/source/), used site-wide outside IgniteEd.
+// The Science is out of the main menu (23 Sep ruling, restored in v8.5);
+// /science/ stays reachable from the pages that link to it. Markup and copy
+// as in the draft; the <details> menu works without JavaScript.
 
 const navItems = [
   { key: "ignitethinking", href: "/ignitethinking/", label: "IgniteThinking" },
   { key: "igniteed", href: "/igniteed/", label: "IgniteEd" },
-  { key: "science", href: "/science/", label: "The Science" },
   { key: "about", href: "/about/", label: "About" },
 ] as const
 
@@ -19,10 +18,6 @@ type SiteHeaderProps = {
   current?: "home" | "ignitethinking" | "igniteed" | "science" | "about"
   /** The small mono label right of the nav. */
   tail?: string
-  /** "dark": home v8.17's deep purple header with the orange Log in. */
-  tone?: "light" | "dark"
-  /** Home v8.5+: The Science is out of the main menu (23 Sep ruling). */
-  hideScience?: boolean
   /** Home v8.11+: the orange announcement bar above the header. */
   announce?: boolean
 }
@@ -30,11 +25,8 @@ type SiteHeaderProps = {
 export function SiteHeader({
   current,
   tail = "A research-driven product lab",
-  tone = "light",
-  hideScience = false,
   announce = false,
 }: SiteHeaderProps) {
-  const items = hideScience ? navItems.filter((item) => item.key !== "science") : navItems
   return (
     <>
       {announce && (
@@ -43,7 +35,7 @@ export function SiteHeader({
           <Link href="/ignitethinking/">See IgniteThinking</Link>
         </div>
       )}
-      <header className={`${styles.topbar}${tone === "dark" ? ` ${styles.dark}` : ""}`}>
+      <header className={styles.topbar}>
         <div className={styles.wrap}>
           <Link href="/" className={styles.brandmark} aria-current={current === "home" ? "page" : undefined}>
             Ignite Curiosity Lab
@@ -57,7 +49,7 @@ export function SiteHeader({
             </summary>
           </details>
           <nav aria-label="Products and pages">
-            {items.map((item) => (
+            {navItems.map((item) => (
               <Link key={item.key} href={item.href} aria-current={current === item.key ? "page" : undefined}>
                 {item.label}
               </Link>

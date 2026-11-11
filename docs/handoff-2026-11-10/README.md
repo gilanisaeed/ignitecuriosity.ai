@@ -12,10 +12,11 @@ Todo chips left in v8.17 (not shipped, still open):
 - "blocker: page must exist before launch" (privacy link in the commitments strip)
 - "blocker: needs a real page" (footer privacy link)
 
-v8.17 also changes the site chrome: an orange announcement bar, a deep purple
-header with an orange Log in, a deep purple footer, and The Science out of the
-main menu. These ship on `/` only, through `SiteHeader`'s `tone="dark"`,
-`hideScience` and `announce` props and `SiteFooter`'s `tone="dark"`; the other
-pages keep the light v8.4/v3.4 chrome until their own drafts move.
+v8.17 also changes the site chrome: a deep purple header with an orange Log
+in, a deep purple footer, and The Science out of the main menu. On Azade's
+ruling (10 Nov 2026) these apply site-wide, on every page outside IgniteEd.
+The draft has no current-page style for the dark menu, so the current link is
+white with an orange underline. The orange announcement bar shows on `/` only
+(`SiteHeader`'s `announce` prop).
 
 This folder is outside `app/`, so Next.js does not build or ship it.
