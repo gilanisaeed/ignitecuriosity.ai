@@ -1,10 +1,13 @@
-# Home draft v8.20 and IgniteThinking draft v3.34 (10 Nov 2026)
+# Home draft v8.22 and IgniteThinking draft v3.34 (10 to 11 Nov 2026)
 
-`source/ICL-Home-Philosophy-v8_20.html` is the visual and copy source of truth
-for `/`, superseding v8.17 (kept alongside for the diff) and
+`source/ICL-Home-Philosophy-v8_22.html` is the visual and copy source of truth
+for `/`, superseding v8.17, v8.20 and v8.21 (kept alongside for the diff) and
 `../handoff-2026-11-01/source/ICL-Home-Philosophy-v8_4.html`. v8.18 adds the
 Instagram and LinkedIn footer links (shown site-wide, since the footer is
-shared); v8.19 and v8.20 bring Curiosity Teal to the science section.
+shared); v8.19 and v8.20 bring Curiosity Teal to the science section; v8.21
+(11 Nov) splits the closing orange band into two columns, with the three doors
+as white cards on the right; v8.22 gives those cards the site's card pattern
+(Montserrat title, card-size copy, the "What we build" link style).
 `source/IgniteThinking-Page-v3_34.html` is the source for `/ignitethinking/`,
 superseding `../handoff-2026-11-01/source/IgniteThinking-Page-v3_4.html`. Its
 three screenshots are embedded in the draft; the site serves them from
@@ -14,7 +17,7 @@ The rules in `../handoff-2026-11-01/HANDOFF.md` still apply: copy is ported
 verbatim, and the review-only elements (draft banner, todo chips, the draft
 footer tail, version-history comments) do not ship.
 
-Todo chips left in home v8.20 (not shipped, still open):
+Todo chips left in home v8.22 (not shipped, still open):
 
 - "re-check the date at every deploy" (late November beta date, claims ladder)
 - "blocker: page must exist before launch" (privacy link in the commitments strip)
@@ -42,5 +45,22 @@ The draft has no current-page style for the dark menu, so the current link is
 white with an orange underline. The orange announcement bar shows on `/` (linking to
 `/ignitethinking/`) and on `/ignitethinking/` (linking to `#beta`), through
 `SiteHeader`'s `announce` prop.
+
+## About page
+
+`source/ICL-About-v1_4.html` (11 Nov 2026) is the source for `/about/`,
+replacing the July About page and its `components/about-section.tsx`. Its three
+team portraits are embedded in the draft; the site serves them from
+`public/about/`. Its closing band is the v8.21 one (door labels as small
+labels); home v8.22 later gave the doors card titles.
+
+Todo chips left in About v1.4 (not shipped, still open):
+
+- Why we started: "optional: the moment that started Ignite, in one true sentence" (the paragraph held only this note, so it does not ship)
+- Why we started: "sign-off: belief 04, moved here from home on 9 Sep" (the "student without a tutor at home" sentence ships)
+- Pull quote: "confirm: from your 2030 Manifesto"
+- Advisors: "confirm both agree to be named"
+- Standing rule: "check with Saeed: the 29 Oct audit found “reviewed” not yet true in the app" (the sentence "Today every hint your child sees is written and reviewed by educators." ships, as it does on IgniteThinking)
+- Footer privacy link: "blocker: needs a real page"
 
 This folder is outside `app/`, so Next.js does not build or ship it.

@@ -1,11 +1,11 @@
-/* Home page, ported from docs/handoff-2026-11-10/source/ICL-Home-Philosophy-v8_20.html
+/* Home page, ported from docs/handoff-2026-11-10/source/ICL-Home-Philosophy-v8_22.html
    (first ported from v8.4 in docs/handoff-2026-11-01/source/).
    Class names, values and media queries as in the draft's <style> block; the
    chrome (.topbar/.login/.menu/footer) lives in components/site-chrome.module.css,
    and the review-only .todo/.draft-banner rules do not ship (handoff 4.2).
    Element selectors are scoped under .page because CSS Modules cannot target
    :root or bare elements; fonts come from the next/font variables.
-   The draft layers its colour system as override blocks (v8.8 to v8.20) at
+   The draft layers its colour system as override blocks (v8.8 to v8.22) at
    the end of its <style>; they are kept in that order at the end of this file.
    Where the draft overrides a bare `h2` rule, the override is folded into the
    base `.page h2` rule instead, so the module keeps the draft's cascade. */
@@ -1321,4 +1321,79 @@
 }
 .success .walker {
   box-shadow: 0 0 0 4px #ffffff;
+}
+
+/* Closing band, two columns (Azade, 11 Nov 2026, draft v8.21): the right half of the orange band was empty on wide screens.
+   The message and buttons sit on the left; the three doors become white cards on the right, like the white beta card on the
+   IgniteThinking page. On white: orange-hover label 5.6, ink 14.1, purple-700 link 10.6. One column again under 900 px. */
+.close-band {
+  max-width: none;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(32px, 5vw, 80px);
+  align-items: center;
+}
+.doors {
+  margin: 0;
+  padding: 0;
+  border-top: 0;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+.doors li {
+  /* the closing band sets a white focus ring; the white cards need the purple one back (purple-500 on white 6.4) */
+  --focus-ring: var(--purple-500);
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 18px 22px 8px;
+  box-shadow: 0 14px 34px rgba(42, 34, 61, 0.22);
+}
+.doors .lab {
+  color: var(--orange-hover);
+}
+.doors p {
+  color: var(--ink);
+}
+.doors a {
+  color: var(--purple-700);
+}
+@media (max-width: 900px) {
+  .close-band {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
+
+/* v8.22: the doors match the site's own card pattern (Azade, 11 Nov 2026): a Montserrat h3 title, body copy at the card
+   size, and the same link style as the "What we build" cards (.card .go): heading font, no underline, orange on hover. */
+.doors li {
+  border-radius: 12px;
+  padding: 20px 22px 10px;
+  display: flex;
+  flex-direction: column;
+}
+.doors h3 {
+  margin: 0 0 6px;
+  font-size: 1.14rem;
+  color: var(--purple-700);
+}
+.doors p {
+  font-size: 0.94rem;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.doors a {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  min-height: 44px;
+  padding: 0;
+  font-family: var(--font-h);
+  font-weight: 600;
+  font-size: 0.93rem;
+  color: var(--purple-700);
+  text-decoration: none;
+}
+.doors a:hover {
+  color: var(--orange-strong);
 }
