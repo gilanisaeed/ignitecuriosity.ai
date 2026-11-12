@@ -5,7 +5,7 @@ import { SiteFooter } from "@/components/site-footer"
 import { SuccessFigure } from "@/components/home/success-figure"
 import styles from "./page.module.css"
 
-// Ported from docs/handoff-2026-11-10/source/ICL-Home-Philosophy-v8_20.html
+// Ported from docs/handoff-2026-11-10/source/ICL-Home-Philosophy-v8_21.html
 // (first ported from v8.4, docs/handoff-2026-11-01/source/).
 // Copy is final and audited (handoff rule 3): port verbatim, no edits.
 // Review-only elements (draft banner, todo chips, draft footer tail,
@@ -404,18 +404,20 @@ export default function Home() {
         <section className={styles["close-dark"]}>
           <div className={styles.wrap}>
             <div className={styles["close-band"]}>
-              <span className={`${styles.lab} ${styles.eyebrow}`}>Work with us</span>
-              <h2>Build AI that leaves people more capable than it found them.</h2>
-              <p className={styles.prose} style={{ margin: "14px 0 0" }}>
-                That is the standard we hold our products, our research, and our partnerships to.
-              </p>
-              <div className={styles["cta-row"]} style={{ marginTop: 24 }}>
-                <a className={`${styles.btn} ${styles["btn-onorange"]}`} href="mailto:hello@ignitecuriosity.ai">
-                  Partner with us
-                </a>
-                <a className={`${styles.btn} ${styles["btn-onorange-ghost"]}`} href="#build">
-                  Explore our products
-                </a>
+              <div className={styles["close-copy"]}>
+                <span className={`${styles.lab} ${styles.eyebrow}`}>Work with us</span>
+                <h2>Build AI that leaves people more capable than it found them.</h2>
+                <p className={styles.prose} style={{ margin: "14px 0 0" }}>
+                  That is the standard we hold our products, our research, and our partnerships to.
+                </p>
+                <div className={styles["cta-row"]} style={{ marginTop: 24 }}>
+                  <a className={`${styles.btn} ${styles["btn-onorange"]}`} href="mailto:hello@ignitecuriosity.ai">
+                    Partner with us
+                  </a>
+                  <a className={`${styles.btn} ${styles["btn-onorange-ghost"]}`} href="#build">
+                    Explore our products
+                  </a>
+                </div>
               </div>
               <ul className={styles.doors}>
                 <li>
