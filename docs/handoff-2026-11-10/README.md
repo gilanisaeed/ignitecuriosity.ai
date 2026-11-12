@@ -46,4 +46,21 @@ white with an orange underline. The orange announcement bar shows on `/` (linkin
 `/ignitethinking/`) and on `/ignitethinking/` (linking to `#beta`), through
 `SiteHeader`'s `announce` prop.
 
+## About page
+
+`source/ICL-About-v1_4.html` (11 Nov 2026) is the source for `/about/`,
+replacing the July About page and its `components/about-section.tsx`. Its three
+team portraits are embedded in the draft; the site serves them from
+`public/about/`. Its closing band is the v8.21 one (door labels as small
+labels); home v8.22 later gave the doors card titles.
+
+Todo chips left in About v1.4 (not shipped, still open):
+
+- Why we started: "optional: the moment that started Ignite, in one true sentence" (the paragraph held only this note, so it does not ship)
+- Why we started: "sign-off: belief 04, moved here from home on 9 Sep" (the "student without a tutor at home" sentence ships)
+- Pull quote: "confirm: from your 2030 Manifesto"
+- Advisors: "confirm both agree to be named"
+- Standing rule: "check with Saeed: the 29 Oct audit found “reviewed” not yet true in the app" (the sentence "Today every hint your child sees is written and reviewed by educators." ships, as it does on IgniteThinking)
+- Footer privacy link: "blocker: needs a real page"
+
 This folder is outside `app/`, so Next.js does not build or ship it.
