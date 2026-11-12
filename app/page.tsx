@@ -5,7 +5,7 @@ import { SiteFooter } from "@/components/site-footer"
 import { SuccessFigure } from "@/components/home/success-figure"
 import styles from "./page.module.css"
 
-// Ported from docs/handoff-2026-11-10/source/ICL-Home-Philosophy-v8_21.html
+// Ported from docs/handoff-2026-11-10/source/ICL-Home-Philosophy-v8_22.html
 // (first ported from v8.4, docs/handoff-2026-11-01/source/).
 // Copy is final and audited (handoff rule 3): port verbatim, no edits.
 // Review-only elements (draft banner, todo chips, draft footer tail,
@@ -421,17 +421,17 @@ export default function Home() {
               </div>
               <ul className={styles.doors}>
                 <li>
-                  <span className={styles.lab}>Families</span>
+                  <h3>Families</h3>
                   <p>Join the IgniteThinking Founding Families beta.</p>
                   <Link href="/ignitethinking/#beta">Request beta access &rarr;</Link>
                 </li>
                 <li>
-                  <span className={styles.lab}>Educators and schools</span>
+                  <h3>Educators and schools</h3>
                   <p>Practical AI literacy for your team, through IgniteEd.</p>
                   <Link href="/igniteed/">Visit IgniteEd &rarr;</Link>
                 </li>
                 <li>
-                  <span className={styles.lab}>Researchers and funders</span>
+                  <h3>Researchers and funders</h3>
                   <p>Help us study how children reason after the hints are gone.</p>
                   <a href="mailto:hello@ignitecuriosity.ai?subject=Research%20with%20Ignite%20Curiosity%20Lab">
                     Write to us &rarr;
