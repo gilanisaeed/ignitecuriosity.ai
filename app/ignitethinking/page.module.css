@@ -1,5 +1,5 @@
 /* IgniteThinking landing page, ported from
-   docs/handoff-2026-11-10/source/IgniteThinking-Page-v3_34.html (10 Nov 2026),
+   docs/handoff-2026-11-10/source/IgniteThinking-Page-v3_40.html (14 Nov 2026),
    replacing the v3.4 port. Generated from the draft's <style> block, in its
    order, so the draft's later colour layers (v3.19 to v3.34) keep overriding
    the base rules as they do there:
@@ -2141,9 +2141,9 @@
 .f-ok:empty {
   display:none;
 }
-/* v3.31: three access cards */
+/* v3.38: two access cards (talk-to-type off at launch, ruled 14 Nov) */
 :where(.page) :global(#trust) .aids {
-  grid-template-columns:repeat(3,minmax(0,1fr));
+  grid-template-columns:repeat(2,minmax(0,1fr));
 }
 @media (max-width:900px) {
   :where(.page) :global(#trust) .aids {
@@ -2207,3 +2207,116 @@
   max-width:34ch;
 }
 
+/* v3.36: link from the thinking map block to the public explorer, and the teachers-and-schools band */
+.inbuild .map-now {
+  margin: 20px 0 0;
+  font-size: 0.97rem;
+}
+.inbuild .map-link {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  align-items: center;
+}
+.btn-brand {
+  background: var(--purple-600);
+  color: #fff;
+}
+.btn-brand:hover {
+  background: var(--purple-700);
+  transform: translateY(-1px);
+}
+.sch-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.sch {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 24px 26px;
+}
+.sch h3 {
+  font-size: 1.08rem;
+  margin-bottom: 6px;
+}
+.sch > p {
+  margin: 0 0 14px;
+  font-size: 0.97rem;
+  color: var(--ink-muted-tint);
+}
+.sch dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 8px 16px;
+  font-size: 0.96rem;
+}
+.sch dt {
+  font-family: var(--font-m);
+  font-weight: 500;
+  color: var(--purple-700);
+}
+.sch dd {
+  margin: 0;
+}
+.sch .fine {
+  margin: 16px 0 0;
+  font-size: 0.88rem;
+  color: var(--ink-muted);
+}
+.sch-foot {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 32px;
+  align-items: center;
+  justify-content: space-between;
+}
+.sch-foot p {
+  margin: 0;
+  max-width: 58ch;
+}
+.sch-foot .cta-row {
+  margin: 0;
+}
+@media (max-width: 760px) {
+  .sch-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== v3.40: beta card rebalanced (Azade, 14 Nov 2026) =====
+   The heading and lede run across the top of the card, the form sits left, and "What a family gets" is a lavender
+   panel on the right that stretches to the height of the form. On lavender: ink 12.18, ink-muted 4.55, purple-600 7.09. */
+.beta {
+  align-items: stretch;
+  gap: clamp(22px, 3vw, 34px) 40px;
+}
+.beta-head {
+  grid-column: 1/-1;
+}
+.beta-head h2 {
+  max-width: 24ch;
+}
+.beta-head p {
+  max-width: 62ch;
+}
+.beta-form .signup {
+  margin-top: 0;
+}
+.beta-gets {
+  background: var(--tint);
+  border-radius: 12px;
+  padding: clamp(20px, 2.6vw, 28px);
+}
+.beta-gets .lab {
+  color: var(--purple-700);
+}
+.beta-gets .muted {
+  color: var(--ink);
+}

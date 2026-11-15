@@ -8,7 +8,7 @@ import { BetaForm } from "@/components/ignitethinking/beta-form"
 import { StickyCta } from "@/components/ignitethinking/sticky-cta"
 import { c } from "./cx"
 
-// Ported from docs/handoff-2026-11-10/source/IgniteThinking-Page-v3_34.html
+// Ported from docs/handoff-2026-11-10/source/IgniteThinking-Page-v3_40.html
 // (10 Nov 2026), replacing the v3.4 port. Copy is final and audited
 // (handoff rule 3): port verbatim, no edits. Class names are the draft's,
 // mapped to the CSS Module by c(). Review-only elements (draft banner, todo
@@ -23,8 +23,13 @@ import { c } from "./cx"
 const baloo = Baloo_2({ subsets: ["latin"], weight: ["600", "700"], variable: "--font-baloo", display: "swap" })
 const nunito = Nunito({ subsets: ["latin"], weight: ["400", "600"], variable: "--font-nunito", display: "swap" })
 
-// The privacy section is hidden in the draft (v3.21) while its content is researched.
+// The privacy section: shown again in draft v3.37 for review, but the draft says it must not
+// go live before the privacy notice is signed and published (/privacy/ is still a placeholder).
 const PRIVACY_SECTION_READY = false
+
+// The Thinking Map Explorer (draft v1.0, proposed at /ignitethinking/thinking-map/) is not on
+// the site yet; its two links and the sentence that introduces them wait for it.
+const THINKING_MAP_READY = false
 
 export const metadata: Metadata = {
   title: "IgniteThinking",
@@ -270,6 +275,12 @@ export default function IgniteThinkingPage() {
                   <li>Each item says what happened on a puzzle: solved on their own, solved with help, working on it, or not met yet.</li>
                   <li>No scores, no rankings, and no comparison with other children.</li>
                 </ul>
+                {THINKING_MAP_READY && (
+        <>
+        <p className={c("map-now")}>You can explore the map of our puzzles today. It describes the puzzles, not any child.</p>
+                <div className={c("map-link")}><a className={c("btn btn-ghost")} href="/ignitethinking/thinking-map/">Explore the thinking map</a></div>
+        </>
+        )}
               </div>
               <div>
                 <figure className={c("shot")}>
@@ -344,10 +355,6 @@ export default function IgniteThinkingPage() {
                 <p>Instructions, hints and worked examples, read aloud at the press of a button.</p>
               </div>
               <div className={c("aid")}>
-                <div className={c("aid-h")}><svg className={c("mk")} width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--slate)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="7.5" y="2.5" width="5" height="9" rx="2.5" /><path d="M4.5 9.5a5.5 5.5 0 0 0 11 0" /><path d="M10 15v2.5" /></svg><h3>Speak instead of typing</h3></div>
-                <p>On devices that turn speech into text themselves, your child can press and talk. The audio stays on the device: never sent to us, never kept.</p>
-              </div>
-              <div className={c("aid")}>
                 <div className={c("aid-h")}><svg className={c("mk")} width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--slate)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="2.5" y="5.5" width="15" height="9" rx="2" /><path d="M6 8.6h.01M9 8.6h.01M11.6 8.6h.01M14.4 8.6h.01M6.6 11.6h6.8" /></svg><h3>Built for the keyboard</h3></div>
                 <p>Everything works from the keyboard, including the pieces meant to be dragged.</p>
               </div>
@@ -357,9 +364,10 @@ export default function IgniteThinkingPage() {
           </div>
         </section>
 
-        {/* ==================== PRIVACY (deep purple, v3.19) ====================
-             HIDDEN in v3.21 (Azade, 3 Nov 2026): kept, not shown, while the privacy content is researched
-             and completed. To bring it back, set PRIVACY_SECTION_READY to true. */}
+        {/* ==================== PRIVACY (deep purple, v3.19; rebuilt v3.37 to v3.39) ====================
+             Hidden in v3.21; shown again in draft v3.37 for review, rebuilt from Privacy Notice v0.3 to v0.7.
+             The draft says it must not go live before the privacy notice is signed and published, so it stays
+             behind PRIVACY_SECTION_READY until /privacy/ carries the real notice. */}
         {PRIVACY_SECTION_READY && (
         <section id="privacy" className={c("deep")}>
           <div className={c("wrap")}>
@@ -375,8 +383,24 @@ export default function IgniteThinkingPage() {
                 <p>Your first name and email, and for your child a nickname, an age band and the work they make. No birth date, photo, school or location.</p>
               </div>
               <div className={c("aid")}>
+                <div className={c("aid-h")}><svg className={c("mk")} width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--slate)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="5" y="5" width="10" height="10" rx="2" /><path d="M8 2.5v2.5M12 2.5v2.5M8 15v2.5M12 15v2.5M2.5 8h2.5M2.5 12h2.5M15 8h2.5M15 12h2.5" /></svg><h3>No AI in the app today</h3></div>
+                <p>Every hint your child sees is written and reviewed by educators. Before any AI feature goes on, we name the provider, say what it receives and tell you first.</p>
+              </div>
+              <div className={c("aid")}>
+                <div className={c("aid-h")}><svg className={c("mk")} width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--slate)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="4.5" y="3.5" width="11" height="14" rx="2" /><path d="M7.5 3.5h5v2h-5zM7.5 10h5M7.5 13h3" /></svg><h3>Research is a separate choice</h3></div>
+                <p>You can use IgniteThinking without ever joining a study. If we invite you, the study comes with its own consent form.</p>
+              </div>
+              <div className={c("aid")}>
+                <div className={c("aid-h")}><svg className={c("mk")} width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--slate)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M10 2.5l6 2.5v4.5c0 3.6-2.6 6.4-6 8-3.4-1.6-6-4.4-6-8V5z" /><path d="M7.5 10l1.8 1.8 3.4-3.6" /></svg><h3>Never used to train AI</h3></div>
+                <p>We never use your child&rsquo;s work, words or voice to train AI models, and any provider we use must agree to the same in writing.</p>
+              </div>
+              <div className={c("aid")}>
                 <div className={c("aid-h")}><svg className={c("mk")} width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--slate)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="7" /><path d="M5.1 14.9L14.9 5.1" /></svg><h3>No ads, no selling, no chat</h3></div>
                 <p>No advertisers, no data brokers, no third-party trackers, and nobody in the app to message.</p>
+              </div>
+              <div className={c("aid")}>
+                <div className={c("aid-h")}><svg className={c("mk")} width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--slate)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="7" cy="7" r="2.5" /><circle cx="13.5" cy="7.5" r="2" /><path d="M2.5 16c.6-2.8 2.4-4.2 4.5-4.2s3.9 1.4 4.5 4.2M12 12c1.9-.2 3.6.9 4.2 3.5" /></svg><h3>Nothing shared between children</h3></div>
+                <p>No friends list, no public gallery, no featured work, and nobody else can open your child&rsquo;s review.</p>
               </div>
               <div className={c("aid")}>
                 <div className={c("aid-h")}><svg className={c("mk")} width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--slate)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="2.5" y="4" width="15" height="12" rx="2" /><path d="M2.5 8h15" /><path d="M5.4 6h.01M7.9 6h.01" /></svg><h3>Trying it sends nothing</h3></div>
@@ -384,27 +408,73 @@ export default function IgniteThinkingPage() {
               </div>
               <div className={c("aid")}>
                 <div className={c("aid-h")}><svg className={c("mk")} width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--slate)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M1.8 10S4.7 4.8 10 4.8 18.2 10 18.2 10 15.3 15.2 10 15.2 1.8 10 1.8 10Z" /><circle cx="10" cy="10" r="2.3" /></svg><h3>You can see it, and end it</h3></div>
-                <p>Ask to see your child&rsquo;s data or have it deleted, or withdraw consent, at any time.</p>
+                <p>Ask to see your child&rsquo;s data, have it deleted, or withdraw consent, at any time. If a security problem ever affects it, we tell you within 72 hours.</p>
               </div>
             </div>
-            <p className={c("bridge")}>Full detail in the <a href="/privacy/">privacy notice</a>.</p>
+            <p className={c("bridge")}>Full detail, including every provider we use and how long we keep each kind of data, is in the <a href="/privacy/">privacy notice</a>.</p>
             </div>
           </div>
         </section>
         )}
 
+        {/* ==================== FOR TEACHERS AND SCHOOLS (v3.36) ==================== */}
+        <section id="schools">
+          <div className={c("wrap")}>
+            <div className={c("head prose")}>
+              <span className={c("lab eyebrow")}>For teachers and schools</span>
+              <h2>The standards behind the puzzles.</h2>
+              <p className={c("muted")}>Children use IgniteThinking at home. If you teach grade 4 or 5, this is how it lines up with your classroom: most puzzles are about how to think, not a math topic, so they sit in the practice standards, in math and in computer science.</p>
+            </div>
+            <div className={c("sch-grid")}>
+              <div className={c("sch")}>
+                <h3>Common Core: Standards for Mathematical Practice</h3>
+                <p>Four practices come up most across the puzzles.</p>
+                <dl>
+                  <dt>MP1</dt><dd>Make sense of problems and persevere in solving them.</dd>
+                  <dt>MP3</dt><dd>Construct viable arguments and critique the reasoning of others.</dd>
+                  <dt>MP7</dt><dd>Look for and make use of structure.</dd>
+                  <dt>MP8</dt><dd>Look for and express regularity in repeated reasoning.</dd>
+                </dl>
+                <p className={c("fine")}>We do not claim MP5, use appropriate tools strategically. The app provides the thinking aid rather than letting the child choose a tool, so claiming it would not be true.</p>
+              </div>
+              <div className={c("sch")}>
+                <h3>Computer science: CSTA 2026 practices</h3>
+                <p>The thinking skills behind the puzzles draw on four practices.</p>
+                <dl>
+                  <dt>CT6</dt><dd>Define computational problems.</dd>
+                  <dt>CT7</dt><dd>Develop and use abstractions.</dd>
+                  <dt>CT8</dt><dd>Generate and evaluate multiple approaches.</dd>
+                  <dt>CT9</dt><dd>Test and refine.</dd>
+                </dl>
+                <p className={c("fine")}>The puzzles never ask children to read or write code, so the CSTA content standards fit only loosely.</p>
+              </div>
+            </div>
+            <div className={c("sch-foot")}>
+              <p>Want to share IgniteThinking with your grade 4 and 5 families? We are looking for partner schools for our pilot.</p>
+              <div className={c("cta-row")}>
+                {THINKING_MAP_READY && (
+        <a className={c("btn btn-ghost")} href="/ignitethinking/thinking-map/#schools">See every standard on the map</a>
+        )}
+                <a className={c("btn btn-brand")} href="mailto:hello@ignitecuriosity.ai?subject=IgniteThinking%3A%20school%20pilot">Talk to us</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* ============================== BETA ============================== */}
         <section id="beta" className={c("band-orange")}>
           <div className={c("wrap")}>
             <div className={c("beta")}>
-              <div>
+              <div className={c("beta-head")}>
                 <span className={c("lab eyebrow")}>Founding Families</span>
                 <h2>The Founding Families beta opens in late November</h2>
                 <p>Your family helps us learn what works, what confuses, and what to fix. We are keeping the group small so we can answer every family who writes.</p>
+              </div>
+              <div className={c("beta-form")}>
                 <BetaForm />
                 <p className={c("have")}>Already a Founding Family? <a href="https://app.ignitecuriosity.ai/">Log in</a>. Have an invite code? <a href="https://app.ignitecuriosity.ai/register">Set up your family</a>.</p>
               </div>
-              <div>
+              <div className={c("beta-gets")}>
                 <p className={c("lab")} style={{ marginBottom: "12px" }}>What a family gets</p>
                 <ul>
                   <li><svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8.6l3.6 3.6L14 3.8" fill="none" stroke="#56457F" strokeWidth="2.4" strokeLinecap="round" /></svg><span>24 puzzles, 18 computational thinking and 6 math, across three levels, all open from the first day.</span></li>
