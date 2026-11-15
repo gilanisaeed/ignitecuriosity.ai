@@ -22,7 +22,7 @@ Outputs a fully static site to `out/`. The build does not fail on type errors (`
 ## Site structure
 
 - **Home** — `/`, ported from home draft v8.22 (11 Nov 2026, `docs/handoff-2026-11-10/`), first ported from the 1 Nov 2026 handoff (v8.4)
-- **IgniteThinking** — `/ignitethinking/`, the product's public landing page (draft v3.40, 14 Nov 2026, `docs/handoff-2026-11-10/`); the login lives at [app.ignitecuriosity.ai](https://app.ignitecuriosity.ai)
+- **IgniteThinking** — `/ignitethinking/`, the product's public landing page (draft v3.41, 14 Nov 2026, `docs/handoff-2026-11-10/`); the login lives at [app.ignitecuriosity.ai](https://app.ignitecuriosity.ai)
 - **IgniteEd** — `/igniteed/` (with `/program`, `/impact`, `/about`, `/pricing`, `/readiness-review` subpages), components in `components/igniteed/`, assets in `public/igniteed/`
 - **About** — `/about/`, ported from About draft v1.4 (11 Nov 2026, `docs/handoff-2026-11-10/`)
 - **The Science** — `/science/` (July content, no longer in the menu) · **Privacy** — `/privacy/` (placeholder until counsel approves the notice)

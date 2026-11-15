@@ -8,7 +8,7 @@ import { BetaForm } from "@/components/ignitethinking/beta-form"
 import { StickyCta } from "@/components/ignitethinking/sticky-cta"
 import { c } from "./cx"
 
-// Ported from docs/handoff-2026-11-10/source/IgniteThinking-Page-v3_40.html
+// Ported from docs/handoff-2026-11-10/source/IgniteThinking-Page-v3_41.html
 // (10 Nov 2026), replacing the v3.4 port. Copy is final and audited
 // (handoff rule 3): port verbatim, no edits. Class names are the draft's,
 // mapped to the CSS Module by c(). Review-only elements (draft banner, todo
@@ -30,6 +30,9 @@ const PRIVACY_SECTION_READY = false
 // The Thinking Map Explorer (draft v1.0, proposed at /ignitethinking/thinking-map/) is not on
 // the site yet; its two links and the sentence that introduces them wait for it.
 const THINKING_MAP_READY = false
+
+// The "For teachers and schools" section (v3.36) is hidden, not deleted, for now (v3.41).
+const SCHOOLS_SECTION_READY = false
 
 export const metadata: Metadata = {
   title: "IgniteThinking",
@@ -417,6 +420,8 @@ export default function IgniteThinkingPage() {
         </section>
         )}
 
+        {SCHOOLS_SECTION_READY && (
+        <>
         {/* ==================== FOR TEACHERS AND SCHOOLS (v3.36) ==================== */}
         <section id="schools">
           <div className={c("wrap")}>
@@ -460,6 +465,8 @@ export default function IgniteThinkingPage() {
             </div>
           </div>
         </section>
+        </>
+        )}
 
         {/* ============================== BETA ============================== */}
         <section id="beta" className={c("band-orange")}>
