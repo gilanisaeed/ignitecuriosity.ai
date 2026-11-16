@@ -1,8 +1,7 @@
 /* IgniteThinking landing page, ported from
-   docs/handoff-2026-11-10/source/IgniteThinking-Page-v3_41.html (14 Nov 2026),
-   replacing the v3.4 port. Generated from the draft's <style> block, in its
-   order, so the draft's later colour layers (v3.19 to v3.34) keep overriding
-   the base rules as they do there:
+   docs/handoff-2026-11-10/source/IgniteThinking-Page-v3_48.html (16 Nov 2026),
+   over v3.41. Generated from the draft's <style> block, in its order, so the
+   draft's later layers keep overriding the base rules as they do there:
    - :root tokens and the body rules sit on .page (CSS Modules cannot target :root);
      the font stacks use the next/font variables (Baloo 2 and Nunito for the
      product depictions, ruled in on 1 Nov 2026).
@@ -12,13 +11,14 @@
    - The chrome (announcement bar, header, footer) lives in
      components/site-chrome.module.css; the review-only .todo and
      .draft-banner rules do not ship (handoff 4.2).
-   - On phones the sticky bar's body padding goes on .shell, which wraps the footer. */
+   - On phones the pinned bar's body padding goes on .shell, which wraps the footer.
+   - The white focus ring on the hero follows the home page (14e80c4). */
 
 /* ICL house system: purple structure, orange CTAs (and, by Azade's ruling of 3 Nov, v3.16, the six loop markers: orange fill, purple border), dark surfaces in Curiosity Purple and deep purple from v3.19 (slate retired). Every colour is a token from
    IgniteCuriosityLab_DesignSystem.html, except the product depictions (the demo frame and the puzzle cards),
    which take the app's own tokens because they show the product (ruled 9 Sep). The box-icon tiles are
    orange-strong by Azade's ruling of 24 Sep (v5.9). */
-/* tokens on the shell as well, so the sticky bar outside <main> sees them */
+/* tokens on the shell as well, so the pinned bar outside <main> sees them */
 .shell,
 .page {
   --purple-900:#2A223D;
@@ -125,7 +125,7 @@
 :where(.page) input {
   line-height: normal;
 }
-/* the sticky bar sits outside .page, so give it the draft's body line height */
+/* the pinned bar sits outside .page, so give it the draft's body line height */
 .sticky-cta {
   line-height: 1.6;
 }
@@ -2085,6 +2085,198 @@
   font-size:1.08rem;
   color:var(--purple-700);
 }
+/* v3.47 (Azade, 16 Nov 2026): access and privacy sections on the same grid as the AI section. Heading left, boxes right, so the
+   right side is not empty; privacy cards filled like the access cards, equal height; the full-notice line is a box with a button.
+   Contrast: purple-100 on purple-900 11.5:1, white on #56457F 8.2:1, purple-100 on #56457F 6.3:1. */
+:where(.page) :global(#trust) .sec-top {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:20px 40px;
+  align-items:stretch;
+}
+:where(.page) :global(#trust) .sec-top .head {
+  margin:0;
+  max-width:none;
+}
+:where(.page) :global(#trust) .sec-top .aids {
+  grid-template-columns:1fr;
+  grid-auto-rows:1fr;
+  gap:16px;
+}
+:where(.page) :global(#trust) .sec-top .aid {
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+:where(.page) :global(#trust) .bridge {
+  max-width:none;
+}
+:where(.page) :global(#privacy) .pv-grid {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  grid-template-areas:"head notice" "cards cards";
+  gap:28px 40px;
+  align-items:center;
+}
+:where(.page) :global(#privacy) .pv-grid .head {
+  grid-area:head;
+  margin:0;
+  max-width:none;
+}
+:where(.page) :global(#privacy) .privacy {
+  grid-area:cards;
+}
+:where(.page) :global(#privacy) .notice {
+  grid-area:notice;
+  background:var(--purple-900);
+  border-left:5px solid var(--orange);
+  border-radius:14px;
+  padding:22px 26px;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:16px;
+}
+:where(.page) :global(#privacy) .notice p {
+  margin:0;
+  font-size:1.02rem;
+  line-height:1.6;
+  color:var(--purple-100);
+}
+:where(.page) :global(#privacy) .notice .btn {
+  min-height:44px;
+  padding:0 20px;
+  font-size:.95rem;
+}
+:where(.page) :global(#privacy) .notice .btn:focus-visible {
+  outline-color:#FFFFFF;
+}
+:where(.page) :global(#privacy) .aid {
+  background:var(--purple-600);
+  border:0;
+  border-radius:12px;
+  padding:18px 18px 20px;
+}
+@supports (grid-template-rows:subgrid) {
+  :where(.page) :global(#privacy) .aid:not([hidden]) {
+    display:grid;
+    grid-template-rows:subgrid;
+    grid-row:span 2;
+    row-gap:0;
+  }
+}
+@media (max-width:900px) {
+  :where(.page) :global(#trust) .sec-top {
+    grid-template-columns:1fr;
+  }
+  :where(.page) :global(#privacy) .pv-grid {
+    grid-template-columns:1fr;
+    grid-template-areas:"head" "cards" "notice";
+    gap:24px;
+  }
+}
+/* v3.46 (Azade, 16 Nov 2026): AI vision section redesigned on one grid. Heading left, promise box right (no empty right side);
+   each card has a full-width Deep Curiosity Purple header (label + bold title, v3.44) of equal height per row; the will-not-have
+   line is a full-width strip. White on #56457F 8.2:1; #E3DFEA on #56457F 6.2:1. */
+:where(.page) :global(#ai-vision) .ai-top {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:20px 40px;
+  align-items:center;
+  margin:0 0 28px;
+}
+:where(.page) :global(#ai-vision) .ai-top .head {
+  margin:0;
+  max-width:none;
+}
+:where(.page) :global(#ai-vision) .ai-top .head h2 {
+  max-width:none;
+}
+:where(.page) :global(#ai-vision) .promise {
+  margin:0;
+  max-width:none;
+}
+:where(.page) :global(#ai-vision) .feat {
+  padding:0;
+  gap:0;
+  overflow:hidden;
+}
+:where(.page) :global(#ai-vision) .feat-h {
+  background:var(--purple-600);
+  padding:14px 20px 15px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  min-height:5.6rem;
+}
+:where(.page) :global(#ai-vision) .feat-h .where {
+  color:var(--purple-100);
+}
+:where(.page) :global(#ai-vision) .feat-h h3 {
+  margin:0;
+  color:#FFFFFF;
+  font-weight:700;
+  font-size:1.1rem;
+  line-height:1.3;
+}
+:where(.page) :global(#ai-vision) .feat>p {
+  padding:16px 20px 20px;
+}
+@supports (grid-template-rows:subgrid) {
+  :where(.page) :global(#ai-vision) .feat {
+    display:grid;
+    grid-template-rows:subgrid;
+    grid-row:span 2;
+    row-gap:0;
+  }
+  :where(.page) :global(#ai-vision) .feat-h {
+    min-height:0;
+  }
+}
+:where(.page) :global(#ai-vision) .never {
+  margin:16px 0 0;
+  max-width:none;
+  background:var(--surface);
+  border:1px solid var(--purple-200);
+  border-left:5px solid var(--orange);
+  border-radius:12px;
+  padding:14px 20px;
+  color:var(--ink);
+}
+@media (max-width:900px) {
+  :where(.page) :global(#ai-vision) .ai-top {
+    grid-template-columns:1fr;
+  }
+}
+@media (min-width:1001px) {
+  :where(.page) :global(#ai-vision) .feat-h {
+    min-height:6.2rem;
+  }
+}
+/* v3.48 (Azade, 16 Nov 2026): Curiosity Teal joins this page with one job: it marks the AI section. Same two tokens and rules as the
+   home page (v8.19): --teal #2F8CA8 for lines only (3.86 on white), --teal-strong #0F7C9C for fills and text (white on it 4.79,
+   it on white 4.79). White sections only; never on the purple sections. The promise box keeps deep purple and orange. */
+.page {
+  --teal:#2F8CA8;
+  --teal-strong:#0F7C9C;
+}
+:where(.page) :global(#ai-vision) .lab.eyebrow {
+  color:var(--teal-strong);
+}
+:where(.page) :global(#ai-vision) .feat {
+  background:var(--surface);
+  border-color:var(--line);
+}
+:where(.page) :global(#ai-vision) .feat-h {
+  background:var(--teal-strong);
+}
+:where(.page) :global(#ai-vision) .feat-h .where {
+  color:#FFFFFF;
+}
+:where(.page) :global(#ai-vision) .never {
+  border-color:var(--line);
+  border-left-color:var(--teal);
+}
 .feat p {
   margin:0;
   font-size:.95rem;
@@ -2108,6 +2300,88 @@
 .never b {
   color:var(--purple-700);
   font-weight:600;
+}
+/* v3.36: link from the thinking map block to the public explorer, and the teachers-and-schools band */
+.inbuild .map-now {
+  margin:20px 0 0;
+  font-size:.97rem;
+}
+.inbuild .map-link {
+  margin-top:14px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 14px;
+  align-items:center;
+}
+.btn-brand {
+  background:var(--purple-600);
+  color:#fff;
+}
+.btn-brand:hover {
+  background:var(--purple-700);
+  transform:translateY(-1px);
+}
+.sch-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:20px;
+}
+.sch {
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:24px 26px;
+}
+.sch h3 {
+  font-size:1.08rem;
+  margin-bottom:6px;
+}
+.sch>p {
+  margin:0 0 14px;
+  font-size:.97rem;
+  color:var(--ink-muted-tint);
+}
+.sch dl {
+  margin:0;
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr);
+  gap:8px 16px;
+  font-size:.96rem;
+}
+.sch dt {
+  font-family:var(--font-m);
+  font-weight:500;
+  color:var(--purple-700);
+}
+.sch dd {
+  margin:0;
+}
+.sch .fine {
+  margin:16px 0 0;
+  font-size:.88rem;
+  color:var(--ink-muted);
+}
+.sch-foot {
+  margin-top:28px;
+  padding-top:24px;
+  border-top:1px solid var(--line);
+  display:flex;
+  flex-wrap:wrap;
+  gap:16px 32px;
+  align-items:center;
+  justify-content:space-between;
+}
+.sch-foot p {
+  margin:0;
+  max-width:58ch;
+}
+.sch-foot .cta-row {
+  margin:0;
+}
+@media (max-width:760px) {
+  .sch-grid {
+    grid-template-columns:1fr;
+  }
 }
 @media (max-width:1000px) {
   .road {
@@ -2206,117 +2480,476 @@
   margin:0 0 12px;
   max-width:34ch;
 }
-
-/* v3.36: link from the thinking map block to the public explorer, and the teachers-and-schools band */
-.inbuild .map-now {
-  margin: 20px 0 0;
-  font-size: 0.97rem;
+/* ===== v3.40: beta card rebalanced (Azade, 14 Nov 2026) =====
+   The right column ended about 390 px above the form and left a blank block in the card. The heading and lede now run across
+   the top of the card (the headline takes two lines, not four), the form sits left, and "What a family gets" is a lavender
+   panel on the right that stretches to the height of the form. On lavender: ink 12.18, ink-muted 4.55, purple-600 7.09. */
+.beta {
+  align-items:stretch;
+  gap:clamp(22px,3vw,34px) 40px;
 }
-.inbuild .map-link {
-  margin-top: 14px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 14px;
-  align-items: center;
+.beta-head {
+  grid-column:1/-1;
 }
-.btn-brand {
-  background: var(--purple-600);
-  color: #fff;
+.beta-head h2 {
+  max-width:24ch;
 }
-.btn-brand:hover {
-  background: var(--purple-700);
-  transform: translateY(-1px);
+.beta-head p {
+  max-width:62ch;
 }
-.sch-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px;
+.beta-form .signup {
+  margin-top:0;
 }
-.sch {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 24px 26px;
+.beta-gets {
+  background:var(--tint);
+  border-radius:12px;
+  padding:clamp(20px,2.6vw,28px);
 }
-.sch h3 {
-  font-size: 1.08rem;
-  margin-bottom: 6px;
+.beta-gets .lab {
+  color:var(--purple-700);
 }
-.sch > p {
-  margin: 0 0 14px;
-  font-size: 0.97rem;
-  color: var(--ink-muted-tint);
+.beta-gets .muted {
+  color:var(--ink);
 }
-.sch dl {
-  margin: 0;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 8px 16px;
-  font-size: 0.96rem;
+/* ===== v3.42: changes from the Harvard course pages note (Azade, 15 Nov 2026) =====
+   W-1 pinned bar; W-2 one-field request form; W-3 what your child does; W-4 questions; W-5 who writes the hints;
+   W-6 puzzle stories on request; W-7 the name as the large hero title. Colours are design-system tokens only.
+   Contrast: ink on lavender 12.18, purple-700 on lavender 8.9, purple-600 on lavender 7.09, ink on white 14.2,
+   purple-700 on white 10.3, white on orange-strong 4.67, app-ink2 on app-paper 6.9. */
+/* W-7 */
+.hero h1 {
+  max-width:none;
+  font-size:clamp(1.22rem,1.75vw,1.5rem);
+  font-weight:600;
+  line-height:1.3;
+  letter-spacing:-.012em;
+  margin:0 0 22px;
 }
-.sch dt {
-  font-family: var(--font-m);
-  font-weight: 500;
-  color: var(--purple-700);
+.hero h1 .nm {
+  display:block;
+  font-weight:700;
+  font-size:clamp(2.7rem,5.4vw,4.2rem);
+  line-height:1;
+  letter-spacing:-.035em;
+  color:#FFFFFF;
+  margin:0 0 16px;
 }
-.sch dd {
-  margin: 0;
+.hero h1 .hl {
+  display:block;
+  max-width:33ch;
+  color:#FFFFFF;
 }
-.sch .fine {
-  margin: 16px 0 0;
-  font-size: 0.88rem;
-  color: var(--ink-muted);
+.hero .sub {
+  font-size:clamp(1.02rem,1.3vw,1.12rem);
+  border-left:3px solid var(--orange);
+  padding-left:14px;
+  margin:0 0 16px;
 }
-.sch-foot {
-  margin-top: 28px;
-  padding-top: 24px;
-  border-top: 1px solid var(--line);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px 32px;
-  align-items: center;
-  justify-content: space-between;
+/* W-3 */
+.does h3 {
+  margin:0 0 16px;
+  font-size:clamp(1.25rem,1.9vw,1.5rem);
+  line-height:1.2;
 }
-.sch-foot p {
-  margin: 0;
-  max-width: 58ch;
+.verbs {
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
 }
-.sch-foot .cta-row {
-  margin: 0;
+.verbs li {
+  background:var(--tint);
+  border-radius:12px;
+  padding:16px 18px 18px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
 }
-@media (max-width: 760px) {
-  .sch-grid {
-    grid-template-columns: 1fr;
+.verbs .where {
+  color:var(--purple-600);
+}
+.verbs b {
+  font-family:var(--font-h);
+  font-weight:700;
+  font-size:1.08rem;
+  line-height:1.25;
+  color:var(--purple-700);
+}
+.verbs .d {
+  font-size:.95rem;
+  line-height:1.5;
+  color:var(--ink);
+}
+@media (max-width:1100px) {
+  .verbs {
+    grid-template-columns:1fr;
+  }
+}
+@media (max-width:960px) {
+  .verbs {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+@media (max-width:560px) {
+  .verbs {
+    grid-template-columns:1fr;
+  }
+}
+/* W-6 */
+.pz-more {
+  margin-top:6px;
+}
+.pz-more summary {
+  list-style:none;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  min-height:44px;
+  font-family:var(--font-app-h);
+  font-weight:600;
+  font-size:.95rem;
+  color:var(--app-ink);
+}
+.pz-more summary::-webkit-details-marker {
+  display:none;
+}
+.pz-more .s-open,
+.pz-more[open] .s-closed {
+  display:none;
+}
+.pz-more[open] .s-open {
+  display:inline;
+}
+.pz-more[open] .chev,
+.qa[open] .chev {
+  transform:rotate(180deg);
+}
+.chev {
+  flex:0 0 auto;
+  transition:transform .18s var(--ease);
+}
+.pzc.lv .pz-more p {
+  margin:0 0 4px;
+  font-size:.97rem;
+  line-height:1.5;
+  color:var(--app-ink2);
+}
+.pz-more p .pz-k {
+  display:block;
+  margin-bottom:5px;
+  font-family:var(--font-m);
+  font-size:.6rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.pz-src {
+  margin:14px 0 0;
+}
+/* W-4 and W-5 */
+.faq-grid {
+  display:grid;
+  grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);
+  gap:clamp(28px,4.5vw,64px);
+  align-items:start;
+}
+.faq-side h2 {
+  margin:0 0 26px;
+}
+.hintby {
+  background:var(--tint);
+  border-radius:12px;
+  padding:20px 22px 22px;
+  max-width:440px;
+}
+.hintby .lab {
+  display:block;
+  margin:0 0 14px;
+  font-size:.72rem;
+  line-height:1.6;
+  color:var(--purple-600);
+}
+.hintby-row {
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:12px;
+}
+.hintby-row img {
+  flex:0 0 auto;
+  width:72px;
+  height:72px;
+  border-radius:50%;
+  object-fit:cover;
+  display:block;
+}
+.hintby-row b {
+  display:block;
+  font-family:var(--font-h);
+  font-weight:700;
+  font-size:1.08rem;
+  line-height:1.25;
+  color:var(--purple-700);
+}
+.hintby-row span {
+  display:block;
+  font-size:.9rem;
+  line-height:1.4;
+  color:var(--ink);
+}
+.hintby p {
+  margin:0;
+  font-size:.95rem;
+  line-height:1.55;
+  color:var(--ink);
+}
+.hintby-go {
+  display:inline-flex;
+  align-items:center;
+  min-height:44px;
+  margin-top:4px;
+  font-family:var(--font-h);
+  font-weight:600;
+  font-size:.93rem;
+  color:var(--purple-700);
+  text-decoration:none;
+}
+.hintby-go:hover {
+  color:var(--orange-hover);
+}
+.faq-list {
+  border-bottom:1px solid var(--line);
+}
+.qa {
+  border-top:1px solid var(--line);
+}
+.qa summary {
+  list-style:none;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  min-height:64px;
+  padding:8px 0;
+  color:var(--purple-700);
+}
+.qa summary::-webkit-details-marker {
+  display:none;
+}
+.qa summary h3 {
+  margin:0;
+  font-size:1.12rem;
+  line-height:1.3;
+}
+.qa summary:hover h3 {
+  color:var(--purple-600);
+}
+.qa-a {
+  padding:0 0 20px;
+  max-width:62ch;
+}
+.qa-a p {
+  margin:0 0 10px;
+  font-size:1rem;
+  line-height:1.6;
+  color:var(--ink);
+}
+.qa-a p:last-child {
+  margin-bottom:0;
+}
+.qa-a b {
+  color:var(--purple-700);
+}
+.qa-a a,
+.faq-more a {
+  color:var(--purple-700);
+  font-weight:600;
+}
+.faq-more {
+  margin:0;
+  padding:18px 0;
+  border-top:1px solid var(--line);
+  font-size:.95rem;
+  color:var(--ink-muted);
+}
+@media (max-width:960px) {
+  .faq-grid {
+    grid-template-columns:1fr;
+    gap:28px;
+  }
+  .hintby {
+    max-width:none;
+  }
+  .faq-side h2 {
+    margin-bottom:20px;
+  }
+}
+/* W-2 */
+.f-line {
+  display:flex;
+  gap:10px;
+  align-items:stretch;
+}
+.f-line input {
+  flex:1 1 auto;
+  min-width:0;
+  min-height:48px;
+}
+.f-line .btn {
+  flex:0 0 auto;
+}
+.beta-form .f-row {
+  margin-bottom:0;
+}
+.beta-form .f-err {
+  min-height:0;
+  margin:0;
+}
+.beta-form .f-err:not(:empty) {
+  margin:8px 0 0;
+}
+.beta-form .note {
+  margin-top:12px;
+}
+.beta-form .have {
+  margin:14px 0 0;
+}
+.beta-form .have+.have {
+  margin-top:6px;
+}
+.beta {
+  grid-template-areas:"head head" "form gets" "edu gets";
+  grid-template-rows:auto auto 1fr;
+}
+.beta-head {
+  grid-area:head;
+}
+.beta-form {
+  grid-area:form;
+}
+.beta-gets {
+  grid-area:gets;
+}
+.beta-edu {
+  grid-area:edu;
+  align-self:end;
+  padding-top:18px;
+  border-top:1px solid var(--line);
+}
+@media (max-width:960px) {
+  .beta {
+    grid-template-areas:"head" "form" "gets" "edu";
+    grid-template-rows:none;
+  }
+}
+.beta-edu .lab {
+  display:block;
+  margin:0 0 8px;
+  font-size:.72rem;
+  line-height:1.6;
+  color:var(--purple-600);
+}
+.beta-edu p {
+  margin:0;
+  font-size:.95rem;
+  line-height:1.55;
+  color:var(--ink-muted);
+}
+.beta-edu a {
+  color:var(--purple-700);
+  font-weight:600;
+}
+@media (max-width:560px) {
+  .f-line {
+    flex-direction:column;
+  }
+  .f-line .btn {
+    width:100%;
+  }
+}
+/* W-1 */
+:global(html):has(.page) {
+  scroll-padding-bottom:84px;
+}
+.sticky-cta {
+  display:block;
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:20;
+  padding:9px 0 calc(9px + env(safe-area-inset-bottom));
+  background:rgba(255,255,255,.97);
+  border-top:1px solid var(--line);
+  box-shadow:0 -8px 24px rgba(42,34,61,.10);
+  backdrop-filter:blur(6px);
+  transition:transform .22s var(--ease),visibility .22s;
+}
+.sticky-cta.off {
+  transform:translateY(110%);
+  visibility:hidden;
+}
+.pin {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px 24px;
+}
+.pin-t {
+  margin:0;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:baseline;
+  font-family:var(--font-h);
+  font-weight:500;
+  font-size:.95rem;
+  line-height:1.35;
+  color:var(--ink);
+}
+.pin-t b {
+  font-weight:700;
+  color:var(--purple-700);
+}
+.pin-t span::before {
+  content:"\00B7";
+  margin:0 10px;
+  color:var(--purple-500);
+}
+.sticky-cta .btn {
+  width:auto;
+  max-width:none;
+  min-height:44px;
+  flex:0 0 auto;
+}
+@media (max-width:640px) {
+  .pin {
+    gap:10px;
+  }
+  .pin-t {
+    display:block;
+    font-size:.8rem;
+    line-height:1.35;
+  }
+  .pin-t b {
+    display:none;
+  }
+  .pin-t span {
+    display:block;
+  }
+  .pin-t span::before {
+    display:none;
+  }
+  .pin-t span:first-of-type {
+    font-weight:700;
+    color:var(--purple-700);
+  }
+  .sticky-cta .btn {
+    padding:0 13px;
+    font-size:.86rem;
+    white-space:nowrap;
   }
 }
 
-/* ===== v3.40: beta card rebalanced (Azade, 14 Nov 2026) =====
-   The heading and lede run across the top of the card, the form sits left, and "What a family gets" is a lavender
-   panel on the right that stretches to the height of the form. On lavender: ink 12.18, ink-muted 4.55, purple-600 7.09. */
-.beta {
-  align-items: stretch;
-  gap: clamp(22px, 3vw, 34px) 40px;
-}
-.beta-head {
-  grid-column: 1/-1;
-}
-.beta-head h2 {
-  max-width: 24ch;
-}
-.beta-head p {
-  max-width: 62ch;
-}
-.beta-form .signup {
-  margin-top: 0;
-}
-.beta-gets {
-  background: var(--tint);
-  border-radius: 12px;
-  padding: clamp(20px, 2.6vw, 28px);
-}
-.beta-gets .lab {
-  color: var(--purple-700);
-}
-.beta-gets .muted {
-  color: var(--ink);
-}

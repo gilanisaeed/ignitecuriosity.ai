@@ -8,7 +8,7 @@ import { BetaForm } from "@/components/ignitethinking/beta-form"
 import { StickyCta } from "@/components/ignitethinking/sticky-cta"
 import { c } from "./cx"
 
-// Ported from docs/handoff-2026-11-10/source/IgniteThinking-Page-v3_41.html
+// Ported from docs/handoff-2026-11-10/source/IgniteThinking-Page-v3_48.html
 // (10 Nov 2026), replacing the v3.4 port. Copy is final and audited
 // (handoff rule 3): port verbatim, no edits. Class names are the draft's,
 // mapped to the CSS Module by c(). Review-only elements (draft banner, todo
@@ -55,8 +55,13 @@ export default function IgniteThinkingPage() {
             <div>
               <span className={c("kicker")}>Grades 4 and 5 &middot; Founding Families beta</span>
               <h1>
-                <span className={c("nm")}>IgniteThinking:</span>building independent reasoning through computational
-                thinking and math puzzles, solved with a design thinking process.
+                <span className={c("nm")}>
+                  IgniteThinking<span className={c("sr-only")}>:</span>
+                </span>{" "}
+                <span className={c("hl")}>
+                  Building independent reasoning through computational thinking and math puzzles, solved with a design
+                  thinking process.
+                </span>
               </h1>
               <p className={c("sub")}>
                 Your child solves it.<b>The guide is never given the answer.</b>
@@ -150,7 +155,7 @@ export default function IgniteThinkingPage() {
               </div>
             </div>
 
-            <div className={c("two")} style={{ marginTop: "clamp(34px,4.2vw,50px)", paddingTop: "clamp(30px,3.6vw,42px)", borderTop: "1px solid var(--line)" } as CSSProperties}>
+            <div className={c("two")} style={{ marginTop: "clamp(34px,4.2vw,50px)", paddingTop: "clamp(30px,3.6vw,42px)", borderTop: "1px solid var(--line)" }}>
               <div>
                 <figure className={c("shot")}>
                   <div className={c("shot-bar")} aria-hidden="true"><i></i><i></i><i></i></div>
@@ -158,10 +163,14 @@ export default function IgniteThinkingPage() {
                 </figure>
                 <p className={c("shot-cap")}>Ideate, in the app: your child writes down ways to try before choosing, and the map flags any clash.</p>
               </div>
-              <div>
-                <span className={c("lab")}>Back at Ideate</span>
-                <h3 style={{ margin: "10px 0 8px" }}>And when it does not work</h3>
-                <p>The loop sends your child back to choose again, with help in small steps.</p>
+              <div className={c("does")}>
+                <h3>What your child does in every puzzle</h3>
+                <ul className={c("verbs")}>
+                  <li><span className={c("where")}>Understand and Ideate</span><b>Tries first</b><span className={c("d")}>A real attempt comes before any hint.</span></li>
+                  <li><span className={c("where")}>Prototype and Test</span><b>Predicts, then tests</b><span className={c("d")}>They say what they expect before the picture runs.</span></li>
+                  <li><span className={c("where")}>Back at Ideate</span><b>Tries another way</b><span className={c("d")}>When a test fails, they are invited to choose again.</span></li>
+                  <li><span className={c("where")}>Reflect</span><b>Explains what they found</b><span className={c("d")}>In their own words.</span></li>
+                </ul>
               </div>
             </div>
           </div>
@@ -225,7 +234,7 @@ export default function IgniteThinkingPage() {
                   <span className={c("bd")}>Warm-Up</span>
                   <h3>One idea to find</h3>
                   <p>A short situation, a visual to move, and one insight inside it.</p>
-                  <div className={c("pz-tag")}><span className={c("pz-k")}>Example puzzle</span><span className={c("pz-nm")}>Spot the Odd Cone</span><span className={c("pz-bl")}>Find the one that breaks the rule.</span></div>
+                  <div className={c("pz-tag")}><span className={c("pz-k")}>Example puzzle</span><span className={c("pz-nm")}>Spot the Odd Cone</span><span className={c("pz-bl")}>Find the one that breaks the rule.</span><details className={c("pz-more")}><summary><span className={c("s-closed")}>Show details</span><span className={c("s-open")}>Hide details</span><svg className={c("chev")} width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 5l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg></summary><p><span className={c("pz-k")}>The story your child reads</span>Every cone from this ice-cream machine follows the same secret recipe. The cones look almost identical. But one of them quietly breaks the rule. &lsquo;Almost&rsquo; is the clue.</p></details></div>
               </div>
               <div className={c("pzc lv")} style={{ "--pa": "#4C8DF6" } as CSSProperties}>
                   <svg className={c("pzv")} viewBox="0 0 168 100" role="img" aria-label="An illustrative map of five blank regions, A to E, that share borders">
@@ -239,7 +248,7 @@ export default function IgniteThinkingPage() {
                   <span className={c("bd")}>Explorer</span>
                   <h3>More than one thing to hold</h3>
                   <p>Choose an approach, not a trick, and try a second way when the first one fails.</p>
-                  <div className={c("pz-tag")}><span className={c("pz-k")}>Example puzzle</span><span className={c("pz-nm")}>Fewest Colours</span><span className={c("pz-bl")}>Color the map with as few colors as you can.</span></div>
+                  <div className={c("pz-tag")}><span className={c("pz-k")}>Example puzzle</span><span className={c("pz-nm")}>Fewest Colours</span><span className={c("pz-bl")}>Color the map with as few colors as you can.</span><details className={c("pz-more")}><summary><span className={c("s-closed")}>Show details</span><span className={c("s-open")}>Hide details</span><svg className={c("chev")} width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 5l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg></summary><p><span className={c("pz-k")}>The story your child reads</span>Mapmakers play a quiet game: color every region so neighbors never match, using as FEW colors as you can. Five regions. Surely that takes five colors&hellip; or does it?</p></details></div>
               </div>
               <div className={c("pzc lv")} style={{ "--pa": "#7B61FF" } as CSSProperties}>
                   <svg className={c("pzv")} viewBox="0 0 168 100" role="img" aria-label="A snowflake branch that splits into three, and each tip splits into three again">
@@ -256,9 +265,10 @@ export default function IgniteThinkingPage() {
                   <span className={c("bd")}>Challenger</span>
                   <h3>Nothing obvious to try first</h3>
                   <p>Find a way in before choosing a method. These take longer, by design.</p>
-                  <div className={c("pz-tag")}><span className={c("pz-k")}>Example puzzle</span><span className={c("pz-nm")}>The Copycat Snowflake</span><span className={c("pz-bl")}>Count the tips before you can&rsquo;t.</span></div>
+                  <div className={c("pz-tag")}><span className={c("pz-k")}>Example puzzle</span><span className={c("pz-nm")}>The Copycat Snowflake</span><span className={c("pz-bl")}>Count the tips before you can&rsquo;t.</span><details className={c("pz-more")}><summary><span className={c("s-closed")}>Show details</span><span className={c("s-open")}>Hide details</span><svg className={c("chev")} width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 5l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg></summary><p><span className={c("pz-k")}>The story your child reads</span>The snowflake grows by one strange rule: every tip sprouts a tiny copy of the whole branch. Stage 2 is pretty. Stage 3 is crowded. Stage 4 has far too many tips to count, unless you never actually count them.</p></details></div>
               </div>
             </div>
+
             <div className={c("lv-facts")}>
               <div><span className={c("lab")}>Reading level</span><p>Fourth-grade reading in Warm-Up, fifth-grade above it: the difficulty is in the thinking, not the reading.</p></div>
               <div><span className={c("lab")}>Math puzzles too</span><p>Grade 4 and 5 ideas such as fractions, common multiples, proportional reasoning and volume. No coding needed.</p></div>
@@ -299,6 +309,7 @@ export default function IgniteThinkingPage() {
         {/* ==================== OUR VISION FOR AI (v3.26) ==================== */}
         <section id="ai-vision">
           <div className={c("wrap")}>
+            <div className={c("ai-top")}>
             <div className={c("head prose")}>
               <span className={c("lab eyebrow")}>Our vision for AI</span>
               <h2>Where AI belongs in your child&rsquo;s thinking.</h2>
@@ -306,47 +317,61 @@ export default function IgniteThinkingPage() {
             </div>
             <div className={c("promise")}>
               <p className={c("stage")}>Today every hint your child sees is written and reviewed by educators.</p>
-              <p><b>The AI won&rsquo;t hand over the answer.</b>It is built without the answer, it only phrases help our educators approved, every line in the first AI release is read by a learning scientist, and live phrasing ships only after it passes a leakage test and a learning test.</p>
+              <p><b>The AI won&rsquo;t hand over the answer.</b> It is built without the answer, it only phrases help our educators approved, every line in the first AI release is read by a learning scientist, and live phrasing ships only after it passes a leakage test and a learning test.</p>
+            </div>
             </div>
             <ul className={c("road")}>
               <li className={c("feat")}>
-                <span className={c("where")}>Before any help</span>
-                <h3>Your child thinks first</h3>
-                <p>Help comes only after a real attempt, one small step at a time.</p>
+                <div className={c("feat-h")}>
+                  <span className={c("where")}>Before any help</span>
+                  <h3>Your child thinks first</h3>
+                </div>
+                <p>Hints come only after a real attempt, one small step at a time. Help with reading and the rules is always there.</p>
               </li>
               <li className={c("feat")}>
-                <span className={c("where")}>When a hint appears</span>
-                <h3>Hints for every reader</h3>
+                <div className={c("feat-h")}>
+                  <span className={c("where")}>When a hint appears</span>
+                  <h3>Hints for every reader</h3>
+                </div>
                 <p>The same hint, worded for different readers. AI drafts the wording from our puzzle material, never from your child&rsquo;s writing, and a learning scientist reads every line first.</p>
               </li>
               <li className={c("feat")}>
-                <span className={c("where")}>When your child predicts</span>
-                <h3>Help built on your child&rsquo;s idea</h3>
-                <p>A hint that picks up your child&rsquo;s own prediction and asks them to check it. Only on puzzles where it helps, and only after a legal review, a leakage test and a learning test.</p>
+                <div className={c("feat-h")}>
+                  <span className={c("where")}>When your child predicts</span>
+                  <h3>Help built on your child&rsquo;s idea</h3>
+                </div>
+                <p>A hint that picks up your child&rsquo;s own prediction and asks them to check it. Only on puzzles where it helps, only with your consent, and only after a legal review, a leakage test and a learning test.</p>
               </li>
               <li className={c("feat")}>
-                <span className={c("where")}>From one puzzle to the next</span>
-                <h3>Memory that keeps your child remembering</h3>
-                <p>Designed to record what your child did, never labels about who they are, and to let old conclusions fade. Used only after a legal review and testing.</p>
+                <div className={c("feat-h")}>
+                  <span className={c("where")}>From one puzzle to the next</span>
+                  <h3>Memory that keeps your child remembering</h3>
+                </div>
+                <p>If we add it, it will record what your child did, never labels about who they are, and let old conclusions fade. Switched on only after a legal review, testing and your consent.</p>
               </li>
               <li className={c("feat")}>
-                <span className={c("where")}>As the puzzles grow</span>
-                <h3>More math to think through</h3>
+                <div className={c("feat-h")}>
+                  <span className={c("where")}>As the puzzles grow</span>
+                  <h3>More math to think through</h3>
+                </div>
                 <p>The puzzles grow to cover grade 4 and 5 math. AI may draft hints for new puzzles; educators approve every one.</p>
               </li>
               <li className={c("feat")}>
-                <span className={c("where")}>Beyond solving</span>
-                <h3>Your child makes the puzzle</h3>
-                <p>Your child designs a puzzle and chooses the kind of thinking it asks for.</p>
+                <div className={c("feat-h")}>
+                  <span className={c("where")}>Beyond solving</span>
+                  <h3>Your child makes the puzzle</h3>
+                </div>
+                <p>We are designing a way for your child to make a puzzle of their own and choose the kind of thinking it asks for. No AI is given the solution.</p>
               </li>
             </ul>
-            <p className={c("never")}><b>What the guide will not have:</b> a chat box, web access, or a way to change itself. No unchecked text reaches your child.</p>
+            <p className={c("never")}><b>What the guide will not have:</b> open chat, web access, or a way to change itself. No unchecked text reaches your child.</p>
           </div>
         </section>
 
         {/* ==================== TRUST AND ACCESS ==================== */}
         <section id="trust" className={c("dark")}>
           <div className={c("wrap")}>
+            <div className={c("sec-top")}>
             <div className={c("head prose")}>
               <span className={c("lab eyebrow")}>Access for every child</span>
               <h2>Reading and typing should not be the barrier.</h2>
@@ -362,19 +387,79 @@ export default function IgniteThinkingPage() {
                 <p>Everything works from the keyboard, including the pieces meant to be dragged.</p>
               </div>
             </div>
+            </div>
             <p className={c("bridge")}>Designed to meet WCAG 2.1 AA. Read-aloud is on from the start and can be turned off.</p>
 
           </div>
         </section>
 
-        {/* ==================== PRIVACY (deep purple, v3.19; rebuilt v3.37 to v3.39) ====================
-             Hidden in v3.21; shown again in draft v3.37 for review, rebuilt from Privacy Notice v0.3 to v0.7.
-             The draft says it must not go live before the privacy notice is signed and published, so it stays
-             behind PRIVACY_SECTION_READY until /privacy/ carries the real notice. */}
+        {/* ==================== QUESTIONS (v3.42: W-4 FAQ and W-5 who writes the hints) ==================== */}
+        <section id="faq">
+          <div className={c("wrap faq-grid")}>
+            <div className={c("faq-side")}>
+              <span className={c("lab eyebrow")}>Before you ask</span>
+              <h2>Questions parents ask.</h2>
+              <div className={c("hintby")}>
+                <p className={c("lab")}>Who writes the hints</p>
+                <div className={c("hintby-row")}>
+                  <img src="/ignitethinking/azin-sanjari.jpg" alt="Portrait of Dr. Azin Sanjari" width="104" height="104" loading="lazy" decoding="async" />
+                  <div><b>Dr. Azin Sanjari</b><span>Co-Founder and Chief Learning Scientist</span></div>
+                </div>
+                <p>Every hint in the puzzle bank is written and reviewed by Dr. Azin Sanjari, Assistant Professor of Mathematics Education at the University of Central Arkansas.</p>
+                <a className={c("hintby-go")} href="/about/#azin">Meet the team &rarr;</a>
+
+              </div>
+            </div>
+            <div className={c("faq-list")}>
+              <details className={c("qa")} open>
+                <summary><h3>Is there AI in the app today?</h3><svg className={c("chev")} width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 5l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg></summary>
+                <div className={c("qa-a")}>
+                  <p>Today every hint your child sees is written and reviewed by educators. The guide&rsquo;s AI comes in a later update, once it passes its tests.</p>
+                  <p><b>The AI won&rsquo;t hand over the answer.</b> It is built without the answer, it only phrases help our educators approved, every line in the first AI release is read by a learning scientist, and live phrasing ships only after it passes a leakage test and a learning test.</p>
+                  <p><a href="#ai-vision">Our vision for AI &rarr;</a></p>
+                </div>
+              </details>
+              <details className={c("qa")}>
+                <summary><h3>What will I see as a parent?</h3><svg className={c("chev")} width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 5l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg></summary>
+                <div className={c("qa-a")}>
+                  <p>The grown-up review: your own read-only view of how your child worked, in their own words and drawings. It shows what they tried, how much help they opened and at which step, what happened when they tested it, and what they wrote at the end, word for word. You get the evidence, not a verdict.</p>
+                  <p><a href="#grown-up">See the grown-up review &rarr;</a></p>
+                </div>
+              </details>
+              <details className={c("qa")}>
+                <summary><h3>Is reading a barrier?</h3><svg className={c("chev")} width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 5l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg></summary>
+                <div className={c("qa-a")}>
+                  <p>It should not be. Instructions, hints and worked examples can be read aloud at the press of a button. Read-aloud is on from the start and can be turned off.</p>
+                  <p><a href="#trust">Access for every child &rarr;</a></p>
+                </div>
+              </details>
+              <details className={c("qa")}>
+                <summary><h3>What do you collect about my child?</h3><svg className={c("chev")} width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 5l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg></summary>
+                <div className={c("qa-a")}>
+                  <p>A nickname, an age band and the work they make. From you, your first name and email. No birth date, photo, school or location. We never use your child&rsquo;s work, words or voice to train AI models.</p>
+                  {PRIVACY_SECTION_READY && (
+        <p><a href="#privacy">What we collect, and what we never do &rarr;</a></p>
+        )}
+                </div>
+              </details>
+              <details className={c("qa")}>
+                <summary><h3>Is this a course or a tutor?</h3><svg className={c("chev")} width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 5l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg></summary>
+                <div className={c("qa-a")}>
+                  <p>Neither. It is an app for learning. Your child works through puzzles on their own, and help comes in small steps when they get stuck. There is no chat box, and nobody in the app to message.</p>
+                </div>
+              </details>
+              <p className={c("faq-more")}>Something else? <a href="mailto:hello@ignitecuriosity.ai?subject=A%20question%20about%20IgniteThinking">Ask us</a>.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* ==================== PRIVACY (deep purple; v3.37 to v3.39 rebuild; v3.45 four promises; v3.47 layout) ====================
+             The draft shows it for review but says it must not go live before the privacy notice is signed and
+             published, so it stays behind PRIVACY_SECTION_READY until /privacy/ carries the real notice. */}
         {PRIVACY_SECTION_READY && (
         <section id="privacy" className={c("deep")}>
           <div className={c("wrap")}>
-            <div>
+            <div className={c("pv-grid")}>
             <div className={c("head prose")}>
               <span className={c("lab eyebrow")}>Privacy</span>
               <h2>What we collect, and what we never do.</h2>
@@ -386,10 +471,10 @@ export default function IgniteThinkingPage() {
                 <p>Your first name and email, and for your child a nickname, an age band and the work they make. No birth date, photo, school or location.</p>
               </div>
               <div className={c("aid")}>
-                <div className={c("aid-h")}><svg className={c("mk")} width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--slate)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="5" y="5" width="10" height="10" rx="2" /><path d="M8 2.5v2.5M12 2.5v2.5M8 15v2.5M12 15v2.5M2.5 8h2.5M2.5 12h2.5M15 8h2.5M15 12h2.5" /></svg><h3>No AI in the app today</h3></div>
-                <p>Every hint your child sees is written and reviewed by educators. Before any AI feature goes on, we name the provider, say what it receives and tell you first.</p>
+                <div className={c("aid-h")}><svg className={c("mk")} width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--slate)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="5" y="5" width="10" height="10" rx="2" /><path d="M8 2.5v2.5M12 2.5v2.5M8 15v2.5M12 15v2.5M2.5 8h2.5M2.5 12h2.5M15 8h2.5M15 12h2.5" /></svg><h3>Educators write every hint</h3></div>
+                <p>Every hint your child sees is written and reviewed by educators. The app picks the hint from your child&rsquo;s progress, and nothing your child makes is sent to an AI provider. Before any AI feature goes on, we name the provider, say what it receives and tell you first.</p>
               </div>
-              <div className={c("aid")}>
+              <div className={c("aid")} hidden>
                 <div className={c("aid-h")}><svg className={c("mk")} width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--slate)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="4.5" y="3.5" width="11" height="14" rx="2" /><path d="M7.5 3.5h5v2h-5zM7.5 10h5M7.5 13h3" /></svg><h3>Research is a separate choice</h3></div>
                 <p>You can use IgniteThinking without ever joining a study. If we invite you, the study comes with its own consent form.</p>
               </div>
@@ -397,24 +482,28 @@ export default function IgniteThinkingPage() {
                 <div className={c("aid-h")}><svg className={c("mk")} width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--slate)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M10 2.5l6 2.5v4.5c0 3.6-2.6 6.4-6 8-3.4-1.6-6-4.4-6-8V5z" /><path d="M7.5 10l1.8 1.8 3.4-3.6" /></svg><h3>Never used to train AI</h3></div>
                 <p>We never use your child&rsquo;s work, words or voice to train AI models, and any provider we use must agree to the same in writing.</p>
               </div>
-              <div className={c("aid")}>
+              <div className={c("aid")} hidden>
                 <div className={c("aid-h")}><svg className={c("mk")} width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--slate)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="7" /><path d="M5.1 14.9L14.9 5.1" /></svg><h3>No ads, no selling, no chat</h3></div>
                 <p>No advertisers, no data brokers, no third-party trackers, and nobody in the app to message.</p>
               </div>
-              <div className={c("aid")}>
+              <div className={c("aid")} hidden>
                 <div className={c("aid-h")}><svg className={c("mk")} width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--slate)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="7" cy="7" r="2.5" /><circle cx="13.5" cy="7.5" r="2" /><path d="M2.5 16c.6-2.8 2.4-4.2 4.5-4.2s3.9 1.4 4.5 4.2M12 12c1.9-.2 3.6.9 4.2 3.5" /></svg><h3>Nothing shared between children</h3></div>
                 <p>No friends list, no public gallery, no featured work, and nobody else can open your child&rsquo;s review.</p>
               </div>
-              <div className={c("aid")}>
+              <div className={c("aid")} hidden>
                 <div className={c("aid-h")}><svg className={c("mk")} width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--slate)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="2.5" y="4" width="15" height="12" rx="2" /><path d="M2.5 8h15" /><path d="M5.4 6h.01M7.9 6h.01" /></svg><h3>Trying it sends nothing</h3></div>
                 <p>The sample puzzle on this page runs in your browser and sends us nothing.</p>
               </div>
               <div className={c("aid")}>
                 <div className={c("aid-h")}><svg className={c("mk")} width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--slate)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M1.8 10S4.7 4.8 10 4.8 18.2 10 18.2 10 15.3 15.2 10 15.2 1.8 10 1.8 10Z" /><circle cx="10" cy="10" r="2.3" /></svg><h3>You can see it, and end it</h3></div>
-                <p>Ask to see your child&rsquo;s data, have it deleted, or withdraw consent, at any time. If a security problem ever affects it, we tell you within 72 hours.</p>
+                <p>Ask to see your child&rsquo;s data, have it deleted, or withdraw consent, at any time.</p>
               </div>
             </div>
-            <p className={c("bridge")}>Full detail, including every provider we use and how long we keep each kind of data, is in the <a href="/privacy/">privacy notice</a>.</p>
+            <div className={c("notice")}>
+              <p>The rest is in the full notice: every provider we use, how long we keep each kind of data, research consent, and what we do if there is a security problem.</p>
+              <a className={c("btn btn-onphoto")} href="/privacy/">Read the full privacy notice &rarr;</a>
+
+            </div>
             </div>
           </div>
         </section>
@@ -480,6 +569,7 @@ export default function IgniteThinkingPage() {
               <div className={c("beta-form")}>
                 <BetaForm />
                 <p className={c("have")}>Already a Founding Family? <a href="https://app.ignitecuriosity.ai/">Log in</a>. Have an invite code? <a href="https://app.ignitecuriosity.ai/register">Set up your family</a>.</p>
+                <p className={c("have")}>Not ready yet? <a href="mailto:hello@ignitecuriosity.ai?subject=A%20question%20about%20IgniteThinking">Ask us a question</a>.</p>
               </div>
               <div className={c("beta-gets")}>
                 <p className={c("lab")} style={{ marginBottom: "12px" }}>What a family gets</p>
@@ -490,8 +580,10 @@ export default function IgniteThinkingPage() {
                   <li><svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8.6l3.6 3.6L14 3.8" fill="none" stroke="#56457F" strokeWidth="2.4" strokeLinecap="round" /></svg><span>A direct line to the people who built it, and a say in what changes.</span></li>
                 </ul>
                 <p className={c("muted")} style={{ margin: "16px 0 0", fontSize: ".95rem" }}>Starting without AI has its own benefits: your child sees help exactly as we wrote it, no AI responds to anything they write or say, and when the AI arrives we can tell whether it helps, because we will know how children did without it.</p>
-                <p className={c("lab")} style={{ margin: "26px 0 8px" }}>Educators and researchers</p>
-                <p className={c("muted")} style={{ margin: "0", fontSize: ".95rem" }}>Help us study how children reason after the hints are gone, and design the AI guide with children and teachers. <a href="mailto:hello@ignitecuriosity.ai?subject=IgniteThinking%3A%20educator%20or%20researcher">Write to us</a>.</p>
+              </div>
+              <div className={c("beta-edu")}>
+                <p className={c("lab")}>Educators and researchers</p>
+                <p>Help us study how children reason after the hints are gone, and design the AI guide with children and teachers. <a href="mailto:hello@ignitecuriosity.ai?subject=IgniteThinking%3A%20educator%20or%20researcher">Write to us</a>.</p>
               </div>
             </div>
           </div>
