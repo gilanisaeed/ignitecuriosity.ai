@@ -1,6 +1,6 @@
 /* IgniteThinking landing page, ported from
-   docs/handoff-2026-11-10/source/IgniteThinking-Page-v3_48.html (16 Nov 2026),
-   over v3.41. Generated from the draft's <style> block, in its order, so the
+   docs/handoff-2026-11-10/source/IgniteThinking-Page-v3_49.html (16 Nov 2026),
+   over v3.48. Generated from the draft's <style> block, in its order, so the
    draft's later layers keep overriding the base rules as they do there:
    - :root tokens and the body rules sit on .page (CSS Modules cannot target :root);
      the font stacks use the next/font variables (Baloo 2 and Nunito for the
@@ -2953,3 +2953,78 @@
   }
 }
 
+
+/* ---------- v3.49 (Azade, 16 Nov 2026): three structures taken from the proposed redesign; colours and words are ours ---------- */
+/* numbers strip: three equal columns with dividers, number and label on one line */
+.facts {
+  padding:0;
+}
+.facts .wrap {
+  display:block;
+}
+.stats {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:0;
+}
+.stat {
+  display:flex;
+  align-items:baseline;
+  gap:14px;
+  padding:clamp(20px,2.6vw,28px) clamp(18px,2.6vw,32px);
+}
+.stat:first-child {
+  padding-left:0;
+}
+.stat+.stat {
+  border-left:1px solid rgba(255,255,255,.2);
+}
+.stat b {
+  display:block;
+  flex:none;
+  font-size:clamp(2.2rem,4vw,3rem);
+}
+.facts .stat span {
+  display:block;
+  margin-top:0;
+  line-height:1.5;
+}
+.facts-tags {
+  padding:12px 0 14px;
+  border-top:1px solid rgba(255,255,255,.2);
+}
+@media (max-width:760px) {
+  .stats {
+    grid-template-columns:minmax(0,1fr);
+  }
+  .stat {
+    padding:14px 0;
+  }
+  .stat b {
+    min-width:3.4rem;
+  }
+  .stat+.stat {
+    border-left:0;
+    border-top:1px solid rgba(255,255,255,.2);
+  }
+}
+/* "What it will not tell you": the three statements each get a line */
+.nottell .nt-list {
+  list-style:none;
+  margin:4px 0 10px;
+  padding:0;
+  display:grid;
+  gap:4px;
+  font-family:var(--font-h);
+  font-weight:700;
+  font-size:clamp(1.1rem,1.7vw,1.28rem);
+  line-height:1.25;
+  letter-spacing:-.01em;
+  color:var(--purple-700);
+}
+/* the "Coming later" thinking map sits in a dashed outline (the home page's sign for coming soon) */
+:where(.page) :global(#map) .inbuild {
+  border:1.5px dashed var(--purple-200);
+  border-radius:16px;
+  padding:clamp(20px,3.2vw,40px);
+}

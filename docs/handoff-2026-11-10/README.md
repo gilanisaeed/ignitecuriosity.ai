@@ -1,4 +1,4 @@
-# Home draft v8.28, IgniteThinking draft v3.48 and About draft v1.6 (10 to 17 Nov 2026)
+# Home draft v8.28, IgniteThinking draft v3.49 and About draft v1.6 (10 to 17 Nov 2026)
 
 `source/ICL-Home-Philosophy-v8_28.html` (16 Nov 2026) is the visual and copy
 source of truth for `/`, superseding v8.17, v8.20, v8.21 and v8.22 (kept
@@ -28,8 +28,8 @@ Todo chips left in home v8.28 (not shipped, still open):
 - Evidence, beta date: "re-check the date at every deploy"
 - Privacy commitment link: "blocker: page must exist before launch"
 - Footer privacy link: "blocker: needs a real page"
-`source/IgniteThinking-Page-v3_48.html` (16 Nov 2026) is the source for
-`/ignitethinking/`, superseding v3.34, v3.40 and v3.41 (kept alongside for the
+`source/IgniteThinking-Page-v3_49.html` (16 Nov 2026) is the source for
+`/ignitethinking/`, superseding v3.34, v3.40, v3.41 and v3.48 (kept alongside for the
 diff) and `../handoff-2026-11-01/source/IgniteThinking-Page-v3_4.html`. Its four
 images (three screenshots and the hint-author portrait) are embedded in the
 draft; the site serves them from `public/ignitethinking/`.
@@ -41,6 +41,11 @@ hints", a one-field beta form and a pinned beta bar on every screen; make
 access sections; and bring Curiosity Teal to the AI section. Earlier: v3.36 the
 schools section and thinking-map link, v3.38 two access cards, v3.40 the beta
 card layout, v3.41 the schools section hidden.
+
+v3.49 (16 Nov) takes three layouts from a proposed redesign, words and colours
+unchanged: the numbers strip as three equal columns with dividers; the three
+"What it will not tell you" statements on their own lines; and the "Coming
+later" thinking map in a dashed outline, the home page's sign for coming soon.
 
 Three parts stay hidden on the site, each behind a switch in the page module:
 
@@ -55,7 +60,7 @@ Three parts stay hidden on the site, each behind a switch in the page module:
 - `SCHOOLS_SECTION_READY`: the "For teachers and schools" section, hidden (not
   deleted) in the draft itself from v3.41.
 
-Todo chips left in IgniteThinking v3.48 (not shipped, still open):
+Todo chips left in IgniteThinking v3.49 (not shipped, still open; unchanged from v3.48):
 
 - Over time row: "publish only once TC-8 Growing view ships"
 - Grown-up review screenshot: "test profile; retake once the review's interpretive wording is replaced (UXR-16) and the independence-bar ruling lands"

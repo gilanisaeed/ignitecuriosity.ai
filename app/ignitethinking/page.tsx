@@ -8,8 +8,8 @@ import { BetaForm } from "@/components/ignitethinking/beta-form"
 import { StickyCta } from "@/components/ignitethinking/sticky-cta"
 import { c } from "./cx"
 
-// Ported from docs/handoff-2026-11-10/source/IgniteThinking-Page-v3_48.html
-// (10 Nov 2026), replacing the v3.4 port. Copy is final and audited
+// Ported from docs/handoff-2026-11-10/source/IgniteThinking-Page-v3_49.html
+// (16 Nov 2026), replacing the v3.4 port. Copy is final and audited
 // (handoff rule 3): port verbatim, no edits. Class names are the draft's,
 // mapped to the CSS Module by c(). Review-only elements (draft banner, todo
 // chips, draft footer tail, version-history comments) do not ship
@@ -118,7 +118,12 @@ export default function IgniteThinkingPage() {
               <p className={c("shot-cap")}>The grown-up review, captured from the running app on 2 Nov 2026.</p>
               <div className={c("nottell")}>
                 <span className={c("lab")}>What it will not tell you</span>
-                <p>Help is not failure. One solve is not mastery. A longer reflection is not better thinking. A trend in how much help they needed is one line about one app, never an assessment of your child.</p>
+                <ul className={c("nt-list")}>
+                  <li>Help is not failure.</li>
+                  <li>One solve is not mastery.</li>
+                  <li>A longer reflection is not better thinking.</li>
+                </ul>
+                <p>A trend in how much help they needed is one line about one app, never an assessment of your child.</p>
               </div>
             </div>
           </div>

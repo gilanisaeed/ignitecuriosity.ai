@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react"
 import { c } from "@/app/ignitethinking/cx"
 
 // The beta form, ported from the draft's second <script>
-// (docs/handoff-2026-11-10/source/IgniteThinking-Page-v3_48.html), logic as
+// (docs/handoff-2026-11-10/source/IgniteThinking-Page-v3_49.html), logic as
 // written. v3.42 (W-2): one field, the email; the optional question is asked on
 // the next step, which is the mail message itself. It composes a message in the
 // visitor's own mail client; nothing is transmitted from this page. After
