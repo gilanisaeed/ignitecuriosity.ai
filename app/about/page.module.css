@@ -1,5 +1,5 @@
-/* About page, ported from docs/handoff-2026-11-10/source/ICL-About-v1_4.html
-   (11 Nov 2026), replacing the July About page. Generated from the draft's
+/* About page, ported from docs/handoff-2026-11-10/source/ICL-About-v1_6.html
+   (17 Nov 2026); first ported from v1.4, replacing the July About page. Generated from the draft's
    <style> block in its order (the draft is home v8.20's stylesheet plus the
    About rules), the same way as the IgniteThinking module:
    - :root tokens and the body rules sit on .page (CSS Modules cannot target :root);
@@ -1873,16 +1873,750 @@
     gap:28px;
   }
 }
+/* Doors match the site's own card pattern (Azade, 11 Nov 2026): a Montserrat h3 title, body copy at the card size, and the
+   same link style as the "What we build" cards (.card .go): heading font, no underline, orange on hover. */
+.doors li {
+  border-radius:12px;
+  padding:20px 22px 10px;
+  display:flex;
+  flex-direction:column;
+}
+.doors h3 {
+  margin:0 0 6px;
+  font-size:1.14rem;
+  color:var(--purple-700);
+}
+.doors p {
+  font-size:.94rem;
+  line-height:1.55;
+  color:var(--ink);
+}
+.doors a {
+  display:inline-flex;
+  align-items:center;
+  align-self:flex-start;
+  min-height:44px;
+  padding:0;
+  font-family:var(--font-h);
+  font-weight:600;
+  font-size:.93rem;
+  color:var(--purple-700);
+  text-decoration:none;
+}
+.doors a:hover {
+  color:var(--orange-strong);
+}
+/* ===== v1.6 (Azade, 17 Nov 2026): compared section by section with the proposed redesign
+   (ignite-curiosity-lab-about-page-red.vercel.app). Structure only: our tokens, our colour rulings, every word unchanged.
+   Colour order is now: deep purple hero, Curiosity Purple band, white (why), pale lavender (team), deep purple (the standing
+   rule, the one dark section), white (path), orange close, deep purple footer. Teal keeps its job, evidence, and stays on white:
+   the proof label and number badges inside the white proof card, and the evidence gate on the white path.
+   Contrast: purple-500 on white 6.0; orange-strong on white 4.67; purple-100 on #56457F 6.27; white on #56457F 8.22;
+   ink on lavender 12.18; orange-hover on lavender 4.79; ink-muted on lavender 4.55; purple-100 on purple-800 9.82;
+   orange on purple-800 4.67; teal-strong on white 4.79; white on teal-strong 4.79; ink-muted on white 5.27. */
+/* 1 · hero figure: one card in place of two. The rejected sentence is struck through, the one we build for is underlined. */
+.slip {
+  margin:0;
+  justify-self:end;
+  width:100%;
+  max-width:470px;
+  background:#FFFFFF;
+  color:var(--purple-800);
+  border-radius:20px;
+  padding:clamp(22px,2.6vw,34px);
+  box-shadow:0 30px 60px -24px rgba(20,14,34,.6);
+}
+.slip figcaption {
+  font-family:var(--font-m);
+  font-size:.7rem;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--purple-600);
+  padding-bottom:18px;
+  border-bottom:1px dashed var(--border-strong);
+}
+.slip p {
+  margin:0;
+  padding-top:20px;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:6px;
+}
+.slip .who {
+  font-family:var(--font-m);
+  font-size:.66rem;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--ink-muted);
+}
+.slip .yes .who {
+  color:var(--orange-strong);
+}
+.slip .sq {
+  position:relative;
+  font-family:var(--font-h);
+  letter-spacing:-.02em;
+}
+.slip .no .sq {
+  font-weight:600;
+  font-size:clamp(1.3rem,2.2vw,1.7rem);
+  line-height:1.2;
+  color:var(--purple-500);
+}
+.slip .no s {
+  text-decoration:none;
+}
+.slip .no .sq::after {
+  content:"";
+  position:absolute;
+  left:-4px;
+  right:-4px;
+  top:54%;
+  height:3px;
+  border-radius:2px;
+  background:var(--orange);
+  transform-origin:left center;
+  animation:strike .5s var(--ease) .9s both;
+}
+.slip .yes .sq {
+  font-weight:700;
+  font-size:clamp(1.7rem,3vw,2.35rem);
+  line-height:1.15;
+  padding-bottom:14px;
+}
+.slip .yes svg {
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:100%;
+  height:10px;
+  color:var(--orange);
+  animation:drawline .6s var(--ease) 1.4s both;
+}
+@keyframes strike {
+  from{transform:scaleX(0)}to{transform:scaleX(1)};
+}
+@keyframes drawline {
+  from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)};
+}
+@media (min-width:961px) {
+  .slip {
+    transform:rotate(-1.5deg);
+  }
+}
+@media (max-width:960px) {
+  .slip {
+    justify-self:start;
+  }
+}
+@media (prefers-reduced-motion:reduce) {
+  .slip .no .sq::after,
+  .slip .yes svg {
+    animation:none;
+  }
+}
+/* credentials: six separate items in place of one run-on line of small capitals. Same Curiosity Purple band as home. */
+.creds {
+  padding:26px 0 28px;
+}
+.creds .wrap {
+  display:block;
+}
+.creds ul {
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr)) minmax(0,1.6fr);
+  gap:20px 24px;
+}
+.creds li {
+  padding-left:14px;
+  border-left:2px solid var(--purple-200);
+}
+.creds li b {
+  display:block;
+  font-family:var(--font-h);
+  font-weight:600;
+  font-size:.95rem;
+  line-height:1.35;
+  color:#FFFFFF;
+}
+.creds li span {
+  display:block;
+  margin-top:2px;
+  font-family:var(--font-b);
+  font-size:.86rem;
+  letter-spacing:0;
+  text-transform:none;
+  line-height:1.4;
+  color:var(--purple-100);
+}
+@media (max-width:960px) {
+  .creds ul {
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+}
+@media (max-width:520px) {
+  .creds ul {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+/* 2 · why we started: heading beside the text; the quote and "Where we come from" get their own row under a line,
+   so the heading and the quote no longer compete side by side. */
+.why-grid {
+  display:grid;
+  grid-template-columns:minmax(0,5fr) minmax(0,6fr);
+  gap:64px;
+  align-items:start;
+}
+.why-grid h2 {
+  margin:0;
+}
+.why-grid .prose {
+  max-width:none;
+  padding-top:34px;
+}
+.why-grid .prose p {
+  font-size:1.06rem;
+  max-width:62ch;
+}
+.why-grid .prose p:last-child {
+  margin-bottom:0;
+}
+@media (min-width:961px) {
+  .why-head {
+    position:sticky;
+    top:28px;
+  }
+}
+.stance {
+  display:grid;
+  grid-template-columns:minmax(0,7fr) minmax(0,4fr);
+  gap:64px;
+  align-items:start;
+  margin-top:clamp(40px,5vw,64px);
+  padding-top:clamp(36px,4.5vw,56px);
+  border-top:1px solid var(--line);
+}
+.stance figure,
+.stance blockquote {
+  margin:0;
+}
+.stance blockquote p {
+  font-family:var(--font-h);
+  font-weight:600;
+  font-size:clamp(1.55rem,3.1vw,2.5rem);
+  line-height:1.16;
+  letter-spacing:-.025em;
+  color:var(--purple-800);
+  margin:0;
+  text-wrap:balance;
+}
+.stance blockquote p span {
+  color:var(--orange-strong);
+}
+.stance figcaption {
+  display:flex;
+  align-items:center;
+  gap:10px 14px;
+  margin-top:24px;
+  flex-wrap:wrap;
+}
+.stance figcaption img {
+  display:block;
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  object-fit:cover;
+}
+.stance figcaption b {
+  display:block;
+  font-family:var(--font-h);
+  font-weight:600;
+  font-size:1rem;
+  line-height:1.3;
+  color:var(--purple-800);
+}
+.stance figcaption .ttl {
+  display:block;
+  font-size:.92rem;
+  color:var(--ink-muted);
+}
+.origin {
+  padding-left:32px;
+  border-left:1px solid var(--line);
+}
+.origin .lab {
+  display:block;
+  color:var(--orange-strong);
+  margin-bottom:10px;
+}
+.origin p {
+  margin:0;
+  font-size:1.02rem;
+  line-height:1.65;
+}
+.origin strong {
+  font-weight:500;
+  color:var(--purple-600);
+}
+@media (max-width:960px) {
+  .why-grid,
+  .stance {
+    grid-template-columns:1fr;
+    gap:26px;
+  }
+  .why-grid .prose {
+    padding-top:0;
+  }
+  .origin {
+    padding:24px 0 0;
+    border-left:0;
+    border-top:1px solid var(--line);
+  }
+}
+/* 3 · the team, on pale lavender, without card boxes: the three bios are very different lengths, and equal purple cards left
+   two of them mostly empty. Portraits 5:4, so faces are not cropped at the forehead. Role as a line of text, not a pill. */
+:where(.page) section.tinted .team-head {
+  grid-template-columns:minmax(0,7fr) minmax(0,5fr);
+  gap:56px;
+  margin-bottom:40px;
+}
+:where(.page) section.tinted .team-head p {
+  color:var(--ink);
+}
+@media (max-width:960px) {
+  :where(.page) section.tinted .team-head {
+    grid-template-columns:1fr;
+    gap:20px;
+  }
+}
+.team2 {
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:40px;
+}
+.person {
+  display:grid;
+  align-content:start;
+}
+.person img {
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:5/4;
+  object-fit:cover;
+  object-position:50% 25%;
+  border-radius:18px;
+  background:var(--purple-100);
+}
+.person h3 {
+  margin:22px 0 0;
+  font-size:1.3rem;
+  color:var(--purple-800);
+}
+.person .role2 {
+  margin:4px 0 0;
+  font-family:var(--font-h);
+  font-weight:600;
+  font-size:.9rem;
+  line-height:1.4;
+  color:var(--orange-hover);
+}
+.person .bio {
+  margin:14px 0 0;
+  font-size:.98rem;
+  line-height:1.65;
+  color:var(--ink);
+}
+:where(.page) section.tinted .advisors {
+  border-top-color:var(--border-strong);
+  margin-top:44px;
+}
+:where(.page) section.tinted .advisors .lab {
+  color:var(--orange-hover);
+}
+:where(.page) section.tinted .advisors b {
+  color:var(--purple-800);
+}
+:where(.page) section.tinted .advisors .aff {
+  color:var(--ink-muted);
+}
+@media (max-width:860px) {
+  .team2 {
+    grid-template-columns:1fr;
+    gap:36px;
+  }
+  .person {
+    grid-template-columns:88px minmax(0,1fr);
+    gap:0 18px;
+    align-items:center;
+  }
+  .person img {
+    width:88px;
+    height:88px;
+    aspect-ratio:auto;
+    border-radius:16px;
+  }
+  .person h3 {
+    margin-top:0;
+  }
+  .person .bio {
+    grid-column:1/-1;
+  }
+}
+/* 4 · the standing rule is the page's one dark section, so the promise is the largest thing on the page.
+   The proof stays on white (a card), which is where teal is allowed: Teal strong label and number badges. */
+.rule2 {
+  display:grid;
+  grid-template-columns:minmax(0,6fr) minmax(0,5fr);
+  gap:72px;
+  align-items:center;
+}
+:where(.page) section.dark .stage {
+  color:var(--purple-100);
+  max-width:32ch;
+  margin-bottom:14px;
+}
+:where(.page) section.dark .promise {
+  color:#FFFFFF;
+  font-size:clamp(2.4rem,5.4vw,4.2rem);
+  line-height:1.02;
+  margin:0;
+  max-width:12ch;
+}
+:where(.page) section.dark .promise span {
+  display:block;
+  color:var(--orange);
+}
+.holds {
+  background:#FFFFFF;
+  border-radius:20px;
+  padding:30px 32px 10px;
+  color:var(--ink);
+  box-shadow:0 30px 60px -28px rgba(20,14,34,.6);
+}
+.holds .proof {
+  margin:0 0 20px;
+  font-size:1rem;
+  line-height:1.6;
+  color:var(--ink);
+}
+.holds .proof .lab {
+  color:var(--teal-strong);
+}
+.layers2 {
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+.layers2 li {
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr);
+  gap:14px;
+  align-items:center;
+  padding:15px 0;
+  border-top:1px solid var(--line);
+}
+.layers2 .n {
+  font-family:var(--font-m);
+  font-size:.66rem;
+  letter-spacing:.14em;
+  color:#FFFFFF;
+  background:var(--teal-strong);
+  padding:3px 9px 2px 10px;
+  border-radius:999px;
+}
+.layers2 b {
+  font-family:var(--font-h);
+  font-weight:600;
+  font-size:1.02rem;
+  line-height:1.35;
+  color:var(--purple-800);
+}
+.holds .morelink {
+  display:flex;
+  align-items:center;
+  min-height:48px;
+  margin:0;
+  padding:6px 0;
+  border-top:1px solid var(--line);
+}
+@media (max-width:960px) {
+  .rule2 {
+    grid-template-columns:1fr;
+    gap:32px;
+  }
+  .holds {
+    padding:24px 22px 8px;
+  }
+}
+/* 5 · the path as a line, on white: four points, the "now" point in orange, the evidence gate as a Teal strong diamond, and the
+   stretch after the gate dashed in Curiosity Teal, because that stretch depends on the evidence. */
+.track2 {
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+.st {
+  position:relative;
+  padding:44px 32px 0 0;
+}
+.st::before {
+  content:"";
+  position:absolute;
+  left:9px;
+  right:-9px;
+  top:8px;
+  height:2px;
+  background:var(--purple-600);
+}
+.st:last-child::before {
+  display:none;
+}
+.st.gate::before {
+  background:repeating-linear-gradient(to right,var(--teal) 0 7px,transparent 7px 13px);
+}
+.st .node {
+  position:absolute;
+  z-index:1;
+  left:0;
+  top:0;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:#FFFFFF;
+  border:2px solid var(--purple-600);
+}
+.st.now .node {
+  background:var(--orange);
+  border-color:var(--orange-strong);
+  box-shadow:0 0 0 5px rgba(242,122,55,.22);
+}
+.st.gate .node {
+  border-radius:3px;
+  transform:rotate(45deg);
+  background:var(--teal-strong);
+  border-color:var(--teal-strong);
+}
+.st .when {
+  display:block;
+  font-family:var(--font-m);
+  font-size:.7rem;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--purple-600);
+}
+.st.now .when {
+  color:var(--orange-strong);
+}
+.st.gate .when {
+  color:var(--teal-strong);
+}
+.st h3 {
+  margin:8px 0 0;
+  font-size:1.22rem;
+  color:var(--purple-800);
+}
+.st p {
+  margin:8px 0 0;
+  font-size:.96rem;
+  line-height:1.55;
+  color:var(--ink-muted);
+  max-width:27ch;
+}
+:global(#path) .path-head {
+  margin-bottom:44px;
+}
+:global(#path) .constant {
+  color:var(--purple-800);
+  margin-top:44px;
+}
+:global(#path) .path-src {
+  color:var(--ink-muted);
+}
+:global(#path) .also {
+  border-top-color:var(--line);
+  margin-top:48px;
+}
+:global(#path) .also>.lab {
+  color:var(--orange-strong);
+}
+@media (max-width:860px) {
+  .track2 {
+    grid-template-columns:1fr;
+  }
+  .st {
+    padding:0 0 32px 40px;
+  }
+  .st:last-child {
+    padding-bottom:0;
+  }
+  .st::before {
+    left:8px;
+    right:auto;
+    top:12px;
+    bottom:-12px;
+    width:2px;
+    height:auto;
+  }
+  .st.gate::before {
+    background:repeating-linear-gradient(to bottom,var(--teal) 0 7px,transparent 7px 13px);
+  }
+  .st .node {
+    top:2px;
+  }
+  .st p {
+    max-width:none;
+  }
+}
+/* also from the lab: the home v8.26 pair. IgniteEd solid Curiosity Purple; IgniteBuild in a dashed outline, the site's sign for
+   coming soon (home v8.26, IgniteThinking v3.49), with "Coming soon" as a plain label. */
+.also2 {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:24px;
+}
+.acard {
+  border-radius:20px;
+  padding:26px 28px 22px;
+  display:flex;
+  flex-direction:column;
+}
+.acard h3 {
+  margin:0 0 8px;
+  font-size:1.4rem;
+  line-height:1.2;
+}
+.acard p {
+  margin:0 0 14px;
+  font-size:.98rem;
+  line-height:1.55;
+  max-width:52ch;
+}
+.acard.ed {
+  background:var(--purple-600);
+  color:var(--purple-100);
+}
+.acard.ed h3 {
+  color:#FFFFFF;
+}
+.acard.ed .go {
+  margin-top:auto;
+  display:inline-flex;
+  align-items:center;
+  align-self:flex-start;
+  min-height:44px;
+  font-family:var(--font-h);
+  font-weight:600;
+  font-size:.95rem;
+  color:#FFFFFF;
+  text-decoration:none;
+}
+.acard.ed .go:hover {
+  color:var(--orange-50);
+}
+.acard.soon {
+  border:1.5px dashed var(--purple-400);
+  color:var(--ink);
+}
+.acard.soon .state {
+  font-family:var(--font-m);
+  font-size:.68rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--ink-muted);
+  margin:0 0 12px;
+}
+.acard.soon h3 {
+  color:var(--purple-800);
+}
+.acard.soon p {
+  margin-bottom:0;
+}
+@media (max-width:760px) {
+  .also2 {
+    grid-template-columns:1fr;
+    gap:16px;
+  }
+}
+/* 6 · closing band: the home v8.28 structure, copied from the home stylesheet so the two pages close the same way.
+   Headline left with the lede and buttons to its right; the three doors in a row below. */
+.close-band.cb2 {
+  display:block;
+  max-width:none;
+}
+.cb2 .close-copy {
+  display:grid;
+  grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);
+  gap:24px 56px;
+  align-items:end;
+  margin:0 0 40px;
+}
+.cb2 h2 {
+  max-width:none;
+  text-wrap:balance;
+}
+.cb2 .cc-r p {
+  margin:0;
+  font-size:1.08rem;
+  line-height:1.55;
+}
+.cb2 .cta-row {
+  margin-top:22px;
+}
+.cb2 .doors {
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:40px;
+  margin:0;
+  padding:0;
+  border-top:0;
+}
+.cb2 .doors li {
+  border-radius:16px;
+  padding:26px 28px 14px;
+}
+.cb2 .doors h3 {
+  font-size:1.22rem;
+  margin:0 0 8px;
+  color:var(--purple-800);
+}
+.cb2 .doors p {
+  font-size:.98rem;
+  margin:0 0 12px;
+}
+.cb2 .doors a {
+  margin-top:auto;
+}
+@media (max-width:900px) {
+  .cb2 .close-copy {
+    grid-template-columns:1fr;
+    margin-bottom:30px;
+  }
+  .cb2 .doors {
+    grid-template-columns:1fr;
+    gap:14px;
+  }
+}
 
 /* Focus ring grounds (as on the home page, 14e80c4): white on the deep purple
-   hero and sections and the orange closing band (12.88, 4.67); the white door
-   cards in the band take purple-500 back (6.4 on white). */
+   hero and sections, the purple IgniteEd card and the orange closing band
+   (12.88, 7.9, 4.67); the white cards on those grounds (the standing rule's
+   proof card, the door cards in the band) take purple-500 back (6.4 on white). */
 .hero,
 :where(.page) section.dark,
+.acard.ed,
 .close-dark {
   --focus-ring: #ffffff;
 }
+.holds,
 .doors li {
   --focus-ring: var(--purple-500);
 }
-

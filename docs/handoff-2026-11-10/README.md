@@ -1,4 +1,4 @@
-# Home draft v8.28, IgniteThinking draft v3.48 and About draft v1.4 (10 to 16 Nov 2026)
+# Home draft v8.28, IgniteThinking draft v3.48 and About draft v1.6 (10 to 17 Nov 2026)
 
 `source/ICL-Home-Philosophy-v8_28.html` (16 Nov 2026) is the visual and copy
 source of truth for `/`, superseding v8.17, v8.20, v8.21 and v8.22 (kept
@@ -86,14 +86,25 @@ white with an orange underline. The orange announcement bar shows on `/` (linkin
 
 ## About page
 
-`source/ICL-About-v1_4.html` (11 Nov 2026) is the source for `/about/`,
-replacing the July About page and its `components/about-section.tsx`. Its three
-team portraits are embedded in the draft; the site serves them from
-`public/about/`. Its closing band is the v8.21 one (door labels as small
-labels); home v8.22 later gave the doors card titles and v8.28 put them in a
-row under the headline.
+`source/ICL-About-v1_6.html` (17 Nov 2026) is the source for `/about/`,
+superseding v1.4 (kept alongside for the diff), which replaced the July About
+page and its `components/about-section.tsx`. Its portraits (three team
+portraits and a small one beside the pull quote) are embedded in the draft;
+the site serves them from `public/about/`.
 
-Todo chips left in About v1.4 (not shipped, still open):
+v1.6 compares the page section by section with a proposed redesign and takes
+its structures, in our colours, with every word unchanged: the hero figure as
+one card ("The AI told me." struck through, "I figured it out." underlined);
+the credentials as six separate items; "Why we started" with the heading beside
+the text and the quote and "Where we come from" on their own row; the team
+without card boxes, on pale lavender; the standing rule as the page's one dark
+section, its proof in a white card; the path as a line with the evidence gate;
+and "Also from the lab" as the home v8.26 pair of cards. The closing band takes
+the home v8.28 structure (v1.5 had given the doors card titles). Not taken from
+the redesign: its cream background, orange in the headline, the missing "Our
+mission" label and the missing proof sentence.
+
+Todo chips left in About v1.6 (not shipped, still open; unchanged from v1.4):
 
 - Why we started: "optional: the moment that started Ignite, in one true sentence" (the paragraph held only this note, so it does not ship)
 - Why we started: "sign-off: belief 04, moved here from home on 9 Sep" (the "student without a tutor at home" sentence ships)
