@@ -1,20 +1,24 @@
-import type { CSSProperties } from "react"
 import Link from "next/link"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { SuccessFigure } from "@/components/home/success-figure"
 import styles from "./page.module.css"
 
-// Ported from docs/handoff-2026-11-10/source/ICL-Home-Philosophy-v8_22.html
+// Ported from docs/handoff-2026-11-10/source/ICL-Home-Philosophy-v8_28.html
 // (first ported from v8.4, docs/handoff-2026-11-01/source/).
 // Copy is final and audited (handoff rule 3): port verbatim, no edits.
 // Review-only elements (draft banner, todo chips, draft footer tail,
 // version-history comments) do not ship (handoff 4.2).
 
-function Check() {
+function Dash() {
+  return <span className={styles.dash} aria-hidden="true"></span>
+}
+
+function CheckDot() {
   return (
-    <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true">
-      <path d="M2 8.6l3.6 3.6L14 3.8" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
+    <svg className={styles.ck} width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
+      <circle cx="13" cy="13" r="13" fill="var(--orange)" />
+      <path d="M7.8 13.4l3.4 3.4 7-7.4" fill="none" stroke="var(--purple-900)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   )
 }
@@ -102,6 +106,10 @@ export default function Home() {
               <span className={styles.ci}>Me2We 2026 Top-10 (Stanford GSB)</span>
             </span>
             <span>Workshop and poster, Khan Lab School AI in Education Summit 2026</span>
+            <span className={styles.people}>
+              Every IgniteThinking hint is written and reviewed by Dr. Azin Sanjari, Assistant Professor of Mathematics
+              Education, University of Central Arkansas
+            </span>
           </div>
         </div>
 
@@ -118,31 +126,50 @@ export default function Home() {
                 further: when a learning principle matters, we design the system around it.
               </p>
             </div>
-            <div className={styles.vs}>
-              <div className={styles.a}>
-                <div className={styles["col-head"]}>
-                  <span className={styles.tag}>The default</span>
-                  <h3>Prompt-level guidance</h3>
-                </div>
-                <div className={styles.row}>The model is instructed to follow a pedagogical rule.</div>
-                <div className={styles.row}>Reliability depends on model compliance and prompt robustness.</div>
-                <div className={styles.row}>Behavior can drift across prompts, models, and model updates.</div>
+            <div className={styles.vs2}>
+              <div className={`${styles.vcard} ${styles.dflt}`}>
+                <span className={styles.tag}>The default</span>
+                <h3>Prompt-level guidance</h3>
+                <ul>
+                  <li>
+                    <Dash />
+                    <span>The model is instructed to follow a pedagogical rule.</span>
+                  </li>
+                  <li>
+                    <Dash />
+                    <span>Reliability depends on model compliance and prompt robustness.</span>
+                  </li>
+                  <li>
+                    <Dash />
+                    <span>Behavior can drift across prompts, models, and model updates.</span>
+                  </li>
+                </ul>
               </div>
-              <div className={styles.b}>
-                <div className={styles["col-head"]}>
-                  <span className={styles.tag}>What we build</span>
-                  <h3>System-level learning design</h3>
-                </div>
-                <div className={styles.row}>
-                  Critical constraints are <strong>enforced by the system</strong>, not requested of the model.
-                </div>
-                <div className={styles.row}>
-                  Any model we use works inside explicit system boundaries, and <strong>it is never given the answer</strong>.
-                </div>
-                <div className={styles.row}>
-                  Those constraints are <strong>checked directly</strong>: we test for answer leakage instead of
-                  assuming it away.
-                </div>
+              <div className={`${styles.vcard} ${styles.ours}`}>
+                <span className={styles.tag}>What we build</span>
+                <h3>System-level learning design</h3>
+                <ul>
+                  <li>
+                    <CheckDot />
+                    <span>
+                      Critical constraints are <strong>enforced by the system</strong>, not requested of the model.
+                    </span>
+                  </li>
+                  <li>
+                    <CheckDot />
+                    <span>
+                      Any model we use works inside explicit system boundaries, and{" "}
+                      <strong>it is never given the answer</strong>.
+                    </span>
+                  </li>
+                  <li>
+                    <CheckDot />
+                    <span>
+                      Those constraints are <strong>checked directly</strong>: we test for answer leakage instead of
+                      assuming it away.
+                    </span>
+                  </li>
+                </ul>
               </div>
             </div>
             <p className={styles.boundary} style={{ marginTop: 22 }}>
@@ -152,66 +179,77 @@ export default function Home() {
         </section>
 
         {/* 2 · the question */}
-        <section className={styles.dark}>
-          <div className={`${styles.wrap} ${styles["q-grid"]}`}>
-            <div>
+        <section className={styles.dark} id="question">
+          <div className={styles.wrap}>
+            <div className={styles["q-head"]}>
               <span className={`${styles.lab} ${styles.eyebrow}`}>The question we ask</span>
               <p className={styles.bigq}>
                 Instead of asking what AI can do for the learner, we ask <em>what thinking must remain with the learner.</em>
               </p>
             </div>
-            <div>
-              <div className={styles.handoff} aria-label="Responsibility moves from the system to the learner">
-                <span className={styles.hl}>System</span>
-                <div className={styles.rail}>
-                  <div className={styles.knob}></div>
-                </div>
-                <span className={styles.hl}>Learner</span>
+            <div className={styles.own} aria-label="What AI can support, and what the learner must own">
+              <div className={`${styles["own-card"]} ${styles.sys}`}>
+                <span className={`${styles.lab} ${styles["own-lab"]}`}>System</span>
+                <h3>AI can support</h3>
+                <ul>
+                  <li>
+                    <span className={styles.n} aria-hidden="true">
+                      01
+                    </span>
+                    <span>Ask a question</span>
+                  </li>
+                  <li>
+                    <span className={styles.n} aria-hidden="true">
+                      02
+                    </span>
+                    <span>Surface a pattern</span>
+                  </li>
+                  <li>
+                    <span className={styles.n} aria-hidden="true">
+                      03
+                    </span>
+                    <span>Offer a scaffold</span>
+                  </li>
+                  <li>
+                    <span className={styles.n} aria-hidden="true">
+                      04
+                    </span>
+                    <span>Prompt reflection</span>
+                  </li>
+                </ul>
               </div>
-              <div className={styles.cm}>
-                <div className={`${styles.panel} ${styles.ai}`}>
-                  <h3>AI can support</h3>
-                  <ul style={{ color: "var(--purple-300)" }}>
-                    <li>
-                      <Check />
-                      <span style={{ color: "var(--ink)" }}>Ask a question</span>
-                    </li>
-                    <li>
-                      <Check />
-                      <span style={{ color: "var(--ink)" }}>Surface a pattern</span>
-                    </li>
-                    <li>
-                      <Check />
-                      <span style={{ color: "var(--ink)" }}>Offer a scaffold</span>
-                    </li>
-                    <li>
-                      <Check />
-                      <span style={{ color: "var(--ink)" }}>Prompt reflection</span>
-                    </li>
-                  </ul>
-                </div>
-                <div className={`${styles.panel} ${styles.learner}`}>
-                  <h3>The learner must own</h3>
-                  <ul style={{ color: "var(--purple-600)" }}>
-                    <li>
-                      <Check />
-                      <span style={{ color: "var(--ink)" }}>Form the hypothesis</span>
-                    </li>
-                    <li>
-                      <Check />
-                      <span style={{ color: "var(--ink)" }}>Choose the approach</span>
-                    </li>
-                    <li>
-                      <Check />
-                      <span style={{ color: "var(--ink)" }}>Make the mistake</span>
-                    </li>
-                    <li>
-                      <Check />
-                      <span style={{ color: "var(--ink)" }}>Explain the reasoning</span>
-                    </li>
-                  </ul>
-                </div>
-                <p className={styles.boundary}>The boundary is the product.</p>
+              <div className={styles["own-line"]}>
+                <p className={styles["own-pill"]}>The boundary is the product.</p>
+              </div>
+              <div className={`${styles["own-card"]} ${styles.lrn}`}>
+                <span className={`${styles.lab} ${styles["own-lab"]}`}>Learner</span>
+                <h3>The learner must own</h3>
+                <ul>
+                  <li>
+                    <span className={styles.n} aria-hidden="true">
+                      01
+                    </span>
+                    <span>Form the hypothesis</span>
+                  </li>
+                  <li>
+                    <span className={styles.n} aria-hidden="true">
+                      02
+                    </span>
+                    <span>Choose the approach</span>
+                  </li>
+                  <li>
+                    <span className={styles.n} aria-hidden="true">
+                      03
+                    </span>
+                    <span>Make the mistake</span>
+                  </li>
+                  <li>
+                    <span className={styles.n} aria-hidden="true">
+                      04
+                    </span>
+                    <span>Explain the reasoning</span>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
@@ -336,8 +374,8 @@ export default function Home() {
               <span className={`${styles.lab} ${styles.eyebrow}`}>Our products</span>
               <h2>What we build</h2>
             </div>
-            <div className={styles.cards}>
-              <article className={styles.card} style={{ "--accent": "var(--coral)" } as CSSProperties}>
+            <div className={styles.pb}>
+              <article className={`${styles.pcard} ${styles.feat}`}>
                 <span className={styles.state}>Founding Families beta · late November 2026</span>
                 <h3>IgniteThinking</h3>
                 <p>
@@ -345,25 +383,47 @@ export default function Home() {
                   work computational thinking puzzles and math puzzles through a design thinking process, and the guide
                   is never given the answer.
                 </p>
-                <Link className={styles.go} href="/ignitethinking/">
-                  See IgniteThinking &rarr;
-                </Link>
+                <div className={styles.pstats}>
+                  <div className={styles.pstat}>
+                    <b>24</b>
+                    <span>puzzles</span>
+                  </div>
+                  <div className={styles.pstat}>
+                    <b>3</b>
+                    <span>levels, all open from day one</span>
+                  </div>
+                  <div className={styles.pstat}>
+                    <b>0</b>
+                    <span>chat boxes</span>
+                  </div>
+                </div>
+                <div className={styles.pcta}>
+                  <Link className={`${styles.btn} ${styles["btn-primary"]}`} href="/ignitethinking/">
+                    See IgniteThinking &rarr;
+                  </Link>
+                  <Link className={`${styles.btn} ${styles["btn-outline"]}`} href="/ignitethinking/#beta">
+                    Request beta access
+                  </Link>
+                </div>
               </article>
-              <article className={styles.card} style={{ "--accent": "var(--purple-400)" } as CSSProperties}>
-                <h3>IgniteEd</h3>
-                <p>
-                  Practical AI literacy for educators and school teams, held to the same rule as everything we make: we
-                  claim only what our data supports.
-                </p>
-                <Link className={styles.go} href="/igniteed/">
-                  Visit IgniteEd &rarr;
-                </Link>
-              </article>
-              <article className={styles.card} style={{ "--accent": "var(--purple-600)" } as CSSProperties}>
-                <span className={styles.state}>Coming soon</span>
-                <h3>IgniteBuild</h3>
-                <p>Where future builders ship. For high schools. Stay tuned.</p>
-              </article>
+              <div className={styles["pb-side"]}>
+                <article className={`${styles.pcard} ${styles.side}`}>
+                  <span className={styles.state}>For educators and schools</span>
+                  <h3>IgniteEd</h3>
+                  <p>
+                    Practical AI literacy for educators and school teams, held to the same rule as everything we make:
+                    we claim only what our data supports.
+                  </p>
+                  <Link className={styles.go} href="/igniteed/">
+                    Visit IgniteEd &rarr;
+                  </Link>
+                </article>
+                <article className={`${styles.pcard} ${styles.soon}`}>
+                  <span className={styles.state}>Coming soon</span>
+                  <h3>IgniteBuild</h3>
+                  <p>Where future builders ship. For high schools. Stay tuned.</p>
+                </article>
+              </div>
             </div>
           </div>
         </section>
@@ -371,30 +431,50 @@ export default function Home() {
         {/* 5 · commitments (warm white) */}
         <section>
           <div className={styles.wrap}>
-            <div className={styles.strip} aria-label="What we hold ourselves to">
+            <div className={`${styles.strip} ${styles.strip2}`} aria-label="What we hold ourselves to">
               <div>
-                <span className={styles.lab}>Human-led, AI-supported</span>
+                <span className={styles.pic} aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="9" cy="8" r="3.2" />
+                    <path d="M3.2 19.2c0-3.1 2.6-5.2 5.8-5.2s5.8 2.1 5.8 5.2" />
+                    <path d="M15.6 5a3.2 3.2 0 0 1 0 6" />
+                    <path d="M17.4 14.4c2 .7 3.4 2.4 3.4 4.8" />
+                  </svg>
+                </span>
+                <h3>Human-led, AI-supported</h3>
                 <p>
                   Human judgment stays central. Teachers direct the tools they use in class, and in learner-facing
                   experiences the learner owns the reasoning. AI supports both. It replaces neither.
                 </p>
               </div>
               <div>
-                <span className={styles.lab}>Explainable by design</span>
+                <span className={styles.pic} aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M2.5 12s3.5-6.5 9.5-6.5S21.5 12 21.5 12s-3.5 6.5-9.5 6.5S2.5 12 2.5 12z" />
+                    <circle cx="12" cy="12" r="2.8" />
+                  </svg>
+                </span>
+                <h3>Explainable by design</h3>
                 <p>
                   Every AI intervention has a pedagogical purpose we can name. Where the system steps in, we design
                   that step to be visible to the teacher or parent, not hidden inside the experience.
                 </p>
               </div>
               <div>
-                <span className={styles.lab}>Privacy is part of the architecture</span>
+                <span className={styles.pic} aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 3l7 2.8v5.4c0 4.4-2.9 8-7 9.8-4.1-1.8-7-5.4-7-9.8V5.8L12 3z" />
+                    <path d="M8.8 12.2l2.3 2.3 4.2-4.6" />
+                  </svg>
+                </span>
+                <h3>Privacy is part of the architecture</h3>
                 <p>
                   We minimize the data we collect about a learner, define clear retention boundaries, never sell or
-                  rent it, and design for age-appropriate privacy from the start.{" "}
-                  <Link href="/privacy/" style={{ display: "inline-block", padding: "12px 0" }}>
-                    Our privacy approach &rarr;
-                  </Link>
+                  rent it, and design for age-appropriate privacy from the start.
                 </p>
+                <Link className={styles.more} href="/privacy/">
+                  Our privacy approach &rarr;
+                </Link>
               </div>
             </div>
           </div>
@@ -403,20 +483,22 @@ export default function Home() {
         {/* 6 · close (orange band) */}
         <section className={styles["close-dark"]}>
           <div className={styles.wrap}>
-            <div className={styles["close-band"]}>
+            <div className={`${styles["close-band"]} ${styles.cb2}`}>
               <div className={styles["close-copy"]}>
-                <span className={`${styles.lab} ${styles.eyebrow}`}>Work with us</span>
-                <h2>Build AI that leaves people more capable than it found them.</h2>
-                <p className={styles.prose} style={{ margin: "14px 0 0" }}>
-                  That is the standard we hold our products, our research, and our partnerships to.
-                </p>
-                <div className={styles["cta-row"]} style={{ marginTop: 24 }}>
-                  <a className={`${styles.btn} ${styles["btn-onorange"]}`} href="mailto:hello@ignitecuriosity.ai">
-                    Partner with us
-                  </a>
-                  <a className={`${styles.btn} ${styles["btn-onorange-ghost"]}`} href="#build">
-                    Explore our products
-                  </a>
+                <div className={styles["cc-l"]}>
+                  <span className={`${styles.lab} ${styles.eyebrow}`}>Work with us</span>
+                  <h2>Build AI that leaves people more capable than it found them.</h2>
+                </div>
+                <div className={styles["cc-r"]}>
+                  <p>That is the standard we hold our products, our research, and our partnerships to.</p>
+                  <div className={styles["cta-row"]}>
+                    <a className={`${styles.btn} ${styles["btn-onorange"]}`} href="mailto:hello@ignitecuriosity.ai">
+                      Partner with us
+                    </a>
+                    <a className={`${styles.btn} ${styles["btn-onorange-ghost"]}`} href="#build">
+                      Explore our products
+                    </a>
+                  </div>
                 </div>
               </div>
               <ul className={styles.doors}>

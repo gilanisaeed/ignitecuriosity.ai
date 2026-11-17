@@ -1,13 +1,33 @@
-# Home draft v8.22, IgniteThinking draft v3.48 and About draft v1.4 (10 to 16 Nov 2026)
+# Home draft v8.28, IgniteThinking draft v3.48 and About draft v1.4 (10 to 16 Nov 2026)
 
-`source/ICL-Home-Philosophy-v8_22.html` is the visual and copy source of truth
-for `/`, superseding v8.17, v8.20 and v8.21 (kept alongside for the diff) and
+`source/ICL-Home-Philosophy-v8_28.html` (16 Nov 2026) is the visual and copy
+source of truth for `/`, superseding v8.17, v8.20, v8.21 and v8.22 (kept
+alongside for the diff) and
 `../handoff-2026-11-01/source/ICL-Home-Philosophy-v8_4.html`. v8.18 adds the
 Instagram and LinkedIn footer links (shown site-wide, since the footer is
 shared); v8.19 and v8.20 bring Curiosity Teal to the science section; v8.21
 (11 Nov) splits the closing orange band into two columns, with the three doors
 as white cards on the right; v8.22 gives those cards the site's card pattern
 (Montserrat title, card-size copy, the "What we build" link style).
+v8.23 to v8.28 (15 and 16 Nov) add a line to the credentials band, "Every
+IgniteThinking hint is written and reviewed by Dr. Azin Sanjari, ...", and
+restructure five sections from Azade's reference screenshots (structure only,
+no copy changed except where noted): the pedagogy comparison becomes two cards
+(v8.25); "The question we ask" puts the headline on top and two numbered cards
+below, with "The boundary is the product." as the line between them (v8.24);
+"What we build" makes IgniteThinking the featured card, with IgniteEd and
+IgniteBuild stacked beside it (v8.26), the IgniteThinking page's numbers row
+and a second button, Request beta access, and the label "For educators and
+schools" on IgniteEd (v8.27); the three commitments gain an icon and a heading
+each (v8.26); and the closing band puts the headline left, the lede and buttons
+right and the three doors in a row below (v8.28).
+
+Todo chips left in home v8.28 (not shipped, still open):
+
+- Credentials band, hint author: "needs Azin's agreement to be named here; wording from deck v36, slide 2" (the line ships, as the "Who writes the hints" box does on IgniteThinking)
+- Evidence, beta date: "re-check the date at every deploy"
+- Privacy commitment link: "blocker: page must exist before launch"
+- Footer privacy link: "blocker: needs a real page"
 `source/IgniteThinking-Page-v3_48.html` (16 Nov 2026) is the source for
 `/ignitethinking/`, superseding v3.34, v3.40 and v3.41 (kept alongside for the
 diff) and `../handoff-2026-11-01/source/IgniteThinking-Page-v3_4.html`. Its four
@@ -70,7 +90,8 @@ white with an orange underline. The orange announcement bar shows on `/` (linkin
 replacing the July About page and its `components/about-section.tsx`. Its three
 team portraits are embedded in the draft; the site serves them from
 `public/about/`. Its closing band is the v8.21 one (door labels as small
-labels); home v8.22 later gave the doors card titles.
+labels); home v8.22 later gave the doors card titles and v8.28 put them in a
+row under the headline.
 
 Todo chips left in About v1.4 (not shipped, still open):
 

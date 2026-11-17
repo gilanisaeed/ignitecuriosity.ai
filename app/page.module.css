@@ -77,7 +77,9 @@
   font-size: 1.12rem;
   line-height: 1.28;
 }
-.page p {
+/* :where() keeps the draft's bare `p` specificity, so class rules such as
+   .own-pill { margin: 0 } win as they do in the draft */
+:where(.page) p {
   margin: 0 0 1em;
 }
 /* :where() keeps this at the bare-element specificity the draft's `a` rule
@@ -1396,4 +1398,541 @@
 }
 .doors a:hover {
   color: var(--orange-strong);
+}
+
+/* ===== Draft v8.23 to v8.28 (15 and 16 Nov 2026), ported from the draft stylesheet. Dark-section rules carry the .page
+   prefix like the earlier ones above. */
+/* v8.23 (H-2, Harvard course pages note, 15 Nov 2026): one people line in the credentials band, on its own row */
+.creds .people {
+  flex-basis:100%;
+}
+/* ===== v8.24 (Azade, 16 Nov 2026): "The question we ask" restructured from her reference screenshot (structure only, our colours).
+   Headline across the top; below it two equal cards with the boundary drawn between them as a line and a pill. The system card is
+   outlined (recessive), the learner card is solid white (the emphasis). Small label, title and four numbered rows per card, rows
+   aligned across the two cards. Replaces the side-by-side layout, the handoff rail and the caption under the cards.
+   Contrast: purple-100 on purple-800 9.82, purple-200 on purple-800 6.73, purple-300 on purple-800 4.67, ink on white 14.13,
+   orange-strong on white 4.67, purple-900 on orange 5.46. */
+:global(#question) .q-head {
+  margin:0 0 36px;
+}
+:global(#question) .bigq {
+  font-size:clamp(1.6rem,3.1vw,2.45rem);
+  line-height:1.16;
+  max-width:none;
+  text-wrap:balance;
+}
+.own {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 72px minmax(0,1fr);
+  align-items:stretch;
+}
+.own-card {
+  border-radius:20px;
+  padding:34px 36px 30px;
+}
+.own-card.sys {
+  border:1px solid rgba(255,255,255,.22);
+  color:var(--purple-100);
+}
+.own-card.lrn {
+  background:var(--surface);
+  color:var(--ink);
+}
+.own-card .own-lab {
+  display:block;
+  margin:0 0 10px;
+  font-size:.72rem;
+  letter-spacing:.2em;
+}
+.own-card.sys .own-lab {
+  color:var(--purple-200);
+}
+.own-card.lrn .own-lab {
+  color:var(--orange-strong);
+}
+.own-card h3 {
+  margin:0 0 18px;
+  font-size:clamp(1.25rem,2vw,1.6rem);
+  line-height:1.2;
+}
+.own-card.sys h3 {
+  color:#FFFFFF;
+}
+.own-card.lrn h3 {
+  color:var(--purple-800);
+}
+.own-card ul {
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+.own-card li {
+  display:grid;
+  grid-template-columns:34px minmax(0,1fr);
+  align-items:baseline;
+  gap:10px;
+  padding:16px 0;
+  font-size:1.08rem;
+  line-height:1.35;
+}
+.own-card li+li {
+  border-top:1px solid rgba(255,255,255,.14);
+}
+.own-card.lrn li+li {
+  border-top-color:var(--line);
+}
+.own-card.lrn li {
+  font-weight:500;
+}
+.own-card .n {
+  font-family:var(--font-m);
+  font-size:.74rem;
+  letter-spacing:.06em;
+}
+.own-card.sys .n {
+  color:var(--purple-300);
+}
+.own-card.lrn .n {
+  color:var(--orange-strong);
+}
+.own-line {
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.own-line::before {
+  content:"";
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:50%;
+  width:2px;
+  margin-left:-1px;
+  background:var(--orange);
+}
+.own-pill {
+  position:relative;
+  margin:0;
+  background:var(--orange);
+  color:var(--purple-900);
+  border-radius:999px;
+  padding:18px 9px;
+  font-family:var(--font-m);
+  font-size:.7rem;
+  font-weight:500;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  white-space:nowrap;
+  writing-mode:vertical-rl;
+  transform:rotate(180deg);
+}
+@media (max-width:860px) {
+  .own {
+    grid-template-columns:1fr;
+  }
+  .own-card {
+    padding:26px 24px 22px;
+  }
+  .own-line {
+    padding:18px 0;
+  }
+  .own-line::before {
+    top:50%;
+    bottom:auto;
+    left:0;
+    right:0;
+    width:auto;
+    height:2px;
+    margin:-1px 0 0;
+  }
+  .own-pill {
+    writing-mode:horizontal-tb;
+    transform:none;
+    padding:9px 18px;
+  }
+}
+/* ===== v8.25 (Azade, 16 Nov 2026): "We make pedagogy part of the architecture" restructured from her reference screenshot
+   (structure only, our colours). The joined table, whose row lines did not meet across the two columns, becomes two separate
+   equal cards: the default outlined with dash marks (recessive), what we build solid deep purple with check marks (the emphasis).
+   Same card shape as "The question we ask" (v8.24), inverted for a white section.
+   Contrast: ink-muted on white 5.0, ink on white 14.13, purple-100 on purple-800 9.82, white on purple-800 13.0,
+   orange on purple-800 4.67, purple-900 on orange 5.46. */
+.vs2 {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:24px;
+  align-items:stretch;
+}
+.vcard {
+  border-radius:20px;
+  padding:34px 36px 32px;
+}
+.vcard.dflt {
+  border:1.5px dashed var(--purple-200);
+  color:var(--ink-muted);
+}
+.vcard.ours {
+  background:var(--purple-800);
+  color:var(--purple-100);
+}
+.vcard .tag {
+  display:block;
+  margin:0 0 10px;
+  font-family:var(--font-m);
+  font-size:.72rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+}
+.vcard.dflt .tag {
+  color:var(--ink-muted);
+}
+.vcard.ours .tag {
+  color:var(--orange);
+}
+.vcard h3 {
+  margin:0 0 22px;
+  font-size:clamp(1.25rem,2vw,1.6rem);
+  line-height:1.2;
+}
+.vcard.dflt h3 {
+  color:var(--ink);
+}
+.vcard.ours h3 {
+  color:#FFFFFF;
+}
+.vcard ul {
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:grid;
+  gap:18px;
+}
+.vcard li {
+  display:grid;
+  grid-template-columns:26px minmax(0,1fr);
+  gap:14px;
+  align-items:start;
+  font-size:1.04rem;
+  line-height:1.5;
+}
+.vcard .dash {
+  width:14px;
+  height:2px;
+  border-radius:2px;
+  background:var(--purple-300);
+  margin-top:.72em;
+}
+.vcard .ck {
+  margin-top:.02em;
+}
+.vcard.ours strong {
+  color:#FFFFFF;
+  font-weight:600;
+}
+@media (max-width:860px) {
+  .vs2 {
+    grid-template-columns:1fr;
+    gap:16px;
+  }
+  .vcard {
+    padding:26px 24px 24px;
+  }
+}
+/* ===== v8.26 (Azade, 16 Nov 2026): "What we build" and the commitments row restructured from her reference screenshots
+   (structure only, our colours). Build: IgniteThinking is the featured card (about two thirds, solid white, large title, the link as
+   a button); IgniteEd (solid Curiosity Purple) and IgniteBuild (dashed, coming soon) are stacked beside it. Card words unchanged.
+   Commitments: each of the three has an icon in a lavender circle and a real heading in place of the small caps label; the privacy
+   link sits under its paragraph. The closing band and the footer are unchanged.
+   Contrast: ink on white 14.13, purple-800 on white 13.0, white on orange-strong 4.67, white on #56457F 8.22,
+   purple-100 on #56457F 6.27, purple-100 on purple-800 9.82, purple-200 on purple-800 6.73, purple-600 on purple-50 7.1. */
+.pb {
+  display:grid;
+  grid-template-columns:minmax(0,1.9fr) minmax(0,1fr);
+  gap:24px;
+  align-items:stretch;
+}
+.pcard {
+  border-radius:20px;
+  padding:34px 36px 32px;
+  display:flex;
+  flex-direction:column;
+}
+.pcard .state {
+  align-self:flex-start;
+  font-family:var(--font-m);
+  font-size:.68rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  margin:0 0 18px;
+}
+.page section.dark .pcard.feat {
+  background:var(--surface);
+  color:var(--ink);
+}
+.pcard.feat .state {
+  background:var(--orange-strong);
+  color:#FFFFFF;
+  border-radius:999px;
+  padding:6px 13px 5px;
+}
+.page section.dark .pcard.feat h3 {
+  margin:0 0 14px;
+  font-size:clamp(1.9rem,3.6vw,2.8rem);
+  line-height:1.08;
+  letter-spacing:-.02em;
+  color:var(--purple-800);
+}
+.page section.dark .pcard.feat p {
+  margin:0 0 28px;
+  max-width:54ch;
+  font-size:1.12rem;
+  line-height:1.6;
+  color:var(--ink);
+}
+.pcard.feat .btn {
+  margin-top:auto;
+  align-self:flex-start;
+}
+.pb-side {
+  display:flex;
+  flex-direction:column;
+  gap:24px;
+}
+.pb-side .pcard {
+  flex:1 1 auto;
+  padding:26px 28px 24px;
+}
+.page section.dark .pcard.side {
+  background:var(--purple-600);
+  color:var(--purple-100);
+}
+.page section.dark .pcard.soon {
+  border:1.5px dashed var(--purple-300);
+  color:var(--purple-100);
+}
+.page section.dark .pb-side h3 {
+  margin:0 0 8px;
+  font-size:1.4rem;
+  line-height:1.2;
+  color:#FFFFFF;
+}
+.page section.dark .pb-side p {
+  margin:0 0 14px;
+  font-size:.98rem;
+  line-height:1.55;
+  color:var(--purple-100);
+}
+.pcard.soon .state {
+  color:var(--purple-200);
+  margin-bottom:12px;
+}
+.pcard.soon p {
+  margin-bottom:0;
+}
+.pcard.side .go {
+  margin-top:auto;
+  display:inline-flex;
+  align-items:center;
+  align-self:flex-start;
+  min-height:44px;
+  font-family:var(--font-h);
+  font-weight:600;
+  font-size:.95rem;
+  color:#FFFFFF;
+  text-decoration:none;
+}
+.pcard.side .go:hover {
+  color:var(--orange-50);
+}
+@media (max-width:860px) {
+  .pb {
+    grid-template-columns:1fr;
+  }
+  .pcard {
+    padding:26px 24px 24px;
+  }
+}
+.strip2 {
+  gap:40px;
+}
+.strip2>div {
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+}
+.strip2 .pic {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  background:var(--purple-50);
+  color:var(--purple-600);
+  margin:0 0 18px;
+}
+.strip2 h3 {
+  margin:0 0 10px;
+  font-size:1.22rem;
+  line-height:1.25;
+  color:var(--purple-800);
+}
+.strip2 p {
+  margin:0;
+  font-size:1rem;
+  line-height:1.6;
+  color:var(--ink);
+}
+.strip2 a.more {
+  margin-top:10px;
+  display:inline-flex;
+  align-items:center;
+  min-height:44px;
+  font-family:var(--font-h);
+  font-weight:600;
+  color:var(--purple-700);
+  text-decoration:none;
+}
+.strip2 a.more:hover {
+  color:var(--orange-strong);
+}
+@media (max-width:860px) {
+  .strip2 {
+    gap:30px;
+  }
+}
+/* v8.27 (Azade, 16 Nov 2026: "we can use them"): the featured card gains the numbers row and a second button, and IgniteEd an
+   audience label. Numbers and their words are the IgniteThinking page's own strip (24 puzzles; 3 levels, all open from day one;
+   0 chat boxes). Numbers are Curiosity Purple, not orange: orange stays for actions. Purple-600 on white 8.22, ink-muted on white 5.0,
+   purple-700 on white 10.6, purple-100 on #56457F 6.27. */
+.page section.dark .pcard.feat p {
+  margin-bottom:24px;
+}
+.pstats {
+  display:flex;
+  flex-wrap:wrap;
+  gap:16px 56px;
+  margin:0 0 28px;
+  padding-top:22px;
+  border-top:1px solid var(--line);
+}
+.pstat b {
+  display:block;
+  font-family:var(--font-h);
+  font-weight:700;
+  font-size:clamp(1.9rem,3vw,2.5rem);
+  line-height:1;
+  color:var(--purple-600);
+}
+.pstat span {
+  display:block;
+  margin-top:6px;
+  font-size:.92rem;
+  color:var(--ink-muted);
+}
+.pcta {
+  margin-top:auto;
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+}
+.pcard.feat .pcta .btn {
+  margin-top:0;
+}
+.btn-outline {
+  background:transparent;
+  color:var(--purple-700);
+  border-color:var(--purple-300);
+}
+.btn-outline:hover {
+  background:var(--purple-50);
+  transform:translateY(-1px);
+}
+.pcard.side .state {
+  color:var(--purple-100);
+  margin-bottom:12px;
+}
+@media (max-width:560px) {
+  .pstats {
+    display:grid;
+    gap:10px;
+  }
+  .pstat {
+    display:grid;
+    grid-template-columns:54px minmax(0,1fr);
+    align-items:baseline;
+  }
+  .pstat b {
+    font-size:1.7rem;
+  }
+  .pstat span {
+    margin:0;
+  }
+}
+/* ===== v8.28 (Azade, 16 Nov 2026): closing band restructured from her reference screenshot (structure only, our colours).
+   Headline left with the lede and buttons to its right, so the top row fills the width; the three doors in a row below, on the
+   same three columns as the commitments above. Replaces the v8.21 layout (message left, doors stacked right). Orange band kept.
+   Contrast: white on orange-strong 4.67, purple-800 on white 12.88, ink on white 14.13, purple-700 on white 10.6. */
+.close-band.cb2 {
+  display:block;
+  max-width:none;
+}
+.cb2 .close-copy {
+  display:grid;
+  grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);
+  gap:24px 56px;
+  align-items:end;
+  margin:0 0 40px;
+}
+.cb2 h2 {
+  max-width:none;
+  text-wrap:balance;
+}
+.cb2 .cc-r p {
+  margin:0;
+  font-size:1.08rem;
+  line-height:1.55;
+}
+.cb2 .cta-row {
+  margin-top:22px;
+}
+.cb2 .doors {
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:40px;
+  margin:0;
+  padding:0;
+  border-top:0;
+}
+.cb2 .doors li {
+  border-radius:16px;
+  padding:26px 28px 14px;
+}
+.cb2 .doors h3 {
+  font-size:1.22rem;
+  margin:0 0 8px;
+  color:var(--purple-800);
+}
+.cb2 .doors p {
+  font-size:.98rem;
+  margin:0 0 12px;
+}
+.cb2 .doors a {
+  margin-top:auto;
+}
+@media (max-width:900px) {
+  .cb2 .close-copy {
+    grid-template-columns:1fr;
+    margin-bottom:30px;
+  }
+  .cb2 .doors {
+    grid-template-columns:1fr;
+    gap:14px;
+  }
+}
+
+/* v8.26 cards: the IgniteEd card is purple-600, where the default purple-500 ring is 1.37:1, so its link gets the white
+   ring the old dark cards had (7.9). The featured card is white and keeps the purple ring. */
+.page section.dark .pcard.side {
+  --focus-ring: #ffffff;
 }
