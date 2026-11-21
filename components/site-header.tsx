@@ -5,7 +5,9 @@ import styles from "./site-chrome.module.css"
 // bar (docs/handoff-2026-11-10/source/), used site-wide outside IgniteEd.
 // The Science is out of the main menu (23 Sep ruling, restored in v8.5);
 // /science/ stays reachable from the pages that link to it. Markup and copy
-// as in the draft; the <details> menu works without JavaScript.
+// as in the draft; the <details> menu works without JavaScript. Home v8.29
+// adds the skip link (to <main id="main"> on every page that uses this
+// header) and a Log in item that shows inside the phone menu.
 
 const navItems = [
   { key: "ignitethinking", href: "/ignitethinking/", label: "IgniteThinking" },
@@ -31,6 +33,9 @@ export function SiteHeader({
   const announceLink = announce === true ? { href: "/ignitethinking/", label: "See IgniteThinking" } : announce
   return (
     <>
+      <a className={styles.skip} href="#main">
+        Skip to content
+      </a>
       {announceLink && (
         <div className={styles.announce}>
           IgniteThinking Founding Families beta &middot; opens late November 2026
@@ -56,6 +61,9 @@ export function SiteHeader({
                 {item.label}
               </Link>
             ))}
+            <a className={styles["nav-login"]} href="https://app.ignitecuriosity.ai/">
+              Log in
+            </a>
           </nav>
           <span className={`${styles.lab} ${styles.tail}`}>{tail}</span>
           <a className={styles.login} href="https://app.ignitecuriosity.ai/">

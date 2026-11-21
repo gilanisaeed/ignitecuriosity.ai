@@ -7,7 +7,7 @@ export default function SciencePage() {
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader current="science" />
-      <main className="flex-1">
+      <main id="main" className="flex-1">
         {/* Section 1: The Crisis */}
         <section className="py-20 bg-muted/30">
           <div className="container px-6 md:px-12">

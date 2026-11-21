@@ -1,19 +1,27 @@
-/* About page, ported from docs/handoff-2026-11-10/source/ICL-About-v1_4.html
-   (11 Nov 2026), replacing the July About page. Generated from the draft's
-   <style> block in its order (the draft is home v8.20's stylesheet plus the
-   About rules), the same way as the IgniteThinking module:
+/* About page, ported from docs/handoff-2026-11-10/source/ICL-About-v1_7.html
+   (20 Nov 2026), whose one consolidated stylesheet replaces the layered v1.6
+   one. Generated from the draft's <style> block in its order, the same way as
+   the home and IgniteThinking modules:
    - :root tokens and the body rules sit on .page (CSS Modules cannot target :root);
      the font stacks use the next/font variables.
    - Bare element selectors carry a :where(.page) prefix, so they keep the
      draft's element-level specificity and lose to class rules as in the draft.
    - #ids stay global (:global(#id)) so the page anchors keep working.
-   - The chrome (announcement bar, header, footer) lives in
+   - The chrome (announcement bar, header, skip link, footer) lives in
      components/site-chrome.module.css; the review-only .todo and
      .draft-banner rules do not ship (handoff 4.2).
-   - The white focus ring on dark and orange grounds follows the home page (14e80c4). */
+   The draft's own comment follows. */
 
-/* Every colour below is a token from IgniteCuriosityLab_DesignSystem.html, with one ruled exception:
-   Ignite Coral #FB5A3C as the accent of the IgniteThinking card only (DECISIONS, 9 Sep 2026). */
+/* ICL About v1.7, 20 Nov 2026. One consolidated stylesheet: the seven stacked layers of v1.0 to v1.6 are resolved into their
+   final values, and the rules carried over from the home page for sections this page does not have are gone. It shares the
+   header, buttons, labels, focus rings, closing band and footer of ICL home v8.29.
+   Every colour is a token from IgniteCuriosityLab_DesignSystem.html. Shadows and translucent lines are palette colours at
+   reduced alpha (white, purple-900 #2A223D, Curiosity Purple #56457F, Curiosity Orange). Coral is not used on this page.
+   Contrast (computed): white on purple-800 12.88, purple-100 on purple-800 9.82, purple-200 on purple-800 6.73,
+   orange on purple-800 4.67, white on #56457F 8.22, purple-100 on #56457F 6.27, white on orange-strong 4.67,
+   orange-strong on white 4.67, orange-hover on lavender 4.79, teal-strong on white 4.79, white on teal-strong 4.79,
+   ink on white 14.13, ink on lavender 12.18, ink-muted on white 5.27, ink-muted on lavender 4.55, purple-800 on white 12.88,
+   purple-500 on white 6.0. */
 .page {
   --purple-900:#2A223D;
   --purple-800:#362C4F;
@@ -26,26 +34,26 @@
   --purple-100:#E3DFEA;
   --purple-50:#EFEDF5;
   --orange:#F27A37;
-  /* Curiosity Orange: the single warm mark in the diagrams */
   --orange-strong:#C0531F;
   --orange-hover:#AC4B1F;
   --orange-50:#FEF2EB;
-  --coral:#FB5A3C;
-  /* IgniteThinking signature: its product card ONLY */
-  --disabled:#A9A5B0;
-  --border-strong:#CFC8D6;
-  --slate:#192028;
-  --bg:#FBF8F3;
+  --teal:#2F8CA8;
+  --teal-strong:#0F7C9C;
+  /* teal has one job: evidence (the proof card and the evidence gate), on white only */
+  --bg:#FFFFFF;
   --surface:#FFFFFF;
   --tint:#EFEDF5;
   --ink:#2C2A33;
   --ink-muted:#6E6A75;
   --line:#E3DFEA;
+  --border-strong:#CFC8D6;
   --font-h: var(--font-heading), "Helvetica Neue", Arial, sans-serif;
   --font-b: var(--font-body), "Helvetica Neue", Arial, sans-serif;
   --font-m: var(--font-mono), ui-monospace, "SF Mono", Menlo, monospace;
-  --ease:cubic-bezier(.2,.6,.3,1);
-  --ease-pop:cubic-bezier(.34,1.4,.64,1);
+  --ease-out:cubic-bezier(.23,1,.32,1);
+  /* every state change */
+  --lab:.75rem;
+  /* smallest label on the page: 12 px */;
 }
 .page *,
 .page *::before,
@@ -64,24 +72,31 @@
   text-wrap:pretty;
   -webkit-font-smoothing:antialiased;
 }
+/* scoped to the page (CSS Modules cannot target a bare ::selection) */
+.page ::selection {
+  background:var(--purple-100);
+  color:var(--purple-900);
+}
 :where(.page) h1,
 :where(.page) h2,
 :where(.page) h3 {
   font-family:var(--font-h);
-  color:var(--purple-700);
   margin:0;
   text-wrap:balance;
   letter-spacing:-.015em;
 }
 :where(.page) h2 {
-  font-weight:600;
-  font-size:clamp(1.7rem,3.1vw,2.4rem);
-  line-height:1.14;
+  font-weight:700;
+  font-size:clamp(2rem,4.2vw,3.3rem);
+  line-height:1.08;
+  letter-spacing:-.025em;
+  color:var(--purple-800);
 }
 :where(.page) h3 {
   font-weight:600;
   font-size:1.12rem;
   line-height:1.28;
+  color:var(--purple-700);
 }
 :where(.page) p {
   margin:0 0 1em;
@@ -108,40 +123,104 @@
   margin-inline:auto;
   padding-inline:24px;
 }
-.prose {
-  max-width:62ch;
-}
 .lab {
   font-family:var(--font-m);
-  font-size:.72rem;
+  font-size:var(--lab);
   letter-spacing:.16em;
   text-transform:uppercase;
   color:var(--ink-muted);
 }
-.rule {
-  width:44px;
-  height:3px;
-  border-radius:2px;
-  background:var(--purple-600);
-  margin-bottom:20px;
+.lab.eyebrow {
+  display:block;
+  font-weight:500;
+  color:var(--orange-strong);
+  margin:0 0 14px;
 }
-.muted {
-  color:var(--ink-muted);
-}
-/* The draft's purple-500 ring is under 3:1 on the dark and orange grounds, so
-   those grounds set --focus-ring to white, as on the home page (14e80c4). */
-:where(.page) :where(a,button,[tabindex]):focus-visible {
-  outline:3px solid var(--focus-ring, var(--purple-500));
+:where(.page) :where(a,button,summary,[tabindex]):focus-visible {
+  outline:3px solid var(--purple-600);
   outline-offset:3px;
   border-radius:4px;
 }
-/* review chips: draft annotations, removed before publishing */
-/* hero: slate ground, faint grid, the thinking trace on the right */
+/* focus ring: Curiosity Purple on light grounds (8.22 on white), white on the purple and orange grounds */
+:where(.page) :where(.announce,.topbar,.hero,.creds,section.dark,.acard.ed,.close-band,footer) :where(a,button,summary):focus-visible {
+  outline-color:#FFFFFF;
+}
+:where(.page) :where(.holds,.doors li) :where(a,button):focus-visible {
+  outline-color:var(--purple-600);
+}
+/* review chips and the draft bar: draft annotations, removed before publishing */
+/* buttons: hover steps the colour, press scales; the lift only where there is a real pointer */
+.btn {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  min-height:48px;
+  padding:0 24px;
+  border-radius:999px;
+  font-family:var(--font-h);
+  font-weight:600;
+  font-size:1rem;
+  text-decoration:none;
+  border:1.5px solid transparent;
+  cursor:pointer;
+  transition:background-color .18s ease,border-color .18s ease,color .18s ease,transform .16s var(--ease-out);
+}
+.btn-primary {
+  background:var(--orange-strong);
+  color:#FFFFFF;
+}
+.btn-primary:hover {
+  background:var(--orange-hover);
+}
+.btn-onphoto {
+  background:rgba(255,255,255,.12);
+  color:#FFFFFF;
+  border-color:rgba(255,255,255,.4);
+}
+.btn-onphoto:hover {
+  background:rgba(255,255,255,.2);
+}
+.btn-onorange {
+  background:#FFFFFF;
+  color:var(--purple-800);
+}
+.btn-onorange:hover {
+  background:var(--purple-50);
+}
+@media (hover:hover) and (pointer:fine) {
+  .btn-primary:hover,
+  .btn-onorange:hover {
+    transform:translateY(-1px);
+  }
+}
+.btn:active {
+  transform:scale(.97);
+}
+/* text links that end a card */
+.go {
+  display:inline-flex;
+  align-items:center;
+  align-self:flex-start;
+  min-height:44px;
+  font-family:var(--font-h);
+  font-weight:600;
+  font-size:.95rem;
+  color:var(--purple-700);
+  text-decoration:none;
+  transition:color .18s ease;
+}
+.go:hover {
+  color:var(--orange-strong);
+}
+/* announcement bar and header */
+/* v8.29: the tail label leaves before it can push Log in onto a second row; on phones Log in lives in the menu */
+/* hero: deep purple ground, faint grid, the sentence card on the right */
 .hero {
   position:relative;
   isolation:isolate;
-  background:var(--slate);
-  color:#fff;
+  background:var(--purple-800);
+  color:#FFFFFF;
   padding:clamp(56px,7vw,88px) 0;
 }
 .hero::before {
@@ -158,7 +237,7 @@
   position:absolute;
   inset:0;
   z-index:-1;
-  background:radial-gradient(ellipse at 18% 45%,rgba(86,69,127,.32),transparent 52%);
+  background:radial-gradient(ellipse at 18% 45%,rgba(86,69,127,.55),transparent 55%);
 }
 .hero-grid {
   display:grid;
@@ -166,100 +245,13 @@
   gap:44px;
   align-items:center;
 }
-.trace {
-  margin:0;
-}
-.trace svg {
-  display:block;
-  width:100%;
-  height:auto;
-}
-.trace .ghost {
-  fill:none;
-  stroke:rgba(255,255,255,.2);
-  stroke-width:5;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-}
-.trace .line {
-  fill:none;
-  stroke:var(--orange);
-  stroke-width:5;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-  stroke-dasharray:1500;
-  stroke-dashoffset:1500;
-  animation:draw 3.2s var(--ease) .3s forwards;
-}
-.trace .node {
-  fill:#192028;
-  stroke:var(--orange);
-  stroke-width:3;
-}
-.trace .node.end {
-  fill:var(--orange);
-}
-.trace .node.turn {
-  r:9;
-}
-.trace .ring {
-  fill:none;
-  stroke:var(--orange);
-  stroke-width:1.5;
-  opacity:.45;
-}
-.trace .ai {
-  fill:none;
-  stroke:var(--purple-200);
-  stroke-width:1.5;
-  stroke-dasharray:4 5;
-}
-.trace .aidot {
-  fill:var(--purple-200);
-}
-.trace text {
-  font-family:var(--font-m);
-  font-size:13px;
-  letter-spacing:.07em;
-  text-transform:uppercase;
-  fill:rgba(255,255,255,.86);
-}
-.trace text.ai-t {
-  fill:var(--purple-200);
-}
-.trace figcaption {
-  margin-top:2px;
-  text-align:center;
-  font-family:var(--font-m);
-  font-size:.72rem;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,.72);
-}
-@keyframes draw {
-  to{stroke-dashoffset:0};
-}
-.hero .kicker {
-  display:inline-block;
-  font-family:var(--font-m);
-  font-size:.7rem;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:#fff;
-  background:rgba(255,255,255,.12);
-  border:1px solid rgba(255,255,255,.24);
-  border-radius:999px;
-  padding:7px 15px;
-  margin-bottom:24px;
-}
 .hero h1 {
-  font-family:var(--font-h);
   font-weight:600;
-  color:#fff;
+  color:#FFFFFF;
   font-size:clamp(2.3rem,5.3vw,4.2rem);
   line-height:1.03;
   letter-spacing:-.03em;
-  max-width:17ch;
+  max-width:15ch;
   margin:0 0 24px;
 }
 .hero h1 b {
@@ -271,34 +263,19 @@
   font-weight:500;
   font-size:clamp(1.05rem,1.6vw,1.25rem);
   line-height:1.45;
-  color:#fff;
+  color:#FFFFFF;
   max-width:46ch;
   margin:0 0 16px;
 }
 .hero .mission .mlab {
   display:block;
   font-family:var(--font-m);
-  font-size:.7rem;
+  font-size:var(--lab);
   font-weight:500;
   letter-spacing:.16em;
   text-transform:uppercase;
   color:var(--purple-200);
   margin-bottom:6px;
-}
-.hero .lede {
-  font-size:clamp(1rem,1.4vw,1.1rem);
-  line-height:1.55;
-  color:rgba(255,255,255,.9);
-  max-width:56ch;
-  margin:0;
-}
-.hero .lede .q {
-  display:block;
-  margin-top:12px;
-  font-family:var(--font-h);
-  font-weight:600;
-  font-size:1.1em;
-  color:#fff;
 }
 .cta-row {
   display:flex;
@@ -306,1360 +283,500 @@
   flex-wrap:wrap;
   margin-top:30px;
 }
-.btn {
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  min-height:48px;
-  padding:0 24px;
-  border-radius:999px;
+.hero .lede {
+  font-size:clamp(1rem,1.4vw,1.1rem);
+  line-height:1.55;
+  color:rgba(255,255,255,.9);
+  max-width:52ch;
+  margin:0;
+}
+/* the sentence card: the page's one authored motion moment. The strike and the underline draw once, early;
+   both are drawn by default, so the hidden state exists only inside the animation. */
+.slip {
+  margin:0;
+  justify-self:end;
+  width:100%;
+  max-width:470px;
+  background:var(--surface);
+  color:var(--purple-800);
+  border-radius:20px;
+  padding:clamp(22px,2.6vw,34px);
+  box-shadow:0 30px 60px -24px rgba(42,34,61,.7);
+}
+.slip figcaption {
+  font-family:var(--font-m);
+  font-size:var(--lab);
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--purple-600);
+  padding-bottom:18px;
+  border-bottom:1px dashed var(--border-strong);
+}
+.slip p {
+  margin:0;
+  padding-top:20px;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:6px;
+}
+.slip .who {
+  font-family:var(--font-m);
+  font-size:var(--lab);
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--ink-muted);
+}
+.slip .yes .who {
+  color:var(--orange-strong);
+}
+.slip .sq {
+  position:relative;
+  font-family:var(--font-h);
+  letter-spacing:-.02em;
+}
+.slip .no .sq {
+  font-weight:600;
+  font-size:clamp(1.3rem,2.2vw,1.7rem);
+  line-height:1.2;
+  color:var(--purple-500);
+}
+.slip .no s {
+  text-decoration:none;
+}
+.slip .no .sq::after {
+  content:"";
+  position:absolute;
+  left:-4px;
+  right:-4px;
+  top:54%;
+  height:3px;
+  border-radius:2px;
+  background:var(--orange);
+  transform-origin:left center;
+  animation:strike .4s var(--ease-out) .4s backwards;
+}
+.slip .yes .sq {
+  font-weight:700;
+  font-size:clamp(1.7rem,3vw,2.35rem);
+  line-height:1.15;
+  padding-bottom:14px;
+}
+.slip .yes svg {
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:100%;
+  height:10px;
+  color:var(--orange);
+  animation:drawline .5s var(--ease-out) .8s backwards;
+}
+@keyframes strike {
+  from{transform:scaleX(0)};
+}
+@keyframes drawline {
+  from{clip-path:inset(0 100% 0 0)};
+}
+/* recognition: six items with a rule beside each */
+.creds {
+  background:var(--purple-600);
+  padding:26px 0 28px;
+}
+.creds ul {
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr)) minmax(0,1.6fr);
+  gap:20px 24px;
+}
+.creds li {
+  padding-left:14px;
+  border-left:2px solid var(--purple-200);
+}
+.creds li b {
+  display:block;
   font-family:var(--font-h);
   font-weight:600;
-  font-size:1rem;
-  text-decoration:none;
-  border:1.5px solid transparent;
-  cursor:pointer;
-  transition:background-color .18s var(--ease),border-color .18s var(--ease),color .18s var(--ease),transform .18s var(--ease-pop);
+  font-size:.95rem;
+  line-height:1.35;
+  color:#FFFFFF;
 }
-.btn-primary {
-  background:var(--orange-strong);
-  color:#fff;
-}
-.btn-primary:hover {
-  background:var(--orange-hover);
-  transform:translateY(-1px);
-}
-.btn-onphoto {
-  background:rgba(255,255,255,.12);
-  color:#fff;
-  border-color:rgba(255,255,255,.4);
-}
-.btn-onphoto:hover {
-  background:rgba(255,255,255,.2);
-}
-.btn:active {
-  transform:translateY(0);
-}
-.creds {
-  background:var(--slate);
-  border-top:1px solid rgba(255,255,255,.12);
-  padding:14px 0;
-}
-.creds .wrap {
-  display:flex;
-  gap:10px 34px;
-  flex-wrap:wrap;
-  align-items:center;
-}
-.creds span {
-  font-family:var(--font-m);
-  font-size:.66rem;
-  letter-spacing:.13em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,.62);
-}
-.creds .ci {
-  white-space:nowrap;
-}
-.creds .todo {
-  color:var(--purple-900);
-  letter-spacing:.1em;
+.creds li span {
+  display:block;
+  margin-top:2px;
+  font-size:.86rem;
+  line-height:1.4;
+  color:var(--purple-100);
 }
 :where(.page) section {
   padding:clamp(52px,6.5vw,80px) 0;
 }
 :where(.page) section.tinted {
   background:var(--tint);
-  border-block:1px solid var(--line);
 }
-.head {
-  margin-bottom:32px;
-}
-/* frame */
-.frame-head {
-  display:grid;
-  grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
-  gap:44px;
-  align-items:end;
-  margin-bottom:30px;
-}
-.frame-head p {
-  margin:0;
-  font-size:1.06rem;
-}
-.vs {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  border:1px solid var(--line);
-  border-radius:14px;
-  overflow:hidden;
-  background:var(--surface);
-}
-.col-head {
-  padding:16px 22px;
-  border-bottom:1px solid var(--line);
-}
-.col-head .tag {
-  font-family:var(--font-m);
-  font-size:.66rem;
-  letter-spacing:.15em;
-  text-transform:uppercase;
-  display:block;
-  margin-bottom:4px;
-}
-.col-head h3 {
-  font-size:1.2rem;
-  margin:0;
-}
-.a .col-head {
-  background:var(--bg);
-}
-.a .col-head .tag {
-  color:var(--ink-muted);
-}
-.a .col-head h3 {
-  color:var(--ink-muted);
-}
-.b .col-head {
-  background:var(--purple-50);
-  border-left:1px solid var(--line);
-}
-.b .col-head .tag {
-  color:var(--purple-600);
-}
-.b .col-head h3 {
-  color:var(--purple-800);
-}
-.vs .row {
-  padding:15px 22px;
-  border-bottom:1px solid var(--line);
-  font-size:.98rem;
-  min-height:70px;
-}
-.b .row {
-  border-left:1px solid var(--line);
-}
-.vs .row:last-child {
-  border-bottom:0;
-}
-.a .row {
-  color:var(--ink-muted);
-  background:var(--bg);
-}
-.b .row strong {
-  font-weight:500;
-  color:var(--purple-800);
-}
-/* question + can/must */
-.q-grid {
-  display:grid;
-  grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);
-  gap:48px;
-  align-items:center;
-}
-.bigq {
-  font-family:var(--font-h);
-  font-weight:600;
-  font-size:clamp(1.6rem,3.2vw,2.5rem);
-  line-height:1.12;
-  letter-spacing:-.025em;
-  color:var(--purple-500);
-  margin:0;
-}
-.bigq em {
-  font-style:normal;
-  color:var(--purple-900);
-}
-.cm {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:16px;
-}
-.panel {
-  background:var(--surface);
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:20px 20px 16px;
-}
-.panel h3 {
-  font-size:1.02rem;
-  margin:0 0 12px;
-}
-.panel.learner {
-  border-top:3px solid var(--purple-600);
-}
-.panel.ai {
-  border-top:3px solid var(--purple-200);
-}
-.panel ul {
-  list-style:none;
-  margin:0;
-  padding:0;
-  display:grid;
-  gap:8px;
-}
-.panel li {
-  display:grid;
-  grid-template-columns:18px 1fr;
-  gap:9px;
-  font-size:.95rem;
-  align-items:start;
-}
-.panel li svg {
-  margin-top:5px;
-}
-.boundary {
-  grid-column:1/-1;
-  margin:4px 0 0;
-  text-align:center;
-  font-family:var(--font-h);
-  font-weight:600;
-  font-size:1.02rem;
-  color:var(--purple-800);
-}
-/* handoff rail: scroll-driven where supported, resting at the learner end otherwise */
-.handoff {
-  display:flex;
-  align-items:center;
-  gap:14px;
-  margin-bottom:16px;
-}
-.handoff .hl {
-  font-family:var(--font-m);
-  font-size:.66rem;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color:var(--ink-muted);
-}
-.rail {
-  flex:1;
-  position:relative;
-  height:8px;
-  border-radius:999px;
-  background:var(--purple-100);
-  container-type:inline-size;
-}
-.knob {
-  position:absolute;
-  top:50%;
-  left:0;
-  width:26px;
-  height:26px;
-  margin-top:-13px;
-  border-radius:50%;
-  background:var(--orange);
-  box-shadow:0 0 0 4px rgba(242,122,55,.25);
-  transform:translateX(calc(100cqw - 26px));
-}
-@supports (animation-timeline: view()) {
-  .knob {
-    animation:handoff linear both;
-    animation-timeline:view();
-    animation-range:entry 10% cover 45%;
-  }
-}
-@keyframes handoff {
-  from{transform:translateX(0)}to{transform:translateX(calc(100cqw - 26px))};
-}
-.cm .panel {
-  transition:transform .22s var(--ease),box-shadow .22s var(--ease);
-}
-.cm .panel:hover,
-.cm .panel:focus-within {
-  transform:translateY(-2px);
-  box-shadow:0 10px 26px rgba(44,36,64,.10);
-}
-/* evidence: findings + ladder */
-.ev-head {
-  display:grid;
-  grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);
-  gap:40px;
-  align-items:start;
-  margin-bottom:36px;
-}
-.ladder {
-  background:var(--slate);
-  color:var(--purple-50);
-  border-radius:14px;
-  padding:20px 22px;
-}
-.ladder .lab {
-  color:var(--purple-200);
-  display:block;
-  margin-bottom:6px;
-}
-.ladder h3 {
-  color:#fff;
-  font-size:1.02rem;
-  margin:0 0 12px;
-}
-.rungs {
-  display:grid;
-  gap:7px;
-}
-.rung {
-  display:grid;
-  grid-template-columns:auto 1fr;
-  gap:12px;
-  align-items:baseline;
-  padding:9px 13px;
-  border-radius:9px;
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.11);
-}
-.rung span {
-  font-family:var(--font-m);
-  font-size:.62rem;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color:var(--purple-200);
-}
-.rung b {
-  font-family:var(--font-h);
-  font-weight:600;
-  color:#fff;
-  font-size:.95rem;
-}
-.ladder p {
-  margin:12px 0 0;
-  font-size:.88rem;
-  color:var(--purple-100);
-}
-.sub-head {
-  display:flex;
-  align-items:baseline;
-  gap:18px;
-  flex-wrap:wrap;
-  margin:8px 0 22px;
-  padding-top:26px;
-  border-top:1px solid var(--line);
-}
-.sub-head h3 {
-  font-size:1.3rem;
-  color:var(--purple-700);
-  margin:0;
-}
-.beliefs {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:28px 32px;
-}
-.belief {
-  background:var(--tint);
-  border:1px solid var(--line);
-  border-top:3px solid var(--purple-600);
-  border-radius:10px;
-  padding:20px 20px 18px;
-}
-.belief .n {
-  font-family:var(--font-m);
-  font-size:.68rem;
-  letter-spacing:.16em;
-  color:#fff;
-  background:var(--orange-strong);
-  display:inline-block;
-  padding:3px 9px 2px 11px;
-  border-radius:999px;
-  margin-bottom:10px;
-}
-.belief h3 {
-  margin:0 0 8px;
-  color:var(--purple-800);
-}
-.belief p {
-  margin:0;
-  font-size:.95rem;
-}
-.belief .tag {
-  display:block;
-  font-family:var(--font-m);
-  font-size:.62rem;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  color:var(--purple-600);
-  margin:0 0 6px;
-}
-.belief .dd {
-  margin-top:14px;
-  padding-top:12px;
-  border-top:1px solid var(--purple-100);
-}
-.belief .dd p {
-  color:var(--purple-800);
-  font-weight:500;
-}
-.src {
-  display:block;
-  margin-top:9px;
-  font-family:var(--font-m);
-  font-size:.78rem;
-  letter-spacing:.06em;
-  color:var(--ink-muted);
-  line-height:1.5;
-}
-/* success statement */
-.success {
-  margin-top:44px;
-  background:var(--slate);
-  color:var(--purple-50);
-  border-radius:16px;
-  padding:clamp(26px,4vw,44px);
-  display:grid;
-  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
-  gap:40px;
-  align-items:center;
-}
-.success .lab {
-  color:var(--purple-200);
-  display:block;
-  margin-bottom:8px;
-}
-.success h2 {
-  color:#fff;
-  font-size:clamp(1.7rem,3.4vw,2.6rem);
-  margin:0 0 14px;
-}
-.success p {
-  color:var(--purple-100);
-  margin:0;
-  font-size:1.02rem;
-  max-width:44ch;
-}
-.success p strong {
-  color:#fff;
-  font-weight:500;
-}
-.s-fig {
-  margin:0;
-}
-.track {
-  position:relative;
-  height:14px;
-  border-radius:999px;
-  background:rgba(255,255,255,.12);
-  container-type:inline-size;
-}
-.support {
-  position:absolute;
-  inset:0;
-  border-radius:999px;
-  background:linear-gradient(90deg,var(--purple-500),var(--purple-400));
-  transform-origin:left center;
-  transform:scaleX(0);
-}
-.walker {
-  position:absolute;
-  top:50%;
-  left:0;
-  width:22px;
-  height:22px;
-  margin-top:-11px;
-  border-radius:50%;
-  background:var(--orange);
-  box-shadow:0 0 0 4px rgba(242,122,55,.25);
-  transform:translateX(calc(100cqw - 22px));
-}
-.s-fig.play .support {
-  animation:shrink 7s var(--ease) 1 both;
-}
-.s-fig.play .walker {
-  animation:walk 7s var(--ease) 1 both;
-}
-@supports (animation-timeline: view()) {
-  .support {
-    animation:shrink linear both;
-    animation-timeline:view();
-    animation-range:entry 15% cover 60%;
-  }
-  .walker {
-    animation:walk linear both;
-    animation-timeline:view();
-    animation-range:entry 15% cover 60%;
-  }
-}
-.stages {
-  display:flex;
-  justify-content:space-between;
-  margin-top:14px;
-  font-family:var(--font-m);
-  font-size:.66rem;
-  letter-spacing:.13em;
-  text-transform:uppercase;
-  color:var(--purple-200);
-}
-@keyframes shrink {
-  0%,18%{transform:scaleX(1)}30%,48%{transform:scaleX(.62)}60%,78%{transform:scaleX(.26)}90%,100%{transform:scaleX(0)};
-}
-@keyframes walk {
-  0%,18%{transform:translateX(0)}30%,48%{transform:translateX(38cqw)}60%,78%{transform:translateX(72cqw)}90%,100%{transform:translateX(calc(100cqw - 22px))};
-}
-@media (prefers-reduced-motion:reduce) {
-  .support,
-  .walker,
-  .knob,
-  .trace .line,
-  .s-fig.play .support,
-  .s-fig.play .walker {
-    animation:none;
-  }
-  .support {
-    transform:scaleX(0);
-  }
-  .walker {
-    transform:translateX(calc(100cqw - 22px));
-  }
-  .knob {
-    transform:translateX(calc(100cqw - 26px));
-  }
-  .trace .line {
-    stroke-dashoffset:0;
-  }
-}
-/* products */
-.cards {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px;
-}
-.card {
-  background:var(--surface);
-  border:1px solid var(--line);
-  border-top:3px solid var(--accent,var(--purple-600));
-  border-radius:12px;
-  padding:22px 20px;
-  display:flex;
-  flex-direction:column;
-}
-.card .state {
-  font-family:var(--font-m);
-  font-size:.64rem;
-  letter-spacing:.13em;
-  text-transform:uppercase;
-  color:var(--ink-muted);
-  margin-bottom:10px;
-}
-.card h3 {
-  margin:0 0 6px;
-  font-size:1.14rem;
-}
-.card p {
-  font-size:.94rem;
-  margin:0 0 16px;
-}
-.card .go {
-  margin-top:auto;
-  display:inline-flex;
-  align-items:center;
-  align-self:flex-start;
-  min-height:44px;
-  font-family:var(--font-h);
-  font-weight:600;
-  font-size:.93rem;
-  color:var(--purple-700);
-  text-decoration:none;
-}
-.card .go:hover {
-  color:var(--orange-strong);
-}
-.strip {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:28px;
-}
-.strip .lab {
-  display:block;
-  color:var(--purple-700);
-  margin-bottom:8px;
-}
-.strip p {
-  margin:0;
-  font-size:.92rem;
-  color:var(--ink);
-}
-.strip a {
-  font-family:var(--font-h);
-  font-weight:600;
-  text-decoration:none;
-}
-.close-dark {
-  background:var(--slate);
-  color:var(--purple-50);
-  position:relative;
-  isolation:isolate;
-  padding:clamp(60px,7.5vw,92px) 0;
-}
-.close-dark::before {
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:-1;
-  opacity:.55;
-  background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
-  background-size:28px 28px;
-}
-.close-dark::after {
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:-1;
-  background:radial-gradient(ellipse at 22% 70%,rgba(86,69,127,.5),transparent 55%);
-}
-.close-band {
-  max-width:64ch;
-}
-.close-band .rule {
-  background:var(--purple-200);
-}
-.close-band h2 {
-  color:#fff;
-  max-width:22ch;
-}
-.close-band p {
-  color:var(--purple-100);
-}
-@media (max-width:960px) {
-  .frame-head,
-  .q-grid,
-  .ev-head {
-    grid-template-columns:1fr;
-    gap:26px;
-  }
-  .beliefs {
-    grid-template-columns:1fr;
-    gap:26px;
-  }
-  .cards,
-  .cm,
-  .success,
-  .hero-grid,
-  .strip {
-    grid-template-columns:1fr;
-  }
-  .vs {
-    grid-template-columns:1fr;
-  }
-  .b .col-head,
-  .b .row {
-    border-left:0;
-  }
-  .vs .row {
-    min-height:0;
-  }
-}
-@media (prefers-reduced-motion:reduce) {
-  .page *,
-  .page *::before,
-  .page *::after {
-    animation-duration:.001ms!important;
-    transition-duration:.001ms!important;
-  }
-}
-/* ===== v8.8 colour system (Azade, 3 Nov 2026), matching IgniteThinking page v3.20 =====
-   White base; pale lavender for calm sections; deep purple (purple-800) hero, claims ladder and footer, purple-900 credentials
-   strip; Curiosity Purple #56457F (the design system's one primary) for "What we build" and the success band; orange for buttons,
-   labels and the closing band. Slate and cream retired from this page. Contrast: white on purple-800 12.88, purple-200 on
-   purple-800 6.73, white on #56457F 8.22, purple-100 on #56457F 6.27, orange-strong on white 4.67, orange-hover on lavender 4.79,
-   white on orange-strong 4.67, purple-800 on white 12.88. */
-.page {
-  --bg:#FFFFFF;
-}
-:where(.page) h2 {
-  font-weight:700;
-  font-size:clamp(2rem,4.2vw,3.3rem);
-  line-height:1.08;
-  letter-spacing:-.025em;
-}
-.lab.eyebrow {
-  display:block;
-  font-size:.76rem;
-  font-weight:500;
-  letter-spacing:.16em;
-  color:var(--orange-strong);
-  margin:0 0 14px;
-}
-.tinted .lab.eyebrow {
+:where(.page) section.tinted .lab.eyebrow {
   color:var(--orange-hover);
 }
-.hero {
-  background:var(--purple-800);
-}
-.hero::after {
-  background:radial-gradient(ellipse at 18% 45%,rgba(86,69,127,.55),transparent 55%);
-}
-.trace .node {
-  fill:var(--purple-800);
-}
-.creds {
-  background:var(--purple-900);
-  border-top:1px solid rgba(255,255,255,.10);
-  padding:18px 0;
-}
-.creds span {
-  color:var(--purple-200);
-}
-.ladder {
-  background:var(--purple-800);
-}
-/* v8.9: less purple in the middle of the page (Azade, 3 Nov): findings cards and the success card go white with orange edges;
-   the question's key phrase in orange (orange-hover on lavender 4.79). */
-.belief {
-  background:var(--surface);
-  border-top:3px solid var(--orange);
-}
-.success {
-  background:var(--surface);
-  border:1px solid var(--line);
-  border-top:4px solid var(--orange);
-  color:var(--ink);
-}
-.success .lab {
-  color:var(--orange-strong);
-}
-.success h2 {
-  color:var(--purple-700);
-}
-.success p {
-  color:var(--ink-muted);
-}
-.success p strong {
-  color:var(--purple-800);
-}
-.track {
-  background:var(--purple-50);
-}
-.success .stages {
-  color:var(--ink-muted);
-}
-.bigq {
-  color:var(--purple-700);
-}
-.bigq em {
-  color:var(--orange-hover);
-}
-/* Curiosity Purple section */
-:where(.page) section.brand {
-  background:var(--purple-600);
-  border:0;
-}
-:where(.page) section.brand h2 {
-  color:#FFFFFF;
-}
-:where(.page) section.brand .lab.eyebrow {
-  color:var(--purple-100);
-}
-:where(.page) section.brand .card {
-  border-color:transparent;
-}
-/* closing orange band */
-.close-dark {
-  background:var(--orange-strong);
-}
-.close-dark::before,
-.close-dark::after {
-  display:none;
-}
-.close-band h2 {
-  color:#FFFFFF;
-}
-.close-band p {
-  color:#FFFFFF;
-}
-.close-band .lab.eyebrow {
-  color:#FFFFFF;
-}
-.btn-onorange {
-  background:#FFFFFF;
-  color:var(--purple-800);
-}
-.btn-onorange:hover {
-  background:var(--purple-50);
-  transform:translateY(-1px);
-}
-.btn-onorange-ghost {
-  background:transparent;
-  color:#FFFFFF;
-  border-color:rgba(255,255,255,.75);
-}
-.btn-onorange-ghost:hover {
-  background:rgba(255,255,255,.14);
-}
-/* footer */
-/* ===== v8.11: colour order of fundingbreakthroughlab.org, in Ignite colours (Azade, 3 Nov 2026) =====
-   Their dark green -> deep purple (purple-800); their mid green -> Curiosity Purple (#56457F); their cream -> white;
-   their orange -> our orange. Order: orange announcement bar, dark nav, dark hero, mid-tone band, then dark and white
-   sections alternating; white bordered cards on white, mid-tone cards with orange pills on dark; one orange call-to-action
-   band; dark footer. Lavender kept only as a small accent (the comparison table header).
-   Contrast: white on purple-800 12.88, purple-100 on purple-800 9.82, orange on purple-800 4.67, white on #56457F 8.22,
-   purple-100 on #56457F 6.27, white on orange-strong 4.67, purple-800 on white 12.88, orange-strong on white 4.67. */
-:where(.page) h2 {
-  color:var(--purple-800);
-}
-/* mid-tone band under the hero */
-.creds {
-  background:var(--purple-600);
-  border-top:0;
-  padding:22px 0;
-}
-.creds span {
-  color:var(--purple-100);
-}
-/* dark sections */
 :where(.page) section.dark {
   background:var(--purple-800);
-  border:0;
   color:var(--purple-100);
-}
-:where(.page) section.dark h2 {
-  color:#FFFFFF;
 }
 :where(.page) section.dark .lab.eyebrow {
   color:var(--orange);
 }
-:where(.page) section.dark .bigq {
-  color:#FFFFFF;
-}
-:where(.page) section.dark .bigq em {
-  color:var(--orange);
-}
-:where(.page) section.dark .handoff .hl {
-  color:var(--purple-200);
-}
-:where(.page) section.dark .rail {
-  background:rgba(255,255,255,.18);
-}
-:where(.page) section.dark .panel {
-  background:var(--purple-600);
-  border:0;
-}
-:where(.page) section.dark .panel.ai {
-  border-top:3px solid var(--purple-200);
-}
-:where(.page) section.dark .panel.learner {
-  border-top:3px solid var(--orange);
-}
-:where(.page) section.dark .panel h3 {
-  color:#FFFFFF;
-}
-:where(.page) section.dark .panel li span {
-  color:#FFFFFF!important;
-}
-:where(.page) section.dark .panel.ai ul {
-  color:var(--purple-200)!important;
-}
-:where(.page) section.dark .panel.learner ul {
-  color:#FFFFFF!important;
-}
-:where(.page) section.dark .boundary {
-  color:#FFFFFF;
-}
-:where(.page) section.dark .card {
-  background:var(--purple-600);
-  border:0;
-}
-:where(.page) section.dark .card h3 {
-  color:#FFFFFF;
-}
-:where(.page) section.dark .card p {
-  color:var(--purple-100);
-}
-:where(.page) section.dark .card .state {
-  align-self:flex-start;
-  background:var(--orange-strong);
-  color:#FFFFFF;
-  padding:5px 11px 4px;
-  border-radius:999px;
-}
-:where(.page) section.dark .card .go {
-  color:#FFFFFF;
-}
-:where(.page) section.dark .card .go:hover {
-  color:var(--orange-50);
-}
-/* white sections: plain white bordered cards, as on their cream sections */
-.belief {
-  border:1px solid var(--line);
-}
-.success {
-  border:1px solid var(--line);
-}
-.sub-head h3 {
-  color:var(--purple-800);
-}
-/* v8.12: colour in "Three findings, three design decisions" (Azade, 3 Nov): orange top line; the finding on white; the design
-   decision as a lavender panel filling the bottom of each card, aligned across the three. Tag orange-hover on lavender 4.79. */
-.belief {
-  display:flex;
-  flex-direction:column;
-  border-top:4px solid var(--orange);
-  padding-bottom:0;
-  overflow:hidden;
-}
-.belief .n {
-  align-self:flex-start;
-}
-.belief .src {
-  margin-bottom:18px;
-}
-.belief .dd {
-  margin:auto -20px 0;
-  padding:16px 20px 20px;
-  background:var(--tint);
-  border-top:0;
-}
-.belief .dd .tag {
-  color:var(--orange-hover);
-}
-.belief .dd p {
-  color:var(--purple-800);
-}
-/* v8.13: "The learner needs us less" on a lavender card (Azade, 3 Nov). Label orange-hover on lavender 4.79; body ink-muted 4.55;
-   the track goes white so it still shows on lavender. */
-.success {
-  background:var(--tint);
-  border-color:var(--line);
-}
-.success .lab {
-  color:var(--orange-hover);
-}
-.track {
-  background:#FFFFFF;
-  box-shadow:inset 0 0 0 1px var(--purple-100);
-}
-/* v8.17: three doors in the closing band, one per kind of visitor (white on orange-strong 4.67) */
-.doors {
-  list-style:none;
-  margin:34px 0 0;
-  padding:26px 0 0;
-  border-top:1px solid rgba(255,255,255,.35);
+/* why we started */
+.why-grid {
   display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:12px 32px;
-}
-.doors .lab {
-  display:block;
-  margin-bottom:6px;
-  color:#FFFFFF;
-}
-.doors p {
-  margin:0;
-  font-size:.98rem;
-  line-height:1.5;
-  color:#FFFFFF;
-}
-.doors a {
-  display:inline-block;
-  padding:11px 0;
-  font-weight:600;
-  color:#FFFFFF;
-}
-@media (max-width:760px) {
-  .doors {
-    grid-template-columns:1fr;
-  }
-}
-/* ===== v8.19: Curiosity Teal means "this is evidence" (Azade, 10 Nov 2026) =====
-   Teal has one job, in the science section only: the section label, the top line and number badges of the three findings cards,
-   and the "Finding" label. Orange keeps "our action" (the Design decision label, buttons); purple keeps structure.
-   Tokens added to IgniteCuriosityLab_DesignSystem.html the same day: --teal #2F8CA8 (Curiosity Teal; lines only, 3.86 on white)
-   and --teal-strong #0F7C9C (text and fills; 4.79 on white, white on it 4.79). Teal is not used on the purple sections
-   (3.3 on deep purple, 2.2 on Curiosity Purple). */
-.page {
-  --teal:#2F8CA8;
-  --teal-strong:#0F7C9C;
-}
-:where(.page) :global(#science) .lab.eyebrow {
-  color:var(--teal-strong);
-}
-.belief {
-  border-top-color:var(--teal);
-}
-.belief .n {
-  background:var(--teal-strong);
-}
-.belief>.tag {
-  color:var(--teal-strong);
-}
-/* v8.20: "The learner needs us less" card in teal (Azade, 10 Nov 2026). It states how we judge the evidence, so it carries
-   teal's one job. Fill is --teal-strong (#0F7C9C): white text on it is 4.79. Curiosity Teal #2F8CA8 as a fill would put the
-   paragraph at 3.86, under the 4.5 standard. The walker stays orange (the learner), ringed in white so it reads on teal. */
-.success {
-  background:var(--teal-strong);
-  border-color:var(--teal-strong);
-  color:#FFFFFF;
-}
-.success .lab,
-.success h2,
-.success p,
-.success p strong,
-.success .stages {
-  color:#FFFFFF;
-}
-.success p strong {
-  font-weight:600;
-}
-.success .track {
-  background:rgba(255,255,255,.35);
-}
-.success .support {
-  background:#FFFFFF;
-}
-.success .walker {
-  box-shadow:0 0 0 4px #FFFFFF;
-}
-/* ===== About page v1.0 (11 Nov 2026), built on home v8.20: same tokens, same colour order
-   (deep purple hero, Curiosity Purple band, then white and deep purple alternating, orange close, deep purple footer).
-   No teal: teal's one job is evidence in the home science section (10 Nov ruling).
-   Contrast: purple-200 on purple-800 6.73; white on #56457F 8.22; purple-100 on #56457F 6.27; orange #F27A37 on purple-800 4.67;
-   white on orange-strong 4.67; ink-muted on white 5.27; purple-800 on white 12.88; orange-strong on white 4.67. */
-.hero h1 {
-  max-width:15ch;
-}
-.hero .lede {
-  max-width:52ch;
-}
-/* hero figure: the sentence we build for */
-.says {
-  margin:0;
-  display:grid;
-  gap:16px;
-  max-width:440px;
-  justify-self:end;
-  width:100%;
-}
-.say {
-  border-radius:18px;
-  padding:20px 24px 18px;
-  position:relative;
-}
-.say .who {
-  display:block;
-  font-family:var(--font-m);
-  font-size:.66rem;
-  letter-spacing:.15em;
-  text-transform:uppercase;
-  margin-bottom:8px;
-}
-.say q {
-  quotes:none;
-  display:block;
-  font-family:var(--font-h);
-  font-weight:600;
-  font-size:clamp(1.35rem,2.4vw,1.9rem);
-  line-height:1.15;
-  letter-spacing:-.02em;
-}
-.say.not {
-  background:rgba(255,255,255,.07);
-  border:1px dashed rgba(255,255,255,.28);
-  color:var(--purple-200);
-  margin-right:56px;
-}
-.say.not .who {
-  color:var(--purple-200);
-}
-.say.yes {
-  background:#FFFFFF;
-  color:var(--purple-800);
-  border-left:6px solid var(--orange);
-  margin-left:56px;
-  box-shadow:0 18px 40px rgba(20,14,34,.35);
-}
-.say.yes .who {
-  color:var(--orange-strong);
-}
-.says figcaption {
-  font-family:var(--font-m);
-  font-size:.72rem;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,.72);
-  text-align:right;
-  margin-top:4px;
-}
-/* story */
-.story-grid {
-  display:grid;
-  grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);
-  gap:56px;
+  grid-template-columns:minmax(0,5fr) minmax(0,6fr);
+  gap:64px;
   align-items:start;
 }
-.story-grid h2 {
-  margin-bottom:22px;
-  max-width:18ch;
+.why-grid h2 {
+  margin:0;
 }
-.story-grid .prose p {
+.why-grid .prose {
+  padding-top:34px;
+}
+.why-grid .prose p {
   font-size:1.06rem;
+  max-width:62ch;
 }
-.pull {
-  margin:8px 0 0;
-  padding:6px 0 6px 26px;
-  border-left:5px solid var(--orange);
+.why-grid .prose p:last-child {
+  margin-bottom:0;
 }
-.pull p {
+.stance {
+  display:grid;
+  grid-template-columns:minmax(0,7fr) minmax(0,4fr);
+  gap:64px;
+  align-items:start;
+  margin-top:clamp(40px,5vw,64px);
+  padding-top:clamp(36px,4.5vw,56px);
+  border-top:1px solid var(--line);
+}
+.stance figure,
+.stance blockquote {
+  margin:0;
+}
+.stance blockquote p {
   font-family:var(--font-h);
   font-weight:600;
-  font-size:clamp(1.4rem,2.3vw,1.85rem);
-  line-height:1.2;
-  letter-spacing:-.02em;
+  font-size:clamp(1.55rem,3.1vw,2.5rem);
+  line-height:1.16;
+  letter-spacing:-.025em;
   color:var(--purple-800);
-  margin:0 0 14px;
+  margin:0;
+  text-wrap:balance;
 }
-.pull p span {
+.stance blockquote p span {
   color:var(--orange-strong);
 }
-.pull cite {
-  font-style:normal;
-  font-family:var(--font-m);
-  font-size:.74rem;
-  letter-spacing:.08em;
-  color:var(--ink-muted);
-  line-height:1.5;
+.stance figcaption {
+  display:flex;
+  align-items:center;
+  gap:10px 14px;
+  margin-top:24px;
+  flex-wrap:wrap;
+}
+.stance figcaption img {
   display:block;
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  object-fit:cover;
 }
-.roots {
-  margin-top:30px;
-  padding:20px 22px;
-  background:var(--tint);
-  border:1px solid var(--line);
-  border-radius:12px;
-}
-.roots .lab {
+.stance figcaption b {
   display:block;
-  color:var(--orange-hover);
-  margin-bottom:8px;
-}
-.roots p {
-  margin:0;
-  font-size:.95rem;
+  font-family:var(--font-h);
+  font-weight:600;
+  font-size:1rem;
+  line-height:1.3;
   color:var(--purple-800);
 }
-/* team (dark section) */
+.stance figcaption .ttl {
+  display:block;
+  font-size:.92rem;
+  color:var(--ink-muted);
+}
+.origin {
+  padding-left:32px;
+  border-left:1px solid var(--line);
+}
+.origin .lab {
+  display:block;
+  color:var(--orange-strong);
+  margin-bottom:10px;
+}
+.origin p {
+  margin:0;
+  font-size:1.02rem;
+  line-height:1.65;
+}
+.origin strong {
+  font-weight:500;
+  color:var(--purple-600);
+}
+/* the team: no card boxes. Portraits are square and capped at 260 px so the 520 px files stay sharp on dense
+   screens; each is scaled about its own point so the three heads are one size on one eye line. */
 .team-head {
   display:grid;
-  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
-  gap:44px;
+  grid-template-columns:minmax(0,7fr) minmax(0,5fr);
+  gap:56px;
   align-items:end;
-  margin-bottom:34px;
+  margin-bottom:40px;
 }
 .team-head p {
   margin:0;
   font-size:1.04rem;
+  color:var(--ink);
 }
-.team {
+.team2 {
+  list-style:none;
+  margin:0;
+  padding:0;
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:18px;
+  gap:40px;
 }
-.member {
-  background:var(--purple-600);
-  border-radius:14px;
+.person {
+  display:grid;
+  align-content:start;
+}
+.person .ph {
+  display:block;
+  width:min(260px,100%);
+  aspect-ratio:1;
+  border-radius:18px;
   overflow:hidden;
-  display:flex;
-  flex-direction:column;
+  background:var(--purple-100);
 }
-.member img {
+.person .ph img {
   display:block;
   width:100%;
-  aspect-ratio:1/1;
+  height:100%;
   object-fit:cover;
+  transform:scale(var(--z,1));
+  transform-origin:var(--ox,50%) var(--oy,45%);
 }
-.member .body {
-  padding:20px 22px 24px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
+.person h3 {
+  margin:22px 0 0;
+  font-size:1.3rem;
+  color:var(--purple-800);
 }
-.member h3 {
-  color:#FFFFFF;
-  font-size:1.25rem;
-  margin:0;
+.person .role2 {
+  margin:4px 0 0;
+  font-family:var(--font-h);
+  font-weight:600;
+  font-size:.9rem;
+  line-height:1.4;
+  color:var(--orange-hover);
 }
-.member .role {
-  align-self:flex-start;
-  font-family:var(--font-m);
-  font-size:.64rem;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  color:#FFFFFF;
-  background:var(--orange-strong);
-  padding:5px 11px 4px;
-  border-radius:999px;
+.person .bio {
+  margin:14px 0 0;
+  font-size:.98rem;
+  line-height:1.65;
+  color:var(--ink);
 }
-.member p {
-  margin:0;
-  font-size:.95rem;
-  color:var(--purple-100);
+.person .links {
+  margin:6px 0 0;
 }
 .advisors {
-  margin-top:30px;
+  margin-top:44px;
   padding-top:24px;
-  border-top:1px solid rgba(255,255,255,.18);
+  border-top:1px solid var(--border-strong);
   display:grid;
   grid-template-columns:auto 1fr 1fr;
   gap:12px 36px;
   align-items:baseline;
 }
 .advisors .lab {
-  color:var(--orange);
+  color:var(--orange-hover);
+}
+.advisors .adv-lab {
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+}
+.advisors .todo {
+  margin-top:8px;
 }
 .advisors b {
   display:block;
   font-family:var(--font-h);
   font-weight:600;
-  color:#FFFFFF;
+  color:var(--purple-800);
   font-size:1.02rem;
 }
 .advisors .aff {
+  display:block;
   font-size:.92rem;
-  color:var(--purple-100);
+  color:var(--ink-muted);
 }
-/* standing rule (white) */
-.rule-grid {
+/* the standing rule: the promise is the largest thing on the page; the proof is said once, on white */
+.rule2 {
   display:grid;
-  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
-  gap:56px;
-  align-items:start;
+  grid-template-columns:minmax(0,6fr) minmax(0,5fr);
+  gap:72px;
+  align-items:center;
 }
 .stage {
   font-size:1.08rem;
-  color:var(--ink-muted);
-  margin:0 0 12px;
-  max-width:40ch;
+  color:var(--purple-100);
+  margin:0 0 14px;
+  max-width:32ch;
 }
 .promise {
-  font-family:var(--font-h);
   font-weight:700;
-  font-size:clamp(2.2rem,4.6vw,3.6rem);
-  line-height:1.04;
+  font-size:clamp(2.4rem,5.4vw,4.2rem);
+  line-height:1.02;
   letter-spacing:-.03em;
-  color:var(--purple-800);
-  margin:0 0 18px;
-  max-width:14ch;
+  color:#FFFFFF;
+  margin:0;
+  max-width:12ch;
 }
 .promise span {
-  color:var(--orange-strong);
-}
-.proof {
-  font-size:1.02rem;
-  color:var(--ink);
-  margin:0 0 22px;
-}
-.proof .lab {
   display:block;
-  color:var(--orange-strong);
-  margin-bottom:8px;
+  color:var(--orange);
 }
-.layers {
-  list-style:none;
-  margin:0;
-  padding:0;
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:12px;
-}
-.layers li {
-  border:1px solid var(--line);
-  border-top:3px solid var(--orange);
-  border-radius:10px;
-  padding:14px 16px 16px;
+.holds {
   background:var(--surface);
+  border-radius:20px;
+  padding:30px 32px 10px;
+  color:var(--ink);
+  box-shadow:0 30px 60px -28px rgba(42,34,61,.7);
 }
-.layers .n {
+.holds .lab {
   display:block;
-  font-family:var(--font-m);
-  font-size:.66rem;
-  letter-spacing:.14em;
-  color:var(--orange-strong);
-  margin-bottom:6px;
-}
-.layers b {
-  font-family:var(--font-h);
-  font-weight:600;
-  font-size:.98rem;
-  line-height:1.3;
-  color:var(--purple-800);
-}
-.morelink {
-  display:inline-block;
-  margin-top:20px;
-  padding:11px 0;
-  font-family:var(--font-h);
-  font-weight:600;
-  text-decoration:none;
-  color:var(--purple-700);
-}
-.morelink:hover {
-  color:var(--orange-strong);
-}
-/* path (dark) */
-.path-head {
-  max-width:64ch;
-  margin-bottom:34px;
-}
-.path-head p {
-  font-size:1.04rem;
-  margin:14px 0 0;
-}
-.path {
-  list-style:none;
-  margin:0;
-  padding:0;
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr)) minmax(0,.85fr) minmax(0,1fr);
-  gap:14px;
-  align-items:stretch;
-}
-.step {
-  background:var(--purple-600);
-  border-radius:14px;
-  padding:20px 20px 22px;
-  position:relative;
-}
-.step .when {
-  display:inline-block;
-  font-family:var(--font-m);
-  font-size:.64rem;
-  letter-spacing:.13em;
-  text-transform:uppercase;
-  color:#FFFFFF;
-  background:var(--orange-strong);
-  padding:5px 11px 4px;
-  border-radius:999px;
-  margin-bottom:12px;
-}
-.step h3 {
-  color:#FFFFFF;
-  font-size:1.14rem;
+  color:var(--teal-strong);
   margin:0 0 6px;
 }
-.step p {
+/* the proof sentence, word for word, set as four lines */
+.proofline {
   margin:0;
-  font-size:.93rem;
-  color:var(--purple-100);
 }
-.step.gate {
-  background:transparent;
-  border:2px dashed var(--orange);
+.proofline .pl {
+  display:grid;
+  grid-template-columns:22px minmax(0,1fr);
+  gap:14px;
+  align-items:start;
+  padding:14px 0;
+  border-top:1px solid var(--line);
+  font-family:var(--font-h);
+  font-weight:600;
+  font-size:1.04rem;
+  line-height:1.4;
+  color:var(--purple-800);
+}
+.proofline .pl:first-child {
+  border-top:0;
+}
+.proofline .ck {
+  margin-top:.12em;
+}
+.holds .go {
   display:flex;
-  flex-direction:column;
-  justify-content:center;
+  min-height:48px;
+  border-top:1px solid var(--line);
 }
-.step.gate .when {
-  background:transparent;
-  color:var(--orange);
+/* where we're going: a line with four points; the evidence gate is a diamond, the stretch after it is dashed */
+.path-head {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:24px 56px;
+  align-items:end;
+  margin-bottom:44px;
+}
+.path-head h2 {
+  margin:0;
+}
+.path-head p {
+  margin:0;
+  font-size:1.04rem;
+  max-width:56ch;
+}
+.track2 {
+  list-style:none;
+  margin:0;
   padding:0;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+.st {
+  position:relative;
+  padding:44px 32px 0 0;
+}
+.st::before {
+  content:"";
+  position:absolute;
+  left:9px;
+  right:-9px;
+  top:8px;
+  height:2px;
+  background:var(--purple-600);
+}
+.st:last-child::before {
+  display:none;
+}
+.st.gate::before {
+  background:repeating-linear-gradient(to right,var(--teal) 0 7px,transparent 7px 13px);
+}
+.st .node {
+  position:absolute;
+  z-index:1;
+  left:0;
+  top:0;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:var(--surface);
+  border:2px solid var(--purple-600);
+}
+.st.now .node {
+  background:var(--orange);
+  border-color:var(--orange-strong);
+  box-shadow:0 0 0 5px rgba(242,122,55,.22);
+}
+.st.gate .node {
+  border-radius:3px;
+  transform:rotate(45deg);
+  background:var(--teal-strong);
+  border-color:var(--teal-strong);
+}
+.st .when {
+  display:block;
+  font-family:var(--font-m);
+  font-size:var(--lab);
   letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--purple-600);
+}
+.st.now .when {
+  color:var(--orange-strong);
+}
+.st.gate .when {
+  color:var(--teal-strong);
+}
+.st h3 {
+  margin:8px 0 0;
+  font-size:1.22rem;
+  color:var(--purple-800);
+}
+.st p {
+  margin:8px 0 0;
+  font-size:.96rem;
+  line-height:1.55;
+  color:var(--ink-muted);
+  max-width:30ch;
 }
 .constant {
   display:flex;
   gap:12px;
   align-items:baseline;
-  margin:26px 0 0;
+  margin:44px 0 0;
   font-family:var(--font-h);
   font-weight:600;
   font-size:1.06rem;
-  color:#FFFFFF;
+  color:var(--purple-800);
 }
 .constant::before {
   content:"";
@@ -1673,216 +790,259 @@
 .path-src {
   margin:10px 0 0;
   font-size:.9rem;
-  color:var(--purple-200);
+  color:var(--ink-muted);
   max-width:80ch;
 }
 .also {
-  margin-top:40px;
+  margin-top:48px;
   padding-top:26px;
-  border-top:1px solid rgba(255,255,255,.18);
+  border-top:1px solid var(--line);
 }
 .also>.lab {
   display:block;
-  color:var(--orange);
+  color:var(--orange-strong);
   margin-bottom:14px;
 }
-.also .cards {
+.also2 {
+  display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:24px;
 }
-@media (max-width:960px) {
-  .story-grid,
-  .team-head,
-  .rule-grid {
-    grid-template-columns:1fr;
-    gap:28px;
-  }
-  .team {
-    grid-template-columns:1fr;
-  }
-  .member {
-    display:grid;
-    grid-template-columns:140px 1fr;
-  }
-  .member img {
-    height:100%;
-  }
-  .advisors {
-    grid-template-columns:1fr;
-  }
-  .path {
-    grid-template-columns:1fr;
-  }
-  .also .cards {
-    grid-template-columns:1fr;
-  }
-  .says {
-    justify-self:start;
-  }
-}
-@media (max-width:520px) {
-  .member {
-    display:flex;
-  }
-  .layers {
-    grid-template-columns:1fr;
-  }
-  .say.not {
-    margin-right:24px;
-  }
-  .say.yes {
-    margin-left:24px;
-  }
-}
-/* fixes after first render */
-.member img {
-  aspect-ratio:4/3;
-  object-position:50% 28%;
-}
-.advisors .todo {
-  color:var(--purple-900);
-  margin-top:8px;
-}
-.advisors .adv-lab {
+.acard {
+  border-radius:20px;
+  padding:26px 28px 22px;
   display:flex;
   flex-direction:column;
-  align-items:flex-start;
 }
-.member img {
-  height:auto;
+.acard h3 {
+  margin:0 0 8px;
+  font-size:1.4rem;
+  line-height:1.2;
 }
-@media (max-width:960px) {
-  .member img {
-    height:100%;
-    aspect-ratio:auto;
-  }
+.acard p {
+  margin:0 0 14px;
+  font-size:.98rem;
+  line-height:1.55;
+  max-width:52ch;
 }
-@media (max-width:520px) {
-  .member img {
-    height:auto;
-    aspect-ratio:4/3;
-  }
+.acard.ed {
+  background:var(--purple-600);
+  color:var(--purple-100);
 }
-/* ===== v1.1 (Azade, 11 Nov 2026): Curiosity Teal and Teal strong, with the job they have on home v8.19/v8.20: evidence.
-   Curiosity Teal #2F8CA8 for lines and large shapes only (3.86 on white, so never small text); Teal strong #0F7C9C for text,
-   labels and badges on white (4.79) and as a filled box with white text (4.79). Placed where the page shows how a claim is
-   checked: the "Why you can hold us to it" label and the four proof tiles (white section), and the evidence gate on the path
-   as a Teal strong box with white text. No teal text or lines on the purple surfaces (3.3 on deep purple). */
-.page {
-  --teal:#2F8CA8;
-  --teal-strong:#0F7C9C;
-}
-.proof .lab {
-  color:var(--teal-strong);
-}
-.layers li {
-  border-top:4px solid var(--teal);
-}
-.layers .n {
-  display:inline-block;
-  color:#FFFFFF;
-  background:var(--teal-strong);
-  padding:3px 9px 2px 10px;
-  border-radius:999px;
-  margin-bottom:10px;
-}
-.step.gate {
-  background:var(--teal-strong);
-  border:0;
-  box-shadow:0 0 0 3px rgba(255,255,255,.14);
-}
-.step.gate .when {
-  color:#FFFFFF;
-  background:transparent;
-  padding:0;
-}
-.step.gate h3 {
+.acard.ed h3 {
   color:#FFFFFF;
 }
-.step.gate p {
+.acard.ed .go {
+  margin-top:auto;
   color:#FFFFFF;
 }
-.layers li {
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
+.acard.ed .go:hover {
+  color:var(--orange-50);
 }
-/* ===== v1.2 (design review against the home page and the design system, 11 Nov 2026) =====
-   1. Evidence gate: the design system keeps teal off the purple surfaces (2.7:1 against deep purple, 1.8:1 against the
-      Curiosity Purple cards beside it), so the gate is now the one white card in the row: teal top line, Teal strong label
-      (4.79 on white), dark text. It still carries teal's job, evidence, and reads as the gate because it is the odd card out.
-   2. Why we started: the quote and "Where we come from" travel with the text on wide screens, so the right column no longer
-      ends in an empty block. */
-.step.gate {
-  background:#FFFFFF;
-  border:0;
-  border-top:4px solid var(--teal);
-  box-shadow:none;
-}
-.step.gate .when {
-  color:var(--teal-strong);
-  background:transparent;
-  padding:0;
-}
-.step.gate h3 {
-  color:var(--purple-800);
-}
-.step.gate p {
+.acard.soon {
+  border:1.5px dashed var(--purple-400);
   color:var(--ink);
 }
-@media (min-width:1001px) {
-  .story-grid>:last-child {
+.acard.soon .state {
+  font-family:var(--font-m);
+  font-size:var(--lab);
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--ink-muted);
+  margin:0 0 12px;
+}
+.acard.soon h3 {
+  color:var(--purple-800);
+}
+.acard.soon p {
+  margin-bottom:0;
+}
+/* closing orange band: headline left, lede and one button right, three doors in a row on the commitments' columns */
+.close-band {
+  background:var(--orange-strong);
+  color:#FFFFFF;
+  padding:clamp(60px,7.5vw,92px) 0;
+}
+.close-band .lab.eyebrow {
+  color:#FFFFFF;
+}
+.close-copy {
+  display:grid;
+  grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);
+  gap:24px 56px;
+  align-items:end;
+  margin:0 0 40px;
+}
+.close-band h2 {
+  color:#FFFFFF;
+}
+.close-band .cc-r p {
+  margin:0;
+  font-size:1.08rem;
+  line-height:1.55;
+  color:#FFFFFF;
+}
+.close-band .cta-row {
+  margin-top:22px;
+}
+.doors {
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:40px;
+}
+.doors li {
+  background:var(--surface);
+  border-radius:16px;
+  padding:26px 28px 14px;
+  display:flex;
+  flex-direction:column;
+  box-shadow:0 14px 34px rgba(42,34,61,.22);
+}
+.doors h3 {
+  font-size:1.22rem;
+  margin:0 0 8px;
+  color:var(--purple-800);
+}
+.doors p {
+  font-size:.98rem;
+  line-height:1.55;
+  margin:0 0 12px;
+  color:var(--ink);
+}
+.doors .go {
+  margin-top:auto;
+  font-size:.93rem;
+}
+@media (min-width:961px) {
+  .why-head {
     position:sticky;
     top:28px;
   }
 }
-/* Closing band, two columns (Azade, 11 Nov 2026): the right half of the orange band was empty on wide screens. The message and
-   buttons sit on the left; the three doors become white cards on the right, like the white beta card on the IgniteThinking page.
-   On white: orange-hover label 5.6, ink 14.1, purple-700 link 10.6. One column again under 900 px. */
-.close-band {
-  max-width:none;
-  display:grid;
-  grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
-  gap:clamp(32px,5vw,80px);
-  align-items:center;
-}
-.doors {
-  margin:0;
-  padding:0;
-  border-top:0;
-  grid-template-columns:1fr;
-  gap:14px;
-}
-.doors li {
-  background:#FFFFFF;
-  border-radius:14px;
-  padding:18px 22px 8px;
-  box-shadow:0 14px 34px rgba(42,34,61,.22);
-}
-.doors .lab {
-  color:var(--orange-hover);
-}
-.doors p {
-  color:var(--ink);
-}
-.doors a {
-  color:var(--purple-700);
-}
-@media (max-width:900px) {
-  .close-band {
+@media (max-width:960px) {
+  .hero-grid {
     grid-template-columns:1fr;
-    gap:28px;
+  }
+  .slip {
+    justify-self:start;
+  }
+  .creds ul {
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+  .why-grid,
+  .stance {
+    grid-template-columns:1fr;
+    gap:26px;
+  }
+  .why-grid .prose {
+    padding-top:0;
+  }
+  .origin {
+    padding:24px 0 0;
+    border-left:0;
+    border-top:1px solid var(--line);
+  }
+  .team-head {
+    grid-template-columns:1fr;
+    gap:20px;
+  }
+  .advisors {
+    grid-template-columns:1fr;
+  }
+  .rule2 {
+    grid-template-columns:1fr;
+    gap:32px;
+  }
+  .holds {
+    padding:24px 22px 8px;
+  }
+  .path-head {
+    grid-template-columns:1fr;
   }
 }
-
-/* Focus ring grounds (as on the home page, 14e80c4): white on the deep purple
-   hero and sections and the orange closing band (12.88, 4.67); the white door
-   cards in the band take purple-500 back (6.4 on white). */
-.hero,
-:where(.page) section.dark,
-.close-dark {
-  --focus-ring: #ffffff;
+@media (max-width:900px) {
+  .close-copy {
+    grid-template-columns:1fr;
+    margin-bottom:30px;
+  }
+  .doors {
+    grid-template-columns:1fr;
+    gap:14px;
+  }
 }
-.doors li {
-  --focus-ring: var(--purple-500);
+@media (max-width:860px) {
+  .team2 {
+    grid-template-columns:1fr;
+    gap:36px;
+  }
+  .person {
+    grid-template-columns:88px minmax(0,1fr);
+    gap:0 18px;
+    align-items:center;
+  }
+  .person .ph {
+    width:88px;
+    border-radius:16px;
+  }
+  .person h3 {
+    margin-top:0;
+  }
+  .person .bio,
+  .person .links {
+    grid-column:1/-1;
+  }
+  .track2 {
+    grid-template-columns:1fr;
+  }
+  .st {
+    padding:0 0 32px 40px;
+  }
+  .st:last-child {
+    padding-bottom:0;
+  }
+  .st::before {
+    left:8px;
+    right:auto;
+    top:12px;
+    bottom:-12px;
+    width:2px;
+    height:auto;
+  }
+  .st.gate::before {
+    background:repeating-linear-gradient(to bottom,var(--teal) 0 7px,transparent 7px 13px);
+  }
+  .st .node {
+    top:2px;
+  }
+  .st p {
+    max-width:none;
+  }
 }
-
+@media (max-width:760px) {
+  .also2 {
+    grid-template-columns:1fr;
+    gap:16px;
+  }
+}
+@media (max-width:520px) {
+  .creds ul {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+/* reduced motion: the card rests with both marks drawn, and nothing waits on a delay */
+@media (prefers-reduced-motion:reduce) {
+  .slip .no .sq::after,
+  .slip .yes svg {
+    animation:none;
+  }
+  .page *,
+  .page *::before,
+  .page *::after {
+    animation-duration:.001ms!important;
+    animation-delay:0s!important;
+    transition-duration:.001ms!important;
+  }
+}

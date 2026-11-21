@@ -3,12 +3,12 @@
 import { useEffect, useRef } from "react"
 import { c } from "@/app/ignitethinking/cx"
 
-// The mobile sticky beta button (shown under 760 px by the page CSS), ported
-// from the draft's second <script> (v3.25): it appears once the visitor has
-// scrolled past the maze and steps aside while the beta section is on screen.
-// Measured on scroll, not with IntersectionObserver, so a jump straight past
-// the maze (such as the announcement link) still counts. Without JavaScript
-// it stays shown on small screens, as in the draft.
+// The pinned beta bar, ported from the draft's second <script> (v3.25, widened
+// in v3.42 W-1 to every screen size): it appears once the visitor has scrolled
+// past the maze and steps aside while the beta section is on screen. Measured
+// on scroll, not with IntersectionObserver, so a jump straight past the maze
+// (such as the announcement link) still counts. It starts hidden ("off"), as
+// in the draft's markup.
 
 export function StickyCta() {
   const barRef = useRef<HTMLDivElement | null>(null)
@@ -43,10 +43,17 @@ export function StickyCta() {
   }, [])
 
   return (
-    <div className={c("sticky-cta")} ref={barRef}>
-      <a className={c("btn btn-primary")} href="#beta">
-        Request beta access
-      </a>
+    <div className={c("sticky-cta off")} ref={barRef} role="region" aria-label="Founding Families beta">
+      <div className={c("wrap pin")}>
+        <p className={c("pin-t")}>
+          <b>Founding Families beta</b>
+          <span>Opens late November 2026</span>
+          <span>Grades 4 and 5</span>
+        </p>
+        <a className={c("btn btn-primary")} href="#beta">
+          Request beta access
+        </a>
+      </div>
     </div>
   )
 }

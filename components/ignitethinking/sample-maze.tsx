@@ -11,7 +11,9 @@ import styles from "@/app/ignitethinking/page.module.css"
 // and never receives the answer, only how many walks and attempts there
 // have been. v3.25: the first hint opens after one walk, each further hint
 // only after an attempt (a walk with a changed arrow), as in the app; Start
-// over cancels a walk in progress.
+// over cancels a walk in progress. v3.50: each arrow is one drawing, turned
+// (clockwise when tapped, the short way back when it resets), and a solve
+// reveals the page's #solved box under the maze, once.
 // Without JavaScript the grid stays empty, exactly as in the draft file.
 
 type Dir = "R" | "D" | "L" | "U"
@@ -23,7 +25,7 @@ const START: (Dir | null)[][] = [
 ]
 const HOUSE = { r: 2, c: 2 }
 const STEP: Record<Dir, [number, number]> = { R: [0, 1], D: [1, 0], L: [0, -1], U: [-1, 0] }
-const GLYPH: Record<Dir, string> = { R: "→", D: "↓", L: "←", U: "↑" }
+const ANG: Record<Dir, number> = { R: 0, D: 90, L: 180, U: 270 } /* the arrow is one drawing, turned (v3.50) */
 const WORD: Record<Dir, string> = { R: "right", D: "down", L: "left", U: "up" }
 const TURN: Dir[] = ["R", "D", "L", "U"]
 
@@ -53,6 +55,7 @@ export function SampleMaze() {
     const sparkEl = root.querySelector(`.${styles.spark}`) as SVGElement | null
 
     let grid: (Dir | null)[][]
+    let ang: number[][]
     let changed: { r: number; c: number } | null
     let walks: number
     let attempts: number
@@ -127,8 +130,8 @@ export function SampleMaze() {
           b.id = "cell-" + r + "-" + c
           b.innerHTML =
             (r === 0 && c === 0 ? `<span class="${styles.start}" aria-hidden="true">Start</span>` : "") +
-            `<span class="${styles.arrow}" aria-hidden="true">` +
-            GLYPH[grid[r][c] as Dir] +
+            `<span class="${styles.arrow}" aria-hidden="true" style="transform:rotate(${ang[r][c]}deg)">` +
+            '<svg viewBox="0 0 32 32"><path d="M6 16h20M17 7l9 9-9 9"/></svg>' +
             "</span>"
           b.addEventListener("click", () => turn(r, c))
           label(b, r, c)
@@ -154,9 +157,27 @@ export function SampleMaze() {
           if (r === HOUSE.r && c === HOUSE.c) continue
           const e = cell(r, c)
           e.classList.toggle(styles.changed, !!(changed && changed.r === r && changed.c === c))
-          ;(e.querySelector(`.${styles.arrow}`) as HTMLElement).textContent = GLYPH[grid[r][c] as Dir]
           label(e as HTMLButtonElement, r, c)
         }
+    }
+
+    /* Turn the drawn arrow to match the grid: clockwise when the visitor turns it,
+       the short way when one goes back. */
+    function point(r: number, c: number, cw: boolean) {
+      let d = (((ANG[grid[r][c] as Dir] - ang[r][c]) % 360) + 360) % 360
+      if (!cw && d > 180) d -= 360
+      ang[r][c] += d
+      const a = cell(r, c).querySelector(`.${styles.arrow}`) as HTMLElement | null
+      if (a) a.style.transform = "rotate(" + ang[r][c] + "deg)"
+    }
+    /* After a solve: show the next step under the maze, once. The box is page
+       markup (#solved), outside this component. */
+    function showNext() {
+      const s = document.getElementById("solved")
+      if (!s || !s.hidden) return
+      s.hidden = false
+      if (!reduce) s.classList.add(styles.in)
+      s.scrollIntoView({ block: "nearest", behavior: reduce ? "auto" : "smooth" })
     }
 
     function turn(r: number, c: number) {
@@ -165,6 +186,7 @@ export function SampleMaze() {
       let note = ""
       if (changed && (changed.r !== r || changed.c !== c)) {
         grid[changed.r][changed.c] = START[changed.r][changed.c]
+        point(changed.r, changed.c, false)
         note = "Only one arrow may change, so the first one went back. "
       }
       let k = TURN.indexOf(grid[r][c] as Dir)
@@ -172,6 +194,7 @@ export function SampleMaze() {
         k = (k + 1) % 4
       } while (!valid(r, c, TURN[k]))
       grid[r][c] = TURN[k]
+      point(r, c, true)
       changed = grid[r][c] === START[r][c] ? null : { r, c }
       paintChanged()
       if (note) speak(note + "Walk the path to see what your change does.")
@@ -208,6 +231,7 @@ export function SampleMaze() {
         solved = true
         walkBtn.disabled = true
         nudgeBtn.disabled = true
+        showNext()
         speak(
           "You reached the House in " +
             steps +
@@ -265,6 +289,7 @@ export function SampleMaze() {
 
     function init() {
       grid = START.map((row) => row.slice())
+      ang = grid.map((row) => row.map((d) => (d ? ANG[d] : 0)))
       gen++
       if (walkTimer) clearTimeout(walkTimer)
       walkTimer = undefined
@@ -303,7 +328,7 @@ export function SampleMaze() {
           { opacity: 0.4, transform: "scale(.86)" },
           { opacity: 1, transform: "none" },
         ],
-        { duration: 520, iterations: 1, easing: "cubic-bezier(.34,1.4,.64,1)" },
+        { duration: 520, iterations: 1, easing: "cubic-bezier(.23,1,.32,1)" },
       )
     }
 
