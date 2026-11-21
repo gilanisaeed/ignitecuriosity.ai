@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react"
 import { c } from "@/app/ignitethinking/cx"
 
 // The beta form, ported from the draft's second <script>
-// (docs/handoff-2026-11-10/source/IgniteThinking-Page-v3_49.html), logic as
+// (docs/handoff-2026-11-10/source/IgniteThinking-Page-v3_50.html), logic as
 // written. v3.42 (W-2): one field, the email; the optional question is asked on
 // the next step, which is the mail message itself. It composes a message in the
 // visitor's own mail client; nothing is transmitted from this page. After
@@ -26,11 +26,13 @@ export function BetaForm() {
       const m = em.value.trim()
       if (!m || m.indexOf("@") < 1 || m.lastIndexOf(".") < m.indexOf("@")) {
         err.textContent = "Please add an email address, so we can write back."
+        em.setAttribute("aria-invalid", "true")
         em.focus()
         return
       }
       err.textContent = ""
       ok.textContent = ""
+      em.removeAttribute("aria-invalid")
       const body =
         "Please send me an invitation to the IgniteThinking Founding Families beta.\n\nEmail: " +
         m +
