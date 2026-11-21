@@ -1,14 +1,16 @@
+import type { CSSProperties } from "react"
 import type { Metadata } from "next"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import styles from "./page.module.css"
 
-// Ported from docs/handoff-2026-11-10/source/ICL-About-v1_6.html (17 Nov 2026);
+// Ported from docs/handoff-2026-11-10/source/ICL-About-v1_7.html (20 Nov 2026);
 // first ported from v1.4 (11 Nov 2026), replacing the July About page. Copy is final and audited (handoff rule 3):
 // port verbatim, no edits. Class names are the draft's, mapped to the CSS
 // Module by c(). Review-only elements (draft banner, todo chips, draft footer
 // tail, version-history comments) do not ship (handoff 4.2); the one paragraph
-// that held only a review note is left out with it. The portraits embedded
+// that held only a review note is left out with it (as are the two team
+// link lines that hold only a "link needed" note). The portraits embedded
 // in the draft (three team portraits and the quote's small one) are files in
 // public/about/. The draft has no script.
 
@@ -23,6 +25,26 @@ export const metadata: Metadata = {
   title: "About",
   description:
     "Who we are and why we started: educators, researchers and engineers building AI learning experiences that build independent reasoning skills in K-12 students, where AI guides their thinking instead of giving them answers.",
+  alternates: { canonical: "https://ignitecuriosity.ai/about/" },
+  // Share tags (v1.7). The draft's share image (assets/icl-about-share-1200x630.png,
+  // "confirm its address at deploy") is not in this repo yet, so the site's default
+  // image stands in until it is.
+  openGraph: {
+    type: "website",
+    siteName: "Ignite Curiosity Lab",
+    title: "About | Ignite Curiosity Lab",
+    description:
+      "Who we are and why we started: educators, researchers and engineers building AI learning experiences that build independent reasoning skills in K-12 students, where AI guides their thinking instead of giving them answers.",
+    url: "https://ignitecuriosity.ai/about/",
+    images: [{ url: "/images/icl-mainpage.jpg", width: 1280, height: 720, alt: "Ignite Curiosity Lab" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About | Ignite Curiosity Lab",
+    description:
+      "Who we are and why we started: educators, researchers and engineers building AI learning experiences that build independent reasoning skills in K-12 students, where AI guides their thinking instead of giving them answers.",
+    images: ["/images/icl-mainpage.jpg"],
+  },
 }
 
 export default function AboutPage() {
@@ -34,7 +56,6 @@ export default function AboutPage() {
         <section className={c("hero")}>
           <div className={c("wrap hero-grid")}>
           <div>
-            <span className={c("kicker")}>About Ignite Curiosity Lab</span>
             <h1>We build AI that leaves the thinking <b>with the learner.</b></h1>
             <p className={c("mission")}><span className={c("mlab")}>Our mission</span>Ignite Curiosity Lab creates AI learning experiences that build independent reasoning skills in K-12 students, where AI guides their thinking instead of giving them answers.</p>
             <p className={c("lede")}>We are educators, researchers and engineers. We start with how children learn to reason, then ask what technology can add. Never the other way around.</p>
@@ -106,24 +127,25 @@ export default function AboutPage() {
             </div>
             <ul className={c("team2")}>
               <li className={c("person")} id="azade">
-                <img src="/about/azade-sanjari.jpg" alt="Portrait of Azade Sanjari" width="520" height="520" />
+                <span className={c("ph")} style={{ "--z": "1.2", "--ox": "8%", "--oy": "9%" } as CSSProperties}><img loading="lazy" decoding="async" src="/about/azade-sanjari.jpg" alt="Portrait of Azade Sanjari" width="520" height="520" /></span>
                 <div className={c("pn")}><h3>Azade Sanjari</h3><p className={c("role2")}>Co-Founder, CEO and AI Architect</p></div>
                 <p className={c("bio")}>Designed Ignite’s answer-isolation architecture (patent pending). Built production machine learning, computer vision and data systems in industry, including at Octave Bioscience and Zadar Labs. Alongside that work she co-founded the Children of Mehr Foundation, which opened ten library and learning centers, and, working with Code.org, taught more than 1,500 students in Iran AI literacy, coding and algorithmic thinking. Stanford GSB LEAD; LISA alum and mentor.</p>
+                <p className={c("links")}><a className={c("go")} href="https://www.linkedin.com/in/azadesanjari" target="_blank" rel="noopener">LinkedIn &rarr;</a></p>
               </li>
               <li className={c("person")} id="azin">
-                <img loading="lazy" src="/about/azin-sanjari.jpg" alt="Portrait of Dr. Azin Sanjari" width="520" height="520" />
+                <span className={c("ph")}><img loading="lazy" decoding="async" src="/about/azin-sanjari.jpg" alt="Portrait of Dr. Azin Sanjari" width="520" height="520" /></span>
                 <div className={c("pn")}><h3>Dr. Azin Sanjari</h3><p className={c("role2")}>Co-Founder and Chief Learning Scientist</p></div>
                 <p className={c("bio")}>Assistant Professor of Mathematics Education at the University of Central Arkansas. Azin is our learning scientist: she leads Ignite’s learning science and research, including the research pilot with schools and its ethics review.</p>
               </li>
               <li className={c("person")} id="saeed">
-                <img loading="lazy" src="/about/saeed-gilani.jpg" alt="Portrait of Saeed Gilani" width="520" height="520" />
+                <span className={c("ph")} style={{ "--z": "1.1", "--ox": "0%", "--oy": "45%" } as CSSProperties}><img loading="lazy" decoding="async" src="/about/saeed-gilani.jpg" alt="Portrait of Saeed Gilani" width="520" height="520" /></span>
                 <div className={c("pn")}><h3>Saeed Gilani</h3><p className={c("role2")}>Co-Founder and CTO</p></div>
                 <p className={c("bio")}>Built and runs the IgniteThinking app. Brings software infrastructure experience from large technology companies, including Amazon.</p>
               </li>
             </ul>
             <div className={c("advisors")}>
               <div className={c("adv-lab")}><span className={c("lab")}>Advisors</span></div>
-              <div><b>Dr. Shiva Houshmand</b><span className={c("aff")}>Associate Professor of Mathematics and Computer Science, Santa Clara University</span></div>
+              <div><b>Dr. Shiva Houshmand</b><span className={c("aff")}>Associate Professor of Mathematics and Computer Science, Santa Clara University</span><a className={c("go")} href="https://www.scu.edu/cas/mathcs/faculty-and-staff/shiva-houshmand/" target="_blank" rel="noopener">Faculty page &rarr;</a></div>
               <div><b>Kaveh Mir</b><span className={c("aff")}>Program Manager, Google &middot; sales and partnerships</span></div>
             </div>
           </div>
@@ -135,17 +157,18 @@ export default function AboutPage() {
             <div>
               <span className={c("lab eyebrow")}>Our standing rule</span>
               <p className={c("stage")}>Today every hint your child sees is written and reviewed by educators.</p>
-              <p className={c("promise")}>The AI won’t hand over <span>the answer.</span></p>
+              <h2 className={c("promise")}>The AI won’t hand over <span>the answer.</span></h2>
             </div>
             <div className={c("holds")}>
-              <p className={c("proof")}><span className={c("lab")}>Why you can hold us to it</span>It is built without the answer, it only phrases help our educators approved, every line in the first AI release is read by a learning scientist, and live phrasing ships only after it passes a leakage test and a learning test.</p>
-              <ol className={c("layers2")}>
-                <li><span className={c("n")}>01</span><b>Built without the answer</b></li>
-                <li><span className={c("n")}>02</span><b>Phrases only help our educators approved</b></li>
-                <li><span className={c("n")}>03</span><b>Every line of the first AI release read by a learning scientist</b></li>
-                <li><span className={c("n")}>04</span><b>Live phrasing only after a leakage test and a learning test</b></li>
-              </ol>
-              <a className={c("morelink")} href="/#science">How learning science shapes what we build &rarr;</a>
+              <span className={c("lab")}>Why you can hold us to it</span>
+              {/* the Core v1.9 proof line, word for word, set as four lines (v1.7); it reads as one sentence */}
+              <p className={c("proofline")}>
+                <span className={c("pl")}><svg className={c("ck")} width="22" height="22" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="13" fill="var(--teal-strong)" /><path d="M7.8 13.4l3.4 3.4 7-7.4" fill="none" stroke="#FFFFFF" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg><span>It is built without the answer,</span></span>
+                <span className={c("pl")}><svg className={c("ck")} width="22" height="22" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="13" fill="var(--teal-strong)" /><path d="M7.8 13.4l3.4 3.4 7-7.4" fill="none" stroke="#FFFFFF" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg><span>it only phrases help our educators approved,</span></span>
+                <span className={c("pl")}><svg className={c("ck")} width="22" height="22" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="13" fill="var(--teal-strong)" /><path d="M7.8 13.4l3.4 3.4 7-7.4" fill="none" stroke="#FFFFFF" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg><span>every line in the first AI release is read by a learning scientist,</span></span>
+                <span className={c("pl")}><svg className={c("ck")} width="22" height="22" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="13" fill="var(--teal-strong)" /><path d="M7.8 13.4l3.4 3.4 7-7.4" fill="none" stroke="#FFFFFF" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg><span>and live phrasing ships only after it passes a leakage test and a learning test.</span></span>
+              </p>
+              <a className={c("go")} href="/#science">How learning science shapes what we build &rarr;</a>
             </div>
           </div>
         </section>
@@ -154,8 +177,10 @@ export default function AboutPage() {
         <section id="path">
           <div className={c("wrap")}>
             <div className={c("path-head")}>
-              <span className={c("lab eyebrow")}>Where we’re going</span>
-              <h2>IgniteThinking is where we start.</h2>
+              <div>
+                <span className={c("lab eyebrow")}>Where we’re going</span>
+                <h2>IgniteThinking is where we start.</h2>
+              </div>
               <p>Subject matter is the vehicle. Independent reasoning is the point. Each step widens the grades and subjects, and one gate decides when we take it.</p>
             </div>
             <ol className={c("track2")}>
@@ -178,36 +203,33 @@ export default function AboutPage() {
                 <article className={c("acard soon")}>
                   <span className={c("state")}>Coming soon</span>
                   <h3>IgniteBuild</h3>
-                  <p>Where future builders ship. For high schools. Stay tuned.</p>
+                  <p>Ship something real. For high schools. Stay tuned.</p>
                 </article>
               </div>
             </div>
           </div>
         </section>
 
-        {/* 6 · close (orange band, same structure as home v8.28) */}
-        <section className={c("close-dark")}>
+        {/* 6 · close (orange band, same structure as home v8.29) */}
+        <section className={c("close-band")}>
           <div className={c("wrap")}>
-            <div className={c("close-band cb2")}>
-              <div className={c("close-copy")}>
-                <div className={c("cc-l")}>
-                  <span className={c("lab eyebrow")}>Work with us</span>
-                  <h2>Build AI that leaves people more capable than it found them.</h2>
-                </div>
-                <div className={c("cc-r")}>
-                  <p>That is the standard we hold our products, our research, and our partnerships to.</p>
-                  <div className={c("cta-row")}>
-                    <a className={c("btn btn-onorange")} href="mailto:hello@ignitecuriosity.ai">Partner with us</a>
-                    <a className={c("btn btn-onorange-ghost")} href="/ignitethinking/">See IgniteThinking</a>
-                  </div>
+            <div className={c("close-copy")}>
+              <div className={c("cc-l")}>
+                <span className={c("lab eyebrow")}>Work with us</span>
+                <h2>Build AI that leaves people more capable than it found them.</h2>
+              </div>
+              <div className={c("cc-r")}>
+                <p>That is the standard we hold our products, our research, and our partnerships to.</p>
+                <div className={c("cta-row")}>
+                  <a className={c("btn btn-onorange")} href="mailto:hello@ignitecuriosity.ai">Partner with us</a>
                 </div>
               </div>
-              <ul className={c("doors")}>
-                <li><h3>Families</h3><p>Join the IgniteThinking Founding Families beta.</p><a href="/ignitethinking/#beta">Request beta access &rarr;</a></li>
-                <li><h3>Educators and schools</h3><p>Practical AI literacy for your team, through IgniteEd.</p><a href="/igniteed/">Visit IgniteEd &rarr;</a></li>
-                <li><h3>Researchers and funders</h3><p>Help us study how children reason after the hints are gone.</p><a href="mailto:hello@ignitecuriosity.ai?subject=Research%20with%20Ignite%20Curiosity%20Lab">Write to us &rarr;</a></li>
-              </ul>
             </div>
+            <ul className={c("doors")}>
+              <li><h3>Families</h3><p>Join the IgniteThinking Founding Families beta.</p><a className={c("go")} href="/ignitethinking/#beta">Request beta access &rarr;</a></li>
+              <li><h3>Educators and schools</h3><p>Practical AI literacy for your team, through IgniteEd.</p><a className={c("go")} href="/igniteed/">Visit IgniteEd &rarr;</a></li>
+              <li><h3>Researchers and funders</h3><p>Help us study how children reason after the hints are gone.</p><a className={c("go")} href="mailto:hello@ignitecuriosity.ai?subject=Research%20with%20Ignite%20Curiosity%20Lab">Write to us &rarr;</a></li>
+            </ul>
           </div>
         </section>
       </main>

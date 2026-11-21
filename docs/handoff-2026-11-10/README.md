@@ -1,4 +1,4 @@
-# Home draft v8.29, IgniteThinking draft v3.50 and About draft v1.6 (10 to 20 Nov 2026)
+# Home draft v8.29, IgniteThinking draft v3.50 and About draft v1.7 (10 to 20 Nov 2026)
 
 `source/ICL-Home-Philosophy-v8_29.html` (20 Nov 2026) is the visual and copy
 source of truth for `/`, superseding v8.17, v8.20, v8.21, v8.22 and v8.28 (kept
@@ -132,8 +132,8 @@ white with an orange underline. The orange announcement bar shows on `/` (linkin
 
 ## About page
 
-`source/ICL-About-v1_6.html` (17 Nov 2026) is the source for `/about/`,
-superseding v1.4 (kept alongside for the diff), which replaced the July About
+`source/ICL-About-v1_7.html` (20 Nov 2026) is the source for `/about/`,
+superseding v1.4 and v1.6 (kept alongside for the diff); v1.4 replaced the July About
 page and its `components/about-section.tsx`. Its portraits (three team
 portraits and a small one beside the pull quote) are embedded in the draft;
 the site serves them from `public/about/`.
@@ -150,12 +150,29 @@ the home v8.28 structure (v1.5 had given the doors card titles). Not taken from
 the redesign: its cream background, orange in the headline, the missing "Our
 mission" label and the missing proof sentence.
 
-Todo chips left in About v1.6 (not shipped, still open; unchanged from v1.4):
+v1.7 (20 Nov), after a design and motion review of v1.6, consolidates the
+stylesheet into one (the page module and markup are regenerated from it) and:
+
+- removes the hero label above the headline; the hero card is straight, and its
+  strike and underline start at 0.4 s;
+- makes the promise a real h2 and says the proof once: the Core v1.9 sentence,
+  word for word, set as four lines with check marks (the four numbered rows go);
+- shows square team portraits, capped at 260 px and scaled so the three heads
+  match, with a LinkedIn link for Azade and a faculty link for Dr. Shiva
+  Houshmand (the other links are still to find);
+- sets "Where we're going" with the heading left and the paragraph right;
+- takes the home v8.29 closing band (one button), buttons, labels (12 px or
+  more), focus rings and shadows; IgniteBuild reads "Ship something real.";
+- adds share tags (the draft's share image is not in the repo yet, so the
+  site's default image stands in). No other word changed.
+
+Todo chips left in About v1.7 (not shipped, still open):
 
 - Why we started: "optional: the moment that started Ignite, in one true sentence" (the paragraph held only this note, so it does not ship)
 - Why we started: "sign-off: belief 04, moved here from home on 9 Sep" (the "student without a tutor at home" sentence ships)
 - Pull quote: "confirm: from your 2030 Manifesto"
-- Advisors: "confirm both agree to be named"
+- Advisors: "confirm both agree to be named"; Dr. Shiva Houshmand's faculty link: "confirm link" (the link ships); Kaveh Mir: "LinkedIn address needed"
+- Team links: Dr. Azin Sanjari, "link needed: the only public faculty page found is at Arkansas Tech University; confirm which page to link"; Saeed Gilani, "LinkedIn address needed" (both lines held only the note, so neither ships)
 - Standing rule: "check with Saeed: the 29 Oct audit found “reviewed” not yet true in the app" (the sentence "Today every hint your child sees is written and reviewed by educators." ships, as it does on IgniteThinking)
 - Footer privacy link: "blocker: needs a real page"
 
