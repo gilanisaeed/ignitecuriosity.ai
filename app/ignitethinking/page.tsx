@@ -48,7 +48,7 @@ export default function IgniteThinkingPage() {
         tail="Grades 4 and 5 · at home"
         announce={{ href: "#beta", label: "Request beta access" }}
       />
-      <main className={`flex-1 ${c("page")}`}>
+      <main id="main" className={`flex-1 ${c("page")}`}>
         {/* ============================== HERO ============================== */}
         <section className={c("hero")}>
           <div className={c("wrap hero-grid")}>

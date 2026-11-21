@@ -9,7 +9,7 @@ export default function SolutionPage() {
       <SiteHeader />
 
       {/* Section 1: The Paradigm Shift (Hero) */}
-      <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-background to-muted/20">
+      <section id="main" className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-background to-muted/20">
         {/* Background decorative elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 left-10 w-96 h-96 bg-logo-deep-violet/10 rounded-full blur-3xl" />

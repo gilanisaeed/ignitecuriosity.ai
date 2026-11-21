@@ -29,7 +29,7 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <SiteHeader current="about" announce />
-      <main className={`flex-1 ${c("page")}`}>
+      <main id="main" className={`flex-1 ${c("page")}`}>
         {/* 1 · hero */}
         <section className={c("hero")}>
           <div className={c("wrap hero-grid")}>

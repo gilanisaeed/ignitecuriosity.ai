@@ -1,7 +1,7 @@
-# Home draft v8.28, IgniteThinking draft v3.49 and About draft v1.6 (10 to 17 Nov 2026)
+# Home draft v8.29, IgniteThinking draft v3.49 and About draft v1.6 (10 to 20 Nov 2026)
 
-`source/ICL-Home-Philosophy-v8_28.html` (16 Nov 2026) is the visual and copy
-source of truth for `/`, superseding v8.17, v8.20, v8.21 and v8.22 (kept
+`source/ICL-Home-Philosophy-v8_29.html` (20 Nov 2026) is the visual and copy
+source of truth for `/`, superseding v8.17, v8.20, v8.21, v8.22 and v8.28 (kept
 alongside for the diff) and
 `../handoff-2026-11-01/source/ICL-Home-Philosophy-v8_4.html`. v8.18 adds the
 Instagram and LinkedIn footer links (shown site-wide, since the footer is
@@ -22,7 +22,31 @@ schools" on IgniteEd (v8.27); the three commitments gain an icon and a heading
 each (v8.26); and the closing band puts the headline left, the lede and buttons
 right and the three doors in a row below (v8.28).
 
-Todo chips left in home v8.28 (not shipped, still open):
+v8.29 (20 Nov), after a design and motion review of v8.28, consolidates the
+stylesheet into one (the page module is regenerated from it) and:
+
+- moves "What we build" up to follow the credentials band; the IgniteThinking
+  card carries the app screenshot (the Ideate step, as on the IgniteThinking
+  page; `public/home/ideate-fewest-colours.jpg`), with IgniteEd and IgniteBuild
+  in a row under it;
+- removes the hero kicker and lede paragraph (headline and mission unchanged),
+  the eyebrows on "What we build" and the pedagogy section, and the closing
+  band's second button ("Explore our products");
+- changes two labels: the pedagogy card tag "What we build" becomes "Our
+  approach", and the IgniteBuild line becomes "Ship something real. For high
+  schools. Stay tuned." (20 Nov tagline, company brain);
+- redraws the hero trace (2.4 s, each stop appearing as the line reaches it),
+  puts the commitments on lavender, sets the credentials in sentence case, and
+  keeps every label at 12 px or more;
+- adds a skip link, a real h2 for the question and a hidden h2 for the
+  commitments.
+
+Its header changes apply site-wide, since the header is shared: the tagline
+label hides below 1000 px so Log in never drops to a second row; below 760 px
+Log in moves into the menu; a "Skip to content" link leads to each page's
+`<main id="main">` (the first section on `/solution/`).
+
+Todo chips left in home v8.29 (not shipped, still open; unchanged from v8.28):
 
 - Credentials band, hint author: "needs Azin's agreement to be named here; wording from deck v36, slide 2" (the line ships, as the "Who writes the hints" box does on IgniteThinking)
 - Evidence, beta date: "re-check the date at every deploy"

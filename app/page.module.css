@@ -1,1563 +1,630 @@
-/* Home page, ported from docs/handoff-2026-11-10/source/ICL-Home-Philosophy-v8_22.html
-   (first ported from v8.4 in docs/handoff-2026-11-01/source/).
-   Class names, values and media queries as in the draft's <style> block; the
-   chrome (.topbar/.login/.menu/footer) lives in components/site-chrome.module.css,
-   and the review-only .todo/.draft-banner rules do not ship (handoff 4.2).
-   Element selectors are scoped under .page because CSS Modules cannot target
-   :root or bare elements; fonts come from the next/font variables.
-   The draft layers its colour system as override blocks (v8.8 to v8.22) at
-   the end of its <style>; they are kept in that order at the end of this file.
-   Where the draft overrides a bare `h2` rule, the override is folded into the
-   base `.page h2` rule instead, so the module keeps the draft's cascade. */
+/* Home page, ported from docs/handoff-2026-11-10/source/ICL-Home-Philosophy-v8_29.html
+   (20 Nov 2026), whose one consolidated stylesheet replaces the layered v8.28 one.
+   Generated from the draft's <style> block in its order, the same way as the
+   IgniteThinking and About modules:
+   - :root tokens and the body rules sit on .page (CSS Modules cannot target :root);
+     the font stacks use the next/font variables.
+   - Bare element selectors carry a :where(.page) prefix, so they keep the
+     draft's element-level specificity and lose to class rules as in the draft.
+   - #ids stay global (:global(#id)) so the page anchors keep working.
+   - The chrome (announcement bar, header, skip link, footer) lives in
+     components/site-chrome.module.css; the review-only .todo and
+     .draft-banner rules do not ship (handoff 4.2).
+   The draft's own comment follows. */
 
+/* ICL home v8.29, 20 Nov 2026. One consolidated stylesheet: the nine override layers of v8.8 to v8.28 are resolved into
+   their final values and the rules for layouts that no longer exist are removed. Section looks are unchanged unless noted.
+   Every colour is a token from IgniteCuriosityLab_DesignSystem.html. Shadows and translucent lines are palette colours at
+   reduced alpha (white, purple-900 #2A223D, Curiosity Orange). Coral is not used on this page.
+   Contrast (computed): white on purple-800 12.88, purple-100 on purple-800 9.82, purple-200 on purple-800 6.73,
+   purple-300 on purple-800 4.67, orange on purple-800 4.67, white on #56457F 8.22, purple-100 on #56457F 6.27,
+   white on orange-strong 4.67, orange-strong on white 4.67, white on teal-strong 4.79, teal-strong on white 4.79,
+   ink on white 14.13, ink-muted on white 5.0, ink on lavender 12.0, purple-800 on white 12.88. */
 .page {
-  --purple-900: #2a223d;
-  --purple-800: #362c4f;
-  --purple-700: #453765;
-  --purple-600: #56457f;
-  --purple-500: #6a5b8e;
-  --purple-400: #8275a0;
-  --purple-300: #a097b7;
-  --purple-200: #bfb8ce;
-  --purple-100: #e3dfea;
-  --purple-50: #efedf5;
-  --orange: #f27a37; /* Curiosity Orange: the single warm mark in the diagrams */
-  --orange-strong: #c0531f;
-  --orange-hover: #ac4b1f;
-  --orange-50: #fef2eb;
-  --coral: #fb5a3c; /* IgniteThinking signature: its product card ONLY */
-  --disabled: #a9a5b0;
-  --border-strong: #cfc8d6;
-  --slate: #192028;
-  --bg: #fbf8f3;
-  --surface: #ffffff;
-  --tint: #efedf5;
-  --ink: #2c2a33;
-  --ink-muted: #6e6a75;
-  --line: #e3dfea;
+  --purple-900:#2A223D;
+  --purple-800:#362C4F;
+  --purple-700:#453765;
+  --purple-600:#56457F;
+  --purple-300:#A097B7;
+  --purple-200:#BFB8CE;
+  --purple-100:#E3DFEA;
+  --purple-50:#EFEDF5;
+  --orange:#F27A37;
+  --orange-strong:#C0531F;
+  --orange-hover:#AC4B1F;
+  --orange-50:#FEF2EB;
+  --teal:#2F8CA8;
+  --teal-strong:#0F7C9C;
+  /* teal has one job: evidence, in the science section only */
+  --bg:#FFFFFF;
+  --surface:#FFFFFF;
+  --tint:#EFEDF5;
+  --ink:#2C2A33;
+  --ink-muted:#6E6A75;
+  --line:#E3DFEA;
   --font-h: var(--font-heading), "Helvetica Neue", Arial, sans-serif;
   --font-b: var(--font-body), "Helvetica Neue", Arial, sans-serif;
   --font-m: var(--font-mono), ui-monospace, "SF Mono", Menlo, monospace;
-  --ease: cubic-bezier(0.2, 0.6, 0.3, 1);
-  --ease-pop: cubic-bezier(0.34, 1.4, 0.64, 1);
-
-  overflow-x: clip;
-  background: var(--bg);
-  color: var(--ink);
-  font-family: var(--font-b);
-  font-size: 17px;
-  line-height: 1.6;
-  text-wrap: pretty;
-  -webkit-font-smoothing: antialiased;
+  --ease-out:cubic-bezier(.23,1,.32,1);
+  /* every state change */
+  --ease-in-out:cubic-bezier(.37,0,.63,1);
+  /* the one drawn line */
+  --lab:.75rem;
+  /* smallest label on the page: 12 px */;
 }
 .page *,
 .page *::before,
 .page *::after {
-  box-sizing: border-box;
+  box-sizing:border-box;
 }
-.page h1,
-.page h2,
-.page h3 {
-  font-family: var(--font-h);
-  color: var(--purple-700);
-  margin: 0;
-  text-wrap: balance;
-  letter-spacing: -0.015em;
+.page {
+  overflow-x:clip;
 }
-.page h2 {
-  /* v8.8 and v8.11 values (the draft's later bare `h2` overrides) */
-  font-weight: 700;
-  font-size: clamp(2rem, 4.2vw, 3.3rem);
-  line-height: 1.08;
-  letter-spacing: -0.025em;
-  color: var(--purple-800);
+.page {
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--font-b);
+  font-size:17px;
+  line-height:1.6;
+  text-wrap:pretty;
+  -webkit-font-smoothing:antialiased;
 }
-.page h3 {
-  font-weight: 600;
-  font-size: 1.12rem;
-  line-height: 1.28;
+/* scoped to the page (CSS Modules cannot target a bare ::selection) */
+.page ::selection {
+  background:var(--purple-100);
+  color:var(--purple-900);
 }
-/* :where() keeps the draft's bare `p` specificity, so class rules such as
-   .own-pill { margin: 0 } win as they do in the draft */
+:where(.page) h1,
+:where(.page) h2,
+:where(.page) h3 {
+  font-family:var(--font-h);
+  margin:0;
+  text-wrap:balance;
+  letter-spacing:-.015em;
+}
+:where(.page) h2 {
+  font-weight:700;
+  font-size:clamp(2rem,4.2vw,3.3rem);
+  line-height:1.08;
+  letter-spacing:-.025em;
+  color:var(--purple-800);
+}
+:where(.page) h3 {
+  font-weight:600;
+  font-size:1.12rem;
+  line-height:1.28;
+  color:var(--purple-700);
+}
 :where(.page) p {
-  margin: 0 0 1em;
+  margin:0 0 1em;
 }
-/* :where() keeps this at the bare-element specificity the draft's `a` rule
-   had, so .btn, .go and the other link styles override it as in the draft */
-.page :where(a) {
-  color: var(--purple-600);
+:where(.page) a {
+  color:var(--purple-600);
   text-decoration: underline;
 }
+/* Restore what the draft inherits from the browser and the repo's global CSS
+   changes: paragraphs and list items take the font of their container. */
+:where(.page) p,
+:where(.page) li {
+  font-family: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
 .wrap {
-  width: 100%;
-  max-width: 1240px;
-  margin-inline: auto;
-  padding-inline: 24px;
-}
-.prose {
-  max-width: 62ch;
-}
-.lab {
-  font-family: var(--font-m);
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-}
-.rule {
-  width: 44px;
-  height: 3px;
-  border-radius: 2px;
-  background: var(--purple-600);
-  margin-bottom: 20px;
+  width:100%;
+  max-width:1240px;
+  margin-inline:auto;
+  padding-inline:24px;
 }
 .muted {
-  color: var(--ink-muted);
-}
-/* The draft's purple-500 ring is under 3:1 on the dark and orange grounds
-   (2.15 on slate/purple-800, 1.37 on purple-600, 1.29 on orange-strong),
-   so those grounds set --focus-ring to white (12.88, 7.9, 4.67). */
-.page :where(a, button, [tabindex]):focus-visible {
-  outline: 3px solid var(--focus-ring, var(--purple-500));
-  outline-offset: 3px;
-  border-radius: 4px;
-}
-
-/* hero: slate ground, faint grid, the thinking trace on the right */
-.hero {
-  --focus-ring: #ffffff;
-  position: relative;
-  isolation: isolate;
-  background: var(--slate);
-  color: #fff;
-  padding: clamp(56px, 7vw, 88px) 0;
-}
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  opacity: 0.55;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
-  background-size: 28px 28px;
-}
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: radial-gradient(ellipse at 18% 45%, rgba(86, 69, 127, 0.32), transparent 52%);
-}
-.hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 44px;
-  align-items: center;
-}
-.trace {
-  margin: 0;
-}
-.trace svg {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-.trace .ghost {
-  fill: none;
-  stroke: rgba(255, 255, 255, 0.2);
-  stroke-width: 5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-.trace .line {
-  fill: none;
-  stroke: var(--orange);
-  stroke-width: 5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-dasharray: 1500;
-  stroke-dashoffset: 1500;
-  animation: draw 3.2s var(--ease) 0.3s forwards;
-}
-.trace .node {
-  fill: #192028;
-  stroke: var(--orange);
-  stroke-width: 3;
-}
-.trace .node.end {
-  fill: var(--orange);
-}
-.trace .node.turn {
-  r: 9;
-}
-.trace .ring {
-  fill: none;
-  stroke: var(--orange);
-  stroke-width: 1.5;
-  opacity: 0.45;
-}
-.trace .ai {
-  fill: none;
-  stroke: var(--purple-200);
-  stroke-width: 1.5;
-  stroke-dasharray: 4 5;
-}
-.trace .aidot {
-  fill: var(--purple-200);
-}
-.trace text {
-  font-family: var(--font-m);
-  font-size: 13px;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  fill: rgba(255, 255, 255, 0.86);
-}
-.trace text.ai-t {
-  fill: var(--purple-200);
-}
-.trace figcaption {
-  margin-top: 2px;
-  text-align: center;
-  font-family: var(--font-m);
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.72);
-}
-@keyframes draw {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-.hero .kicker {
-  display: inline-block;
-  font-family: var(--font-m);
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #fff;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  border-radius: 999px;
-  padding: 7px 15px;
-  margin-bottom: 24px;
-}
-.hero h1 {
-  font-family: var(--font-h);
-  font-weight: 600;
-  color: #fff;
-  font-size: clamp(2.3rem, 5.3vw, 4.2rem);
-  line-height: 1.03;
-  letter-spacing: -0.03em;
-  max-width: 17ch;
-  margin: 0 0 24px;
-}
-.hero h1 b {
-  font-weight: 600;
-  color: var(--purple-200);
-}
-.hero .mission {
-  font-family: var(--font-h);
-  font-weight: 500;
-  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
-  line-height: 1.45;
-  color: #fff;
-  max-width: 46ch;
-  margin: 0 0 16px;
-}
-.hero .mission .mlab {
-  display: block;
-  font-family: var(--font-m);
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--purple-200);
-  margin-bottom: 6px;
-}
-.hero .lede {
-  font-size: clamp(1rem, 1.4vw, 1.1rem);
-  line-height: 1.55;
-  color: rgba(255, 255, 255, 0.9);
-  max-width: 56ch;
-  margin: 0;
-}
-.hero .lede .q {
-  display: block;
-  margin-top: 12px;
-  font-family: var(--font-h);
-  font-weight: 600;
-  font-size: 1.1em;
-  color: #fff;
-}
-.cta-row {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  margin-top: 30px;
-}
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: 48px;
-  padding: 0 24px;
-  border-radius: 999px;
-  font-family: var(--font-h);
-  font-weight: 600;
-  font-size: 1rem;
-  text-decoration: none;
-  border: 1.5px solid transparent;
-  cursor: pointer;
-  transition: background-color 0.18s var(--ease), border-color 0.18s var(--ease), color 0.18s var(--ease),
-    transform 0.18s var(--ease-pop);
-}
-.btn-primary {
-  background: var(--orange-strong);
-  color: #fff;
-}
-.btn-primary:hover {
-  background: var(--orange-hover);
-  transform: translateY(-1px);
-}
-.btn-onphoto {
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.4);
-}
-.btn-onphoto:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-.btn:active {
-  transform: translateY(0);
-}
-.creds {
-  background: var(--slate);
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-  padding: 14px 0;
-}
-.creds .wrap {
-  display: flex;
-  gap: 10px 34px;
-  flex-wrap: wrap;
-  align-items: center;
-}
-.creds span {
-  font-family: var(--font-m);
-  font-size: 0.66rem;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.62);
-}
-.creds .ci {
-  white-space: nowrap;
-}
-
-.page section {
-  padding: clamp(52px, 6.5vw, 80px) 0;
-}
-/* the draft's bare `section` rule loses to .hero and .close-dark there;
-   the scoped `.page section` would win, so restore their own padding */
-.page section.hero {
-  padding: clamp(56px, 7vw, 88px) 0;
-}
-.page section.close-dark {
-  padding: clamp(60px, 7.5vw, 92px) 0;
-}
-.page section.tinted {
-  background: var(--tint);
-  border-block: 1px solid var(--line);
-}
-.head {
-  margin-bottom: 32px;
-}
-
-/* frame */
-.frame-head {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: 44px;
-  align-items: end;
-  margin-bottom: 30px;
-}
-.frame-head p {
-  margin: 0;
-  font-size: 1.06rem;
-}
-.vs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  overflow: hidden;
-  background: var(--surface);
-}
-.col-head {
-  padding: 16px 22px;
-  border-bottom: 1px solid var(--line);
-}
-.col-head .tag {
-  font-family: var(--font-m);
-  font-size: 0.66rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  display: block;
-  margin-bottom: 4px;
-}
-.col-head h3 {
-  font-size: 1.2rem;
-  margin: 0;
-}
-.a .col-head {
-  background: var(--bg);
-}
-.a .col-head .tag {
-  color: var(--ink-muted);
-}
-.a .col-head h3 {
-  color: var(--ink-muted);
-}
-.b .col-head {
-  background: var(--purple-50);
-  border-left: 1px solid var(--line);
-}
-.b .col-head .tag {
-  color: var(--purple-600);
-}
-.b .col-head h3 {
-  color: var(--purple-800);
-}
-.vs .row {
-  padding: 15px 22px;
-  border-bottom: 1px solid var(--line);
-  font-size: 0.98rem;
-  min-height: 70px;
-}
-.b .row {
-  border-left: 1px solid var(--line);
-}
-.vs .row:last-child {
-  border-bottom: 0;
-}
-.a .row {
-  color: var(--ink-muted);
-  background: var(--bg);
-}
-.b .row strong {
-  font-weight: 500;
-  color: var(--purple-800);
-}
-
-/* question + can/must */
-.q-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
-  gap: 48px;
-  align-items: center;
-}
-/* .page-prefixed so the draft's own margins beat the scoped `.page p` reset */
-.page .bigq {
-  font-family: var(--font-h);
-  font-weight: 600;
-  font-size: clamp(1.6rem, 3.2vw, 2.5rem);
-  line-height: 1.12;
-  letter-spacing: -0.025em;
-  color: var(--purple-500);
-  margin: 0;
-}
-.bigq em {
-  font-style: normal;
-  color: var(--purple-900);
-}
-.cm {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-.panel {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 20px 20px 16px;
-}
-.panel h3 {
-  font-size: 1.02rem;
-  margin: 0 0 12px;
-}
-.panel.learner {
-  border-top: 3px solid var(--purple-600);
-}
-.panel.ai {
-  border-top: 3px solid var(--purple-200);
-}
-.panel ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 8px;
-}
-.panel li {
-  display: grid;
-  grid-template-columns: 18px 1fr;
-  gap: 9px;
-  font-size: 0.95rem;
-  align-items: start;
-}
-.panel li svg {
-  margin-top: 5px;
-}
-.page .boundary {
-  grid-column: 1/-1;
-  margin: 4px 0 0;
-  text-align: center;
-  font-family: var(--font-h);
-  font-weight: 600;
-  font-size: 1.02rem;
-  color: var(--purple-800);
-}
-
-/* handoff rail: scroll-driven where supported, resting at the learner end otherwise */
-.handoff {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 16px;
-}
-.handoff .hl {
-  font-family: var(--font-m);
-  font-size: 0.66rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-}
-.rail {
-  flex: 1;
-  position: relative;
-  height: 8px;
-  border-radius: 999px;
-  background: var(--purple-100);
-  container-type: inline-size;
-}
-.knob {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 26px;
-  height: 26px;
-  margin-top: -13px;
-  border-radius: 50%;
-  background: var(--orange);
-  box-shadow: 0 0 0 4px rgba(242, 122, 55, 0.25);
-  transform: translateX(calc(100cqw - 26px));
-}
-@supports (animation-timeline: view()) {
-  .knob {
-    animation: handoff linear both;
-    animation-timeline: view();
-    animation-range: entry 10% cover 45%;
-  }
-}
-@keyframes handoff {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(calc(100cqw - 26px));
-  }
-}
-.cm .panel {
-  transition: transform 0.22s var(--ease), box-shadow 0.22s var(--ease);
-}
-.cm .panel:hover,
-.cm .panel:focus-within {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 26px rgba(44, 36, 64, 0.1);
-}
-
-/* evidence: findings + ladder */
-.ev-head {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-  gap: 40px;
-  align-items: start;
-  margin-bottom: 36px;
-}
-.ladder {
-  background: var(--slate);
-  color: var(--purple-50);
-  border-radius: 14px;
-  padding: 20px 22px;
-}
-.ladder .lab {
-  color: var(--purple-200);
-  display: block;
-  margin-bottom: 6px;
-}
-.ladder h3 {
-  color: #fff;
-  font-size: 1.02rem;
-  margin: 0 0 12px;
-}
-.rungs {
-  display: grid;
-  gap: 7px;
-}
-.rung {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 12px;
-  align-items: baseline;
-  padding: 9px 13px;
-  border-radius: 9px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.11);
-}
-.rung span {
-  font-family: var(--font-m);
-  font-size: 0.62rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--purple-200);
-}
-.rung b {
-  font-family: var(--font-h);
-  font-weight: 600;
-  color: #fff;
-  font-size: 0.95rem;
-}
-.ladder p {
-  margin: 12px 0 0;
-  font-size: 0.88rem;
-  color: var(--purple-100);
-}
-.sub-head {
-  display: flex;
-  align-items: baseline;
-  gap: 18px;
-  flex-wrap: wrap;
-  margin: 8px 0 22px;
-  padding-top: 26px;
-  border-top: 1px solid var(--line);
-}
-.sub-head h3 {
-  font-size: 1.3rem;
-  color: var(--purple-700);
-  margin: 0;
-}
-.beliefs {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px 32px;
-}
-.belief {
-  background: var(--tint);
-  border: 1px solid var(--line);
-  border-top: 3px solid var(--purple-600);
-  border-radius: 10px;
-  padding: 20px 20px 18px;
-}
-.belief .n {
-  font-family: var(--font-m);
-  font-size: 0.68rem;
-  letter-spacing: 0.16em;
-  color: #fff;
-  background: var(--orange-strong);
-  display: inline-block;
-  padding: 3px 9px 2px 11px;
-  border-radius: 999px;
-  margin-bottom: 10px;
-}
-.belief h3 {
-  margin: 0 0 8px;
-  color: var(--purple-800);
-}
-.belief p {
-  margin: 0;
-  font-size: 0.95rem;
-}
-.belief .tag {
-  display: block;
-  font-family: var(--font-m);
-  font-size: 0.62rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--purple-600);
-  margin: 0 0 6px;
-}
-.belief .dd {
-  margin-top: 14px;
-  padding-top: 12px;
-  border-top: 1px solid var(--purple-100);
-}
-.belief .dd p {
-  color: var(--purple-800);
-  font-weight: 500;
-}
-.src {
-  display: block;
-  margin-top: 9px;
-  font-family: var(--font-m);
-  font-size: 0.78rem;
-  letter-spacing: 0.06em;
-  color: var(--ink-muted);
-  line-height: 1.5;
-}
-
-/* success statement */
-.success {
-  margin-top: 44px;
-  background: var(--slate);
-  color: var(--purple-50);
-  border-radius: 16px;
-  padding: clamp(26px, 4vw, 44px);
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 40px;
-  align-items: center;
-}
-.success .lab {
-  color: var(--purple-200);
-  display: block;
-  margin-bottom: 8px;
-}
-.success h2 {
-  color: #fff;
-  font-size: clamp(1.7rem, 3.4vw, 2.6rem);
-  margin: 0 0 14px;
-}
-.success p {
-  color: var(--purple-100);
-  margin: 0;
-  font-size: 1.02rem;
-  max-width: 44ch;
-}
-.success p strong {
-  color: #fff;
-  font-weight: 500;
-}
-.s-fig {
-  margin: 0;
-}
-.track {
-  position: relative;
-  height: 14px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
-  container-type: inline-size;
-}
-.support {
-  position: absolute;
-  inset: 0;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--purple-500), var(--purple-400));
-  transform-origin: left center;
-  transform: scaleX(0);
-}
-.walker {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 22px;
-  height: 22px;
-  margin-top: -11px;
-  border-radius: 50%;
-  background: var(--orange);
-  box-shadow: 0 0 0 4px rgba(242, 122, 55, 0.25);
-  transform: translateX(calc(100cqw - 22px));
-}
-.s-fig.play .support {
-  animation: shrink 7s var(--ease) 1 both;
-}
-.s-fig.play .walker {
-  animation: walk 7s var(--ease) 1 both;
-}
-@supports (animation-timeline: view()) {
-  .support {
-    animation: shrink linear both;
-    animation-timeline: view();
-    animation-range: entry 15% cover 60%;
-  }
-  .walker {
-    animation: walk linear both;
-    animation-timeline: view();
-    animation-range: entry 15% cover 60%;
-  }
-}
-.stages {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 14px;
-  font-family: var(--font-m);
-  font-size: 0.66rem;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-  color: var(--purple-200);
-}
-@keyframes shrink {
-  0%,
-  18% {
-    transform: scaleX(1);
-  }
-  30%,
-  48% {
-    transform: scaleX(0.62);
-  }
-  60%,
-  78% {
-    transform: scaleX(0.26);
-  }
-  90%,
-  100% {
-    transform: scaleX(0);
-  }
-}
-@keyframes walk {
-  0%,
-  18% {
-    transform: translateX(0);
-  }
-  30%,
-  48% {
-    transform: translateX(38cqw);
-  }
-  60%,
-  78% {
-    transform: translateX(72cqw);
-  }
-  90%,
-  100% {
-    transform: translateX(calc(100cqw - 22px));
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .support,
-  .walker,
-  .knob,
-  .trace .line,
-  .s-fig.play .support,
-  .s-fig.play .walker {
-    animation: none;
-  }
-  .support {
-    transform: scaleX(0);
-  }
-  .walker {
-    transform: translateX(calc(100cqw - 22px));
-  }
-  .knob {
-    transform: translateX(calc(100cqw - 26px));
-  }
-  .trace .line {
-    stroke-dashoffset: 0;
-  }
-}
-
-/* products */
-.cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-}
-.card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-top: 3px solid var(--accent, var(--purple-600));
-  border-radius: 12px;
-  padding: 22px 20px;
-  display: flex;
-  flex-direction: column;
-}
-.card .state {
-  font-family: var(--font-m);
-  font-size: 0.64rem;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-  margin-bottom: 10px;
-}
-.card h3 {
-  margin: 0 0 6px;
-  font-size: 1.14rem;
-}
-.card p {
-  font-size: 0.94rem;
-  margin: 0 0 16px;
-}
-.card .go {
-  margin-top: auto;
-  display: inline-flex;
-  align-items: center;
-  align-self: flex-start;
-  min-height: 44px;
-  font-family: var(--font-h);
-  font-weight: 600;
-  font-size: 0.93rem;
-  color: var(--purple-700);
-  text-decoration: none;
-}
-.card .go:hover {
-  color: var(--orange-strong);
-}
-
-.strip {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
-}
-.strip .lab {
-  display: block;
-  color: var(--purple-700);
-  margin-bottom: 8px;
-}
-.strip p {
-  margin: 0;
-  font-size: 0.92rem;
-  color: var(--ink);
-}
-.strip a {
-  font-family: var(--font-h);
-  font-weight: 600;
-  text-decoration: none;
-}
-.close-dark {
-  --focus-ring: #ffffff;
-  background: var(--slate);
-  color: var(--purple-50);
-  position: relative;
-  isolation: isolate;
-  padding: clamp(60px, 7.5vw, 92px) 0;
-}
-.close-dark::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  opacity: 0.55;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
-  background-size: 28px 28px;
-}
-.close-dark::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: radial-gradient(ellipse at 22% 70%, rgba(86, 69, 127, 0.5), transparent 55%);
-}
-.close-band {
-  max-width: 64ch;
-}
-.close-band .rule {
-  background: var(--purple-200);
-}
-.close-band h2 {
-  color: #fff;
-  max-width: 22ch;
-}
-.close-band p {
-  color: var(--purple-100);
-}
-
-@media (max-width: 960px) {
-  .frame-head,
-  .q-grid,
-  .ev-head {
-    grid-template-columns: 1fr;
-    gap: 26px;
-  }
-  .beliefs {
-    grid-template-columns: 1fr;
-    gap: 26px;
-  }
-  .cards,
-  .cm,
-  .success,
-  .hero-grid,
-  .strip {
-    grid-template-columns: 1fr;
-  }
-  .vs {
-    grid-template-columns: 1fr;
-  }
-  .b .col-head,
-  .b .row {
-    border-left: 0;
-  }
-  .vs .row {
-    min-height: 0;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .page *,
-  .page *::before,
-  .page *::after {
-    animation-duration: 0.001ms !important;
-    transition-duration: 0.001ms !important;
-  }
-}
-
-/* ===== v8.8 colour system (Azade, 3 Nov 2026), matching IgniteThinking page v3.20 =====
-   White base; deep purple hero and claims ladder; orange for buttons, labels and the closing band.
-   Contrast: white on purple-800 12.88, purple-200 on purple-800 6.73, orange-strong on white 4.67,
-   orange-hover on lavender 4.79, white on orange-strong 4.67, purple-800 on white 12.88. */
-.page {
-  --bg: #ffffff;
+  color:var(--ink-muted);
+}
+.vh {
+  position:absolute;
+  width:1px;
+  height:1px;
+  margin:-1px;
+  padding:0;
+  overflow:hidden;
+  clip-path:inset(50%);
+  white-space:nowrap;
+  border:0;
+}
+.lab {
+  font-family:var(--font-m);
+  font-size:var(--lab);
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--ink-muted);
 }
 .lab.eyebrow {
-  display: block;
-  font-size: 0.76rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  color: var(--orange-strong);
-  margin: 0 0 14px;
+  display:block;
+  font-weight:500;
+  color:var(--orange-strong);
+  margin:0 0 14px;
 }
-.tinted .lab.eyebrow {
-  color: var(--orange-hover);
+:where(.page) :where(a,button,summary,[tabindex]):focus-visible {
+  outline:3px solid var(--purple-600);
+  outline-offset:3px;
+  border-radius:4px;
 }
-.hero {
-  background: var(--purple-800);
+/* focus ring: Curiosity Purple on light grounds (8.22 on white), white on the purple and orange grounds */
+:where(.page) :where(.announce,.topbar,.hero,.creds,section.dark,.close-band,footer) :where(a,button,summary):focus-visible {
+  outline-color:#FFFFFF;
 }
-.hero::after {
-  background: radial-gradient(ellipse at 18% 45%, rgba(86, 69, 127, 0.55), transparent 55%);
+:where(.page) :where(.pcard.feat,.own-card.lrn,.doors li) :where(a,button):focus-visible {
+  outline-color:var(--purple-600);
 }
-.trace .node {
-  fill: var(--purple-800);
+/* review chips and the draft bar: draft annotations, removed before publishing */
+/* buttons: hover steps the colour, press scales; the lift only where there is a real pointer */
+.btn {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  min-height:48px;
+  padding:0 24px;
+  border-radius:999px;
+  font-family:var(--font-h);
+  font-weight:600;
+  font-size:1rem;
+  text-decoration:none;
+  border:1.5px solid transparent;
+  cursor:pointer;
+  transition:background-color .18s ease,border-color .18s ease,color .18s ease,transform .16s var(--ease-out);
 }
-.creds {
-  background: var(--purple-900);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 18px 0;
+.btn-primary {
+  background:var(--orange-strong);
+  color:#FFFFFF;
 }
-.creds span {
-  color: var(--purple-200);
+.btn-primary:hover {
+  background:var(--orange-hover);
 }
-.ladder {
-  background: var(--purple-800);
+.btn-onphoto {
+  background:rgba(255,255,255,.12);
+  color:#FFFFFF;
+  border-color:rgba(255,255,255,.4);
 }
-/* v8.9: findings cards and the success card go white with orange edges; the question's key phrase in orange. */
-.belief {
-  background: var(--surface);
-  border-top: 3px solid var(--orange);
+.btn-onphoto:hover {
+  background:rgba(255,255,255,.2);
 }
-.success {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-top: 4px solid var(--orange);
-  color: var(--ink);
+.btn-outline {
+  background:transparent;
+  color:var(--purple-700);
+  border-color:var(--purple-300);
 }
-.success .lab {
-  color: var(--orange-strong);
-}
-.success h2 {
-  color: var(--purple-700);
-}
-.success p {
-  color: var(--ink-muted);
-}
-.success p strong {
-  color: var(--purple-800);
-}
-.track {
-  background: var(--purple-50);
-}
-.success .stages {
-  color: var(--ink-muted);
-}
-.page .bigq {
-  color: var(--purple-700);
-}
-.bigq em {
-  color: var(--orange-hover);
-}
-/* closing orange band */
-.close-dark {
-  background: var(--orange-strong);
-}
-.close-dark::before,
-.close-dark::after {
-  display: none;
-}
-.close-band h2 {
-  color: #ffffff;
-}
-.close-band p {
-  color: #ffffff;
-}
-.close-band .lab.eyebrow {
-  color: #ffffff;
+.btn-outline:hover {
+  background:var(--purple-50);
 }
 .btn-onorange {
-  background: #ffffff;
-  color: var(--purple-800);
+  background:#FFFFFF;
+  color:var(--purple-800);
 }
 .btn-onorange:hover {
-  background: var(--purple-50);
-  transform: translateY(-1px);
+  background:var(--purple-50);
 }
-.btn-onorange-ghost {
-  background: transparent;
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.75);
+@media (hover:hover) and (pointer:fine) {
+  .btn-primary:hover,
+  .btn-outline:hover,
+  .btn-onorange:hover {
+    transform:translateY(-1px);
+  }
 }
-.btn-onorange-ghost:hover {
-  background: rgba(255, 255, 255, 0.14);
+.btn:active {
+  transform:scale(.97);
 }
-/* ===== v8.11: colour order of fundingbreakthroughlab.org, in Ignite colours (Azade, 3 Nov 2026) =====
-   Deep purple (purple-800) and white sections alternating; Curiosity Purple cards with orange pills on
-   the dark sections; plain white bordered cards on white. (Announcement bar, header and footer: see
-   components/site-chrome.module.css, tone="dark".)
-   Contrast: white on purple-800 12.88, purple-100 on purple-800 9.82, orange on purple-800 4.67,
-   white on #56457F 8.22, purple-100 on #56457F 6.27. */
-/* mid-tone band under the hero */
+/* text links that end a card */
+.go {
+  display:inline-flex;
+  align-items:center;
+  align-self:flex-start;
+  min-height:44px;
+  font-family:var(--font-h);
+  font-weight:600;
+  font-size:.95rem;
+  color:var(--purple-700);
+  text-decoration:none;
+  transition:color .18s ease;
+}
+.go:hover {
+  color:var(--orange-strong);
+}
+/* announcement bar and header */
+/* v8.29: the tail label leaves before it can push Log in onto a second row; on phones Log in lives in the menu */
+/* hero: deep purple ground, faint grid, the thinking trace on the right */
+.hero {
+  position:relative;
+  isolation:isolate;
+  background:var(--purple-800);
+  color:#FFFFFF;
+  padding:clamp(56px,7vw,88px) 0;
+}
+.hero::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  opacity:.55;
+  background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+  background-size:28px 28px;
+}
+.hero::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:radial-gradient(ellipse at 18% 45%,rgba(86,69,127,.55),transparent 55%);
+}
+.hero-grid {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:44px;
+  align-items:center;
+}
+.hero h1 {
+  font-weight:600;
+  color:#FFFFFF;
+  font-size:clamp(2.3rem,5.3vw,4.2rem);
+  line-height:1.03;
+  letter-spacing:-.03em;
+  max-width:17ch;
+  margin:0 0 24px;
+}
+.hero h1 b {
+  font-weight:600;
+  color:var(--purple-200);
+}
+.hero .mission {
+  font-family:var(--font-h);
+  font-weight:500;
+  font-size:clamp(1.05rem,1.6vw,1.25rem);
+  line-height:1.45;
+  color:#FFFFFF;
+  max-width:46ch;
+  margin:0;
+}
+.hero .mission .mlab {
+  display:block;
+  font-family:var(--font-m);
+  font-size:var(--lab);
+  font-weight:500;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--purple-200);
+  margin-bottom:6px;
+}
+.cta-row {
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-top:30px;
+}
+/* the trace: the page's one authored motion moment. The line draws once on load; each stop appears as the line reaches it;
+   the two AI marks arrive last. Everything is visible by default: the hidden state exists only inside the animation. */
+.trace {
+  margin:0;
+}
+.trace svg {
+  display:block;
+  width:100%;
+  height:auto;
+}
+.trace .ghost {
+  fill:none;
+  stroke:rgba(255,255,255,.2);
+  stroke-width:5;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.trace .line {
+  fill:none;
+  stroke:var(--orange);
+  stroke-width:5;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-dasharray:1;
+  stroke-dashoffset:0;
+  animation:draw 2.4s var(--ease-in-out) .3s backwards;
+}
+.trace .node {
+  fill:var(--purple-800);
+  stroke:var(--orange);
+  stroke-width:3;
+}
+.trace .node.end {
+  fill:var(--orange);
+}
+.trace .ring {
+  fill:none;
+  stroke:var(--orange);
+  stroke-width:1.5;
+  opacity:.45;
+}
+.trace .ai {
+  fill:none;
+  stroke:var(--purple-200);
+  stroke-width:1.5;
+  stroke-dasharray:4 5;
+}
+.trace .aidot {
+  fill:var(--purple-200);
+}
+.trace text {
+  font-family:var(--font-m);
+  font-size:13px;
+  letter-spacing:.07em;
+  text-transform:uppercase;
+  fill:rgba(255,255,255,.86);
+}
+.trace text.ai-t {
+  fill:var(--purple-200);
+}
+.trace .stop,
+.trace .aimark {
+  transform-box:fill-box;
+  transform-origin:center;
+  animation:arrive .32s var(--ease-out) backwards;
+}
+.trace figcaption {
+  margin-top:2px;
+  text-align:center;
+  font-family:var(--font-m);
+  font-size:var(--lab);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.72);
+}
+@keyframes draw {
+  from{stroke-dashoffset:1};
+}
+@keyframes arrive {
+  from{opacity:0;
+  transform:scale(.94)};
+}
+@media (max-width:560px) {
+  .trace text {
+    font-size:19px;
+    letter-spacing:.03em;
+  }
+}
+/* credentials: plain sentence-case text so the trust signals can be read */
 .creds {
-  background: var(--purple-600);
-  border-top: 0;
-  padding: 22px 0;
+  background:var(--purple-600);
+  padding:22px 0;
+}
+.creds .wrap {
+  display:flex;
+  gap:8px 34px;
+  flex-wrap:wrap;
+  align-items:baseline;
 }
 .creds span {
-  color: var(--purple-100);
+  font-size:.875rem;
+  line-height:1.5;
+  color:var(--purple-100);
 }
-/* dark sections */
-.page section.dark {
-  background: var(--purple-800);
-  border: 0;
-  color: var(--purple-100);
+.creds .ci {
+  white-space:nowrap;
 }
-.page section.dark h2 {
-  color: #ffffff;
-}
-.page section.dark .lab.eyebrow {
-  color: var(--orange);
-}
-.page section.dark .bigq {
-  color: #ffffff;
-}
-.page section.dark .bigq em {
-  color: var(--orange);
-}
-.page section.dark .handoff .hl {
-  color: var(--purple-200);
-}
-.page section.dark .rail {
-  background: rgba(255, 255, 255, 0.18);
-}
-.page section.dark .panel {
-  background: var(--purple-600);
-  border: 0;
-}
-.page section.dark .panel.ai {
-  border-top: 3px solid var(--purple-200);
-}
-.page section.dark .panel.learner {
-  border-top: 3px solid var(--orange);
-}
-.page section.dark .panel h3 {
-  color: #ffffff;
-}
-.page section.dark .panel li span {
-  color: #ffffff !important;
-}
-.page section.dark .panel.ai ul {
-  color: var(--purple-200) !important;
-}
-.page section.dark .panel.learner ul {
-  color: #ffffff !important;
-}
-.page section.dark .boundary {
-  color: #ffffff;
-}
-.page section.dark .card {
-  background: var(--purple-600);
-  border: 0;
-  --focus-ring: #ffffff;
-}
-.page section.dark .card h3 {
-  color: #ffffff;
-}
-.page section.dark .card p {
-  color: var(--purple-100);
-}
-.page section.dark .card .state {
-  align-self: flex-start;
-  background: var(--orange-strong);
-  color: #ffffff;
-  padding: 5px 11px 4px;
-  border-radius: 999px;
-}
-.page section.dark .card .go {
-  color: #ffffff;
-}
-.page section.dark .card .go:hover {
-  color: var(--orange-50);
-}
-/* white sections: plain white bordered cards */
-.belief {
-  border: 1px solid var(--line);
-}
-.success {
-  border: 1px solid var(--line);
-}
-.sub-head h3 {
-  color: var(--purple-800);
-}
-/* v8.12: orange top line; the finding on white; the design decision as a lavender panel filling the
-   bottom of each card, aligned across the three. Tag orange-hover on lavender 4.79. */
-.belief {
-  display: flex;
-  flex-direction: column;
-  border-top: 4px solid var(--orange);
-  padding-bottom: 0;
-  overflow: hidden;
-}
-.belief .n {
-  align-self: flex-start;
-}
-.belief .src {
-  margin-bottom: 18px;
-}
-.belief .dd {
-  margin: auto -20px 0;
-  padding: 16px 20px 20px;
-  background: var(--tint);
-  border-top: 0;
-}
-.belief .dd .tag {
-  color: var(--orange-hover);
-}
-.belief .dd p {
-  color: var(--purple-800);
-}
-/* v8.13: "The learner needs us less" on a lavender card. Label orange-hover on lavender 4.79; body
-   ink-muted 4.55; the track goes white so it still shows on lavender. */
-.success {
-  background: var(--tint);
-  border-color: var(--line);
-}
-.success .lab {
-  color: var(--orange-hover);
-}
-.track {
-  background: #ffffff;
-  box-shadow: inset 0 0 0 1px var(--purple-100);
-}
-/* v8.17: three doors in the closing band, one per kind of visitor (white on orange-strong 4.67) */
-.doors {
-  list-style: none;
-  margin: 34px 0 0;
-  padding: 26px 0 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.35);
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px 32px;
-}
-.doors .lab {
-  display: block;
-  margin-bottom: 6px;
-  color: #ffffff;
-}
-.doors p {
-  margin: 0;
-  font-size: 0.98rem;
-  line-height: 1.5;
-  color: #ffffff;
-}
-.doors a {
-  display: inline-block;
-  padding: 11px 0;
-  font-weight: 600;
-  color: #ffffff;
-}
-@media (max-width: 760px) {
-  .doors {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ===== v8.19: Curiosity Teal means "this is evidence" (Azade, 10 Nov 2026) =====
-   Teal has one job, in the science section only: the section label, the top line and number badges of the three findings
-   cards, and the "Finding" label. Orange keeps "our action" (the Design decision label, buttons); purple keeps structure.
-   --teal #2F8CA8 (Curiosity Teal; lines only, 3.86 on white) and --teal-strong #0F7C9C (text and fills; 4.79 on white,
-   white on it 4.79), added to the design system the same day. Teal is not used on the purple sections. */
-.page {
-  --teal: #2f8ca8;
-  --teal-strong: #0f7c9c;
-}
-.page :global(#science) .lab.eyebrow {
-  color: var(--teal-strong);
-}
-.belief {
-  border-top-color: var(--teal);
-}
-.belief .n {
-  background: var(--teal-strong);
-}
-.belief > .tag {
-  color: var(--teal-strong);
-}
-
-/* v8.20: "The learner needs us less" card in teal (Azade, 10 Nov 2026): teal-strong fill, white text (4.79).
-   The walker stays orange (the learner), ringed in white so it reads on teal. */
-.success {
-  background: var(--teal-strong);
-  border-color: var(--teal-strong);
-  color: #ffffff;
-}
-.success .lab,
-.success h2,
-.success p,
-.success p strong,
-.success .stages {
-  color: #ffffff;
-}
-.success p strong {
-  font-weight: 600;
-}
-.success .track {
-  background: rgba(255, 255, 255, 0.35);
-}
-.success .support {
-  background: #ffffff;
-}
-.success .walker {
-  box-shadow: 0 0 0 4px #ffffff;
-}
-
-/* Closing band, two columns (Azade, 11 Nov 2026, draft v8.21): the right half of the orange band was empty on wide screens.
-   The message and buttons sit on the left; the three doors become white cards on the right, like the white beta card on the
-   IgniteThinking page. On white: orange-hover label 5.6, ink 14.1, purple-700 link 10.6. One column again under 900 px. */
-.close-band {
-  max-width: none;
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-  gap: clamp(32px, 5vw, 80px);
-  align-items: center;
-}
-.doors {
-  margin: 0;
-  padding: 0;
-  border-top: 0;
-  grid-template-columns: 1fr;
-  gap: 14px;
-}
-.doors li {
-  /* the closing band sets a white focus ring; the white cards need the purple one back (purple-500 on white 6.4) */
-  --focus-ring: var(--purple-500);
-  background: #ffffff;
-  border-radius: 14px;
-  padding: 18px 22px 8px;
-  box-shadow: 0 14px 34px rgba(42, 34, 61, 0.22);
-}
-.doors .lab {
-  color: var(--orange-hover);
-}
-.doors p {
-  color: var(--ink);
-}
-.doors a {
-  color: var(--purple-700);
-}
-@media (max-width: 900px) {
-  .close-band {
-    grid-template-columns: 1fr;
-    gap: 28px;
-  }
-}
-
-/* v8.22: the doors match the site's own card pattern (Azade, 11 Nov 2026): a Montserrat h3 title, body copy at the card
-   size, and the same link style as the "What we build" cards (.card .go): heading font, no underline, orange on hover. */
-.doors li {
-  border-radius: 12px;
-  padding: 20px 22px 10px;
-  display: flex;
-  flex-direction: column;
-}
-.doors h3 {
-  margin: 0 0 6px;
-  font-size: 1.14rem;
-  color: var(--purple-700);
-}
-.doors p {
-  font-size: 0.94rem;
-  line-height: 1.55;
-  color: var(--ink);
-}
-.doors a {
-  display: inline-flex;
-  align-items: center;
-  align-self: flex-start;
-  min-height: 44px;
-  padding: 0;
-  font-family: var(--font-h);
-  font-weight: 600;
-  font-size: 0.93rem;
-  color: var(--purple-700);
-  text-decoration: none;
-}
-.doors a:hover {
-  color: var(--orange-strong);
-}
-
-/* ===== Draft v8.23 to v8.28 (15 and 16 Nov 2026), ported from the draft stylesheet. Dark-section rules carry the .page
-   prefix like the earlier ones above. */
-/* v8.23 (H-2, Harvard course pages note, 15 Nov 2026): one people line in the credentials band, on its own row */
 .creds .people {
   flex-basis:100%;
 }
-/* ===== v8.24 (Azade, 16 Nov 2026): "The question we ask" restructured from her reference screenshot (structure only, our colours).
-   Headline across the top; below it two equal cards with the boundary drawn between them as a line and a pill. The system card is
-   outlined (recessive), the learner card is solid white (the emphasis). Small label, title and four numbered rows per card, rows
-   aligned across the two cards. Replaces the side-by-side layout, the handoff rail and the caption under the cards.
-   Contrast: purple-100 on purple-800 9.82, purple-200 on purple-800 6.73, purple-300 on purple-800 4.67, ink on white 14.13,
-   orange-strong on white 4.67, purple-900 on orange 5.46. */
-:global(#question) .q-head {
-  margin:0 0 36px;
+.creds .todo {
+  font-size:.66rem;
+  color:var(--purple-900);
 }
-:global(#question) .bigq {
-  font-size:clamp(1.6rem,3.1vw,2.45rem);
-  line-height:1.16;
-  max-width:none;
-  text-wrap:balance;
+:where(.page) section {
+  padding:clamp(52px,6.5vw,80px) 0;
 }
-.own {
-  display:grid;
-  grid-template-columns:minmax(0,1fr) 72px minmax(0,1fr);
-  align-items:stretch;
+:where(.page) section.tinted {
+  background:var(--tint);
 }
-.own-card {
-  border-radius:20px;
-  padding:34px 36px 30px;
-}
-.own-card.sys {
-  border:1px solid rgba(255,255,255,.22);
+:where(.page) section.dark {
+  background:var(--purple-800);
   color:var(--purple-100);
 }
-.own-card.lrn {
+:where(.page) section.dark h2 {
+  color:#FFFFFF;
+}
+:where(.page) section.dark .lab.eyebrow {
+  color:var(--orange);
+}
+.head {
+  margin-bottom:32px;
+}
+/* products: IgniteThinking leads, with the app itself in the card; the two other lines sit in a row below it */
+.pcard {
+  border-radius:20px;
+  padding:34px 36px 32px;
+  display:flex;
+  flex-direction:column;
+}
+.pcard .state {
+  align-self:flex-start;
+  font-family:var(--font-m);
+  font-size:var(--lab);
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  margin:0 0 18px;
+}
+.pcard.feat {
+  display:grid;
+  grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
+  gap:clamp(28px,4vw,56px);
+  align-items:center;
   background:var(--surface);
   color:var(--ink);
 }
-.own-card .own-lab {
-  display:block;
-  margin:0 0 10px;
-  font-size:.72rem;
-  letter-spacing:.2em;
+.pf-copy {
+  display:flex;
+  flex-direction:column;
+  min-width:0;
 }
-.own-card.sys .own-lab {
-  color:var(--purple-200);
-}
-.own-card.lrn .own-lab {
-  color:var(--orange-strong);
-}
-.own-card h3 {
-  margin:0 0 18px;
-  font-size:clamp(1.25rem,2vw,1.6rem);
-  line-height:1.2;
-}
-.own-card.sys h3 {
+.pcard.feat .state {
+  background:var(--orange-strong);
   color:#FFFFFF;
+  border-radius:999px;
+  padding:6px 13px 5px;
 }
-.own-card.lrn h3 {
+.pcard.feat h3 {
+  margin:0 0 14px;
+  font-size:clamp(1.9rem,3.6vw,2.8rem);
+  line-height:1.08;
+  letter-spacing:-.02em;
   color:var(--purple-800);
 }
-.own-card ul {
-  list-style:none;
-  margin:0;
-  padding:0;
+.pcard.feat p {
+  margin:0 0 24px;
+  max-width:54ch;
+  font-size:1.12rem;
+  line-height:1.6;
+  color:var(--ink);
 }
-.own-card li {
-  display:grid;
-  grid-template-columns:34px minmax(0,1fr);
-  align-items:baseline;
-  gap:10px;
-  padding:16px 0;
-  font-size:1.08rem;
-  line-height:1.35;
-}
-.own-card li+li {
-  border-top:1px solid rgba(255,255,255,.14);
-}
-.own-card.lrn li+li {
-  border-top-color:var(--line);
-}
-.own-card.lrn li {
-  font-weight:500;
-}
-.own-card .n {
-  font-family:var(--font-m);
-  font-size:.74rem;
-  letter-spacing:.06em;
-}
-.own-card.sys .n {
-  color:var(--purple-300);
-}
-.own-card.lrn .n {
-  color:var(--orange-strong);
-}
-.own-line {
-  position:relative;
+.pstats {
   display:flex;
-  align-items:center;
-  justify-content:center;
+  flex-wrap:wrap;
+  gap:16px 48px;
+  margin:0 0 28px;
+  padding-top:22px;
+  border-top:1px solid var(--line);
 }
-.own-line::before {
-  content:"";
-  position:absolute;
-  top:0;
-  bottom:0;
-  left:50%;
-  width:2px;
-  margin-left:-1px;
-  background:var(--orange);
+.pstat b {
+  display:block;
+  font-family:var(--font-h);
+  font-weight:700;
+  font-size:clamp(1.9rem,3vw,2.5rem);
+  line-height:1;
+  color:var(--purple-600);
+  font-variant-numeric:tabular-nums;
 }
-.own-pill {
-  position:relative;
+.pstat span {
+  display:block;
+  margin-top:6px;
+  font-size:.92rem;
+  color:var(--ink-muted);
+}
+.pcta {
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+}
+.shot {
   margin:0;
-  background:var(--orange);
-  color:var(--purple-900);
-  border-radius:999px;
-  padding:18px 9px;
-  font-family:var(--font-m);
-  font-size:.7rem;
-  font-weight:500;
-  letter-spacing:.2em;
-  text-transform:uppercase;
-  white-space:nowrap;
-  writing-mode:vertical-rl;
-  transform:rotate(180deg);
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 18px 40px rgba(42,34,61,.18);
 }
-@media (max-width:860px) {
-  .own {
+.shot-bar {
+  display:flex;
+  gap:6px;
+  padding:10px 14px;
+  background:var(--purple-50);
+  border-bottom:1px solid var(--line);
+}
+.shot-bar i {
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:var(--purple-100);
+  display:block;
+}
+.shot img {
+  display:block;
+  width:100%;
+  height:auto;
+  background:var(--purple-900);
+}
+.pb-side {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:24px;
+  margin-top:24px;
+}
+.pb-side .pcard {
+  padding:26px 28px 24px;
+}
+.pcard.side {
+  background:var(--purple-600);
+  color:var(--purple-100);
+}
+.pcard.soon {
+  border:1.5px dashed var(--purple-300);
+  color:var(--purple-100);
+}
+.pb-side h3 {
+  margin:0 0 8px;
+  font-size:1.4rem;
+  line-height:1.2;
+  color:#FFFFFF;
+}
+.pb-side p {
+  margin:0 0 14px;
+  font-size:.98rem;
+  line-height:1.55;
+  color:var(--purple-100);
+}
+.pcard.side .state {
+  color:var(--purple-100);
+  margin-bottom:12px;
+}
+.pcard.soon .state {
+  color:var(--purple-200);
+  margin-bottom:12px;
+}
+.pcard.soon p {
+  margin-bottom:0;
+}
+.pcard.side .go {
+  margin-top:auto;
+  color:#FFFFFF;
+}
+.pcard.side .go:hover {
+  color:var(--orange-50);
+}
+@media (max-width:1000px) {
+  .pcard.feat {
     grid-template-columns:1fr;
   }
-  .own-card {
-    padding:26px 24px 22px;
+}
+@media (max-width:860px) {
+  .pcard {
+    padding:26px 24px 24px;
   }
-  .own-line {
-    padding:18px 0;
-  }
-  .own-line::before {
-    top:50%;
-    bottom:auto;
-    left:0;
-    right:0;
-    width:auto;
-    height:2px;
-    margin:-1px 0 0;
-  }
-  .own-pill {
-    writing-mode:horizontal-tb;
-    transform:none;
-    padding:9px 18px;
+  .pb-side {
+    grid-template-columns:1fr;
   }
 }
-/* ===== v8.25 (Azade, 16 Nov 2026): "We make pedagogy part of the architecture" restructured from her reference screenshot
-   (structure only, our colours). The joined table, whose row lines did not meet across the two columns, becomes two separate
-   equal cards: the default outlined with dash marks (recessive), what we build solid deep purple with check marks (the emphasis).
-   Same card shape as "The question we ask" (v8.24), inverted for a white section.
-   Contrast: ink-muted on white 5.0, ink on white 14.13, purple-100 on purple-800 9.82, white on purple-800 13.0,
-   orange on purple-800 4.67, purple-900 on orange 5.46. */
+@media (max-width:560px) {
+  .pstats {
+    display:grid;
+    gap:10px;
+  }
+  .pstat {
+    display:grid;
+    grid-template-columns:54px minmax(0,1fr);
+    align-items:baseline;
+  }
+  .pstat b {
+    font-size:1.7rem;
+  }
+  .pstat span {
+    margin:0;
+  }
+}
+/* pedagogy: the default (outlined, recessive) beside what we build (solid, the emphasis) */
+.frame-head {
+  display:grid;
+  grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
+  gap:44px;
+  align-items:end;
+  margin-bottom:30px;
+}
+.frame-head p {
+  margin:0;
+  font-size:1.06rem;
+}
 .vs2 {
   display:grid;
   grid-template-columns:minmax(0,1fr) minmax(0,1fr);
@@ -1580,7 +647,7 @@
   display:block;
   margin:0 0 10px;
   font-family:var(--font-m);
-  font-size:.72rem;
+  font-size:var(--lab);
   letter-spacing:.2em;
   text-transform:uppercase;
 }
@@ -1630,6 +697,497 @@
   color:#FFFFFF;
   font-weight:600;
 }
+.principle {
+  margin:22px 0 0;
+  text-align:center;
+  font-family:var(--font-h);
+  font-weight:600;
+  font-size:1.02rem;
+  color:var(--purple-800);
+}
+/* the question: system card outlined, learner card solid, the boundary drawn between them */
+:global(#question) .q-head {
+  margin:0 0 36px;
+}
+:global(#question) .bigq {
+  font-weight:600;
+  font-size:clamp(1.6rem,3.1vw,2.45rem);
+  line-height:1.16;
+  letter-spacing:-.025em;
+  color:#FFFFFF;
+  margin:0;
+}
+:global(#question) .bigq em {
+  font-style:normal;
+  color:var(--orange);
+}
+.own {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 72px minmax(0,1fr);
+  align-items:stretch;
+}
+.own-card {
+  border-radius:20px;
+  padding:34px 36px 30px;
+}
+.own-card.sys {
+  border:1px solid rgba(255,255,255,.22);
+  color:var(--purple-100);
+}
+.own-card.lrn {
+  background:var(--surface);
+  color:var(--ink);
+}
+.own-card .own-lab {
+  display:block;
+  margin:0 0 10px;
+  letter-spacing:.2em;
+}
+.own-card.sys .own-lab {
+  color:var(--purple-200);
+}
+.own-card.lrn .own-lab {
+  color:var(--orange-strong);
+}
+.own-card h3 {
+  margin:0 0 18px;
+  font-size:clamp(1.25rem,2vw,1.6rem);
+  line-height:1.2;
+}
+.own-card.sys h3 {
+  color:#FFFFFF;
+}
+.own-card.lrn h3 {
+  color:var(--purple-800);
+}
+.own-card ul {
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+.own-card li {
+  display:grid;
+  grid-template-columns:34px minmax(0,1fr);
+  align-items:baseline;
+  gap:10px;
+  padding:16px 0;
+  font-size:1.08rem;
+  line-height:1.35;
+}
+.own-card li+li {
+  border-top:1px solid rgba(255,255,255,.14);
+}
+.own-card.lrn li+li {
+  border-top-color:var(--line);
+}
+.own-card.lrn li {
+  font-weight:500;
+}
+.own-card .n {
+  font-family:var(--font-m);
+  font-size:var(--lab);
+  letter-spacing:.06em;
+}
+.own-card.sys .n {
+  color:var(--purple-300);
+}
+.own-card.lrn .n {
+  color:var(--orange-strong);
+}
+.own-line {
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.own-line::before {
+  content:"";
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:50%;
+  width:2px;
+  margin-left:-1px;
+  background:var(--orange);
+}
+.own-pill {
+  position:relative;
+  margin:0;
+  background:var(--orange);
+  color:var(--purple-900);
+  border-radius:999px;
+  padding:18px 9px;
+  font-family:var(--font-m);
+  font-size:var(--lab);
+  font-weight:500;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  white-space:nowrap;
+  writing-mode:vertical-rl;
+  transform:rotate(180deg);
+}
+/* evidence: findings and the claims ladder. Teal marks evidence; orange marks our action. */
+:global(#science) .lab.eyebrow {
+  color:var(--teal-strong);
+}
+.ev-head {
+  display:grid;
+  grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);
+  gap:40px;
+  align-items:start;
+  margin-bottom:36px;
+}
+.ladder {
+  background:var(--purple-800);
+  color:var(--purple-50);
+  border-radius:14px;
+  padding:20px 22px;
+}
+.ladder .lab {
+  color:var(--purple-200);
+  display:block;
+  margin-bottom:6px;
+}
+.ladder h3 {
+  color:#FFFFFF;
+  font-size:1.02rem;
+  margin:0 0 12px;
+}
+.rungs {
+  display:grid;
+  gap:7px;
+}
+.rung {
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:12px;
+  align-items:baseline;
+  padding:9px 13px;
+  border-radius:9px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.11);
+}
+.rung span {
+  font-family:var(--font-m);
+  font-size:var(--lab);
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--purple-200);
+}
+.rung b {
+  font-family:var(--font-h);
+  font-weight:600;
+  color:#FFFFFF;
+  font-size:.95rem;
+}
+.ladder p {
+  margin:12px 0 0;
+  font-size:.88rem;
+  color:var(--purple-100);
+}
+.sub-head {
+  margin:8px 0 22px;
+  padding-top:26px;
+  border-top:1px solid var(--line);
+}
+.sub-head h3 {
+  font-size:1.3rem;
+  color:var(--purple-800);
+  margin:0;
+}
+.beliefs {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:28px 32px;
+}
+.belief {
+  display:flex;
+  flex-direction:column;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-top:4px solid var(--teal);
+  border-radius:10px;
+  padding:20px 20px 0;
+  overflow:hidden;
+}
+.belief .n {
+  align-self:flex-start;
+  font-family:var(--font-m);
+  font-size:var(--lab);
+  letter-spacing:.16em;
+  color:#FFFFFF;
+  background:var(--teal-strong);
+  padding:3px 9px 2px 11px;
+  border-radius:999px;
+  margin-bottom:10px;
+}
+.belief h3 {
+  margin:0 0 8px;
+  color:var(--purple-800);
+}
+.belief p {
+  margin:0;
+  font-size:.95rem;
+}
+.belief .tag {
+  display:block;
+  font-family:var(--font-m);
+  font-size:var(--lab);
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  margin:0 0 6px;
+}
+.belief>.tag {
+  color:var(--teal-strong);
+}
+.belief .src {
+  display:block;
+  margin:9px 0 18px;
+  font-family:var(--font-m);
+  font-size:.78rem;
+  letter-spacing:.06em;
+  color:var(--ink-muted);
+  line-height:1.5;
+}
+.belief .dd {
+  margin:auto -20px 0;
+  padding:16px 20px 20px;
+  background:var(--tint);
+}
+.belief .dd .tag {
+  color:var(--orange-hover);
+}
+.belief .dd p {
+  color:var(--purple-800);
+  font-weight:500;
+}
+/* success statement: the dot rests on each of the three stages in turn */
+.success {
+  margin-top:44px;
+  background:var(--teal-strong);
+  color:#FFFFFF;
+  border-radius:16px;
+  padding:clamp(26px,4vw,44px);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:40px;
+  align-items:center;
+}
+.success .lab {
+  color:#FFFFFF;
+  display:block;
+  margin-bottom:8px;
+}
+.success h2 {
+  color:#FFFFFF;
+  font-size:clamp(1.7rem,3.4vw,2.6rem);
+  margin:0 0 14px;
+}
+.success p {
+  color:#FFFFFF;
+  margin:0;
+  font-size:1.02rem;
+  max-width:44ch;
+}
+.success p strong {
+  color:#FFFFFF;
+  font-weight:600;
+}
+.s-fig {
+  margin:0;
+}
+.track {
+  position:relative;
+  height:14px;
+  border-radius:999px;
+  background:rgba(255,255,255,.35);
+  box-shadow:inset 0 0 0 1px var(--purple-100);
+  container-type:inline-size;
+}
+.support {
+  position:absolute;
+  inset:0;
+  border-radius:999px;
+  background:#FFFFFF;
+  transform-origin:left center;
+  transform:scaleX(0);
+}
+.walker {
+  position:absolute;
+  top:50%;
+  left:0;
+  width:22px;
+  height:22px;
+  margin-top:-11px;
+  border-radius:50%;
+  background:var(--orange);
+  box-shadow:0 0 0 4px #FFFFFF;
+  transform:translateX(calc(100cqw - 22px));
+}
+.stages {
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  gap:8px;
+  margin-top:14px;
+  font-family:var(--font-m);
+  font-size:var(--lab);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:#FFFFFF;
+}
+.stages span:nth-child(2) {
+  text-align:center;
+}
+.stages span:nth-child(3) {
+  text-align:right;
+}
+.s-fig.play .support {
+  animation:shrink 6s var(--ease-in-out) 1 both;
+}
+.s-fig.play .walker {
+  animation:walk 6s var(--ease-in-out) 1 both;
+}
+@supports (animation-timeline: view()) {
+  .support {
+    animation:shrink linear both;
+    animation-timeline:view();
+    animation-range:entry 15% cover 60%;
+  }
+  .walker {
+    animation:walk linear both;
+    animation-timeline:view();
+    animation-range:entry 15% cover 60%;
+  }
+}
+@keyframes shrink {
+  0%,20%{transform:scaleX(1)}40%,60%{transform:scaleX(.5)}80%,100%{transform:scaleX(0)};
+}
+@keyframes walk {
+  0%,20%{transform:translateX(0)}40%,60%{transform:translateX(calc(50cqw - 11px))}80%,100%{transform:translateX(calc(100cqw - 22px))};
+}
+/* commitments */
+.strip {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:40px;
+}
+.strip>div {
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+}
+.strip .pic {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  background:var(--surface);
+  color:var(--purple-600);
+  margin:0 0 18px;
+}
+.strip h3 {
+  margin:0 0 10px;
+  font-size:1.22rem;
+  line-height:1.25;
+  color:var(--purple-800);
+}
+.strip p {
+  margin:0;
+  font-size:1rem;
+  line-height:1.6;
+  color:var(--ink);
+}
+.strip .go {
+  margin-top:10px;
+  font-size:1.0625rem;
+}
+/* closing orange band: headline left, lede and one button right, three doors in a row on the commitments' columns */
+.close-band {
+  background:var(--orange-strong);
+  color:#FFFFFF;
+  padding:clamp(60px,7.5vw,92px) 0;
+}
+.close-band .lab.eyebrow {
+  color:#FFFFFF;
+}
+.close-copy {
+  display:grid;
+  grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);
+  gap:24px 56px;
+  align-items:end;
+  margin:0 0 40px;
+}
+.close-band h2 {
+  color:#FFFFFF;
+}
+.close-band .cc-r p {
+  margin:0;
+  font-size:1.08rem;
+  line-height:1.55;
+  color:#FFFFFF;
+}
+.close-band .cta-row {
+  margin-top:22px;
+}
+.doors {
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:40px;
+}
+.doors li {
+  background:var(--surface);
+  border-radius:16px;
+  padding:26px 28px 14px;
+  display:flex;
+  flex-direction:column;
+  box-shadow:0 14px 34px rgba(42,34,61,.22);
+}
+.doors h3 {
+  font-size:1.22rem;
+  margin:0 0 8px;
+  color:var(--purple-800);
+}
+.doors p {
+  font-size:.98rem;
+  line-height:1.55;
+  margin:0 0 12px;
+  color:var(--ink);
+}
+.doors .go {
+  margin-top:auto;
+  font-size:.93rem;
+}
+@media (max-width:960px) {
+  .frame-head,
+  .ev-head {
+    grid-template-columns:1fr;
+    gap:26px;
+  }
+  .beliefs {
+    grid-template-columns:1fr;
+    gap:26px;
+  }
+  .success,
+  .hero-grid,
+  .strip {
+    grid-template-columns:1fr;
+  }
+}
+@media (max-width:900px) {
+  .close-copy {
+    grid-template-columns:1fr;
+    margin-bottom:30px;
+  }
+  .doors {
+    grid-template-columns:1fr;
+    gap:14px;
+  }
+}
 @media (max-width:860px) {
   .vs2 {
     grid-template-columns:1fr;
@@ -1638,301 +1196,50 @@
   .vcard {
     padding:26px 24px 24px;
   }
-}
-/* ===== v8.26 (Azade, 16 Nov 2026): "What we build" and the commitments row restructured from her reference screenshots
-   (structure only, our colours). Build: IgniteThinking is the featured card (about two thirds, solid white, large title, the link as
-   a button); IgniteEd (solid Curiosity Purple) and IgniteBuild (dashed, coming soon) are stacked beside it. Card words unchanged.
-   Commitments: each of the three has an icon in a lavender circle and a real heading in place of the small caps label; the privacy
-   link sits under its paragraph. The closing band and the footer are unchanged.
-   Contrast: ink on white 14.13, purple-800 on white 13.0, white on orange-strong 4.67, white on #56457F 8.22,
-   purple-100 on #56457F 6.27, purple-100 on purple-800 9.82, purple-200 on purple-800 6.73, purple-600 on purple-50 7.1. */
-.pb {
-  display:grid;
-  grid-template-columns:minmax(0,1.9fr) minmax(0,1fr);
-  gap:24px;
-  align-items:stretch;
-}
-.pcard {
-  border-radius:20px;
-  padding:34px 36px 32px;
-  display:flex;
-  flex-direction:column;
-}
-.pcard .state {
-  align-self:flex-start;
-  font-family:var(--font-m);
-  font-size:.68rem;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  margin:0 0 18px;
-}
-.page section.dark .pcard.feat {
-  background:var(--surface);
-  color:var(--ink);
-}
-.pcard.feat .state {
-  background:var(--orange-strong);
-  color:#FFFFFF;
-  border-radius:999px;
-  padding:6px 13px 5px;
-}
-.page section.dark .pcard.feat h3 {
-  margin:0 0 14px;
-  font-size:clamp(1.9rem,3.6vw,2.8rem);
-  line-height:1.08;
-  letter-spacing:-.02em;
-  color:var(--purple-800);
-}
-.page section.dark .pcard.feat p {
-  margin:0 0 28px;
-  max-width:54ch;
-  font-size:1.12rem;
-  line-height:1.6;
-  color:var(--ink);
-}
-.pcard.feat .btn {
-  margin-top:auto;
-  align-self:flex-start;
-}
-.pb-side {
-  display:flex;
-  flex-direction:column;
-  gap:24px;
-}
-.pb-side .pcard {
-  flex:1 1 auto;
-  padding:26px 28px 24px;
-}
-.page section.dark .pcard.side {
-  background:var(--purple-600);
-  color:var(--purple-100);
-}
-.page section.dark .pcard.soon {
-  border:1.5px dashed var(--purple-300);
-  color:var(--purple-100);
-}
-.page section.dark .pb-side h3 {
-  margin:0 0 8px;
-  font-size:1.4rem;
-  line-height:1.2;
-  color:#FFFFFF;
-}
-.page section.dark .pb-side p {
-  margin:0 0 14px;
-  font-size:.98rem;
-  line-height:1.55;
-  color:var(--purple-100);
-}
-.pcard.soon .state {
-  color:var(--purple-200);
-  margin-bottom:12px;
-}
-.pcard.soon p {
-  margin-bottom:0;
-}
-.pcard.side .go {
-  margin-top:auto;
-  display:inline-flex;
-  align-items:center;
-  align-self:flex-start;
-  min-height:44px;
-  font-family:var(--font-h);
-  font-weight:600;
-  font-size:.95rem;
-  color:#FFFFFF;
-  text-decoration:none;
-}
-.pcard.side .go:hover {
-  color:var(--orange-50);
-}
-@media (max-width:860px) {
-  .pb {
+  .own {
     grid-template-columns:1fr;
   }
-  .pcard {
-    padding:26px 24px 24px;
+  .own-card {
+    padding:26px 24px 22px;
   }
-}
-.strip2 {
-  gap:40px;
-}
-.strip2>div {
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-}
-.strip2 .pic {
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  width:52px;
-  height:52px;
-  border-radius:50%;
-  background:var(--purple-50);
-  color:var(--purple-600);
-  margin:0 0 18px;
-}
-.strip2 h3 {
-  margin:0 0 10px;
-  font-size:1.22rem;
-  line-height:1.25;
-  color:var(--purple-800);
-}
-.strip2 p {
-  margin:0;
-  font-size:1rem;
-  line-height:1.6;
-  color:var(--ink);
-}
-.strip2 a.more {
-  margin-top:10px;
-  display:inline-flex;
-  align-items:center;
-  min-height:44px;
-  font-family:var(--font-h);
-  font-weight:600;
-  color:var(--purple-700);
-  text-decoration:none;
-}
-.strip2 a.more:hover {
-  color:var(--orange-strong);
-}
-@media (max-width:860px) {
-  .strip2 {
+  .own-line {
+    padding:18px 0;
+  }
+  .own-line::before {
+    top:50%;
+    bottom:auto;
+    left:0;
+    right:0;
+    width:auto;
+    height:2px;
+    margin:-1px 0 0;
+  }
+  .own-pill {
+    writing-mode:horizontal-tb;
+    transform:none;
+    padding:9px 18px;
+    letter-spacing:.14em;
+  }
+  .strip {
     gap:30px;
   }
 }
-/* v8.27 (Azade, 16 Nov 2026: "we can use them"): the featured card gains the numbers row and a second button, and IgniteEd an
-   audience label. Numbers and their words are the IgniteThinking page's own strip (24 puzzles; 3 levels, all open from day one;
-   0 chat boxes). Numbers are Curiosity Purple, not orange: orange stays for actions. Purple-600 on white 8.22, ink-muted on white 5.0,
-   purple-700 on white 10.6, purple-100 on #56457F 6.27. */
-.page section.dark .pcard.feat p {
-  margin-bottom:24px;
-}
-.pstats {
-  display:flex;
-  flex-wrap:wrap;
-  gap:16px 56px;
-  margin:0 0 28px;
-  padding-top:22px;
-  border-top:1px solid var(--line);
-}
-.pstat b {
-  display:block;
-  font-family:var(--font-h);
-  font-weight:700;
-  font-size:clamp(1.9rem,3vw,2.5rem);
-  line-height:1;
-  color:var(--purple-600);
-}
-.pstat span {
-  display:block;
-  margin-top:6px;
-  font-size:.92rem;
-  color:var(--ink-muted);
-}
-.pcta {
-  margin-top:auto;
-  display:flex;
-  flex-wrap:wrap;
-  gap:12px;
-}
-.pcard.feat .pcta .btn {
-  margin-top:0;
-}
-.btn-outline {
-  background:transparent;
-  color:var(--purple-700);
-  border-color:var(--purple-300);
-}
-.btn-outline:hover {
-  background:var(--purple-50);
-  transform:translateY(-1px);
-}
-.pcard.side .state {
-  color:var(--purple-100);
-  margin-bottom:12px;
-}
-@media (max-width:560px) {
-  .pstats {
-    display:grid;
-    gap:10px;
+/* reduced motion: every figure rests in its final state and nothing waits on a delay */
+@media (prefers-reduced-motion:reduce) {
+  .trace .line,
+  .trace .stop,
+  .trace .aimark,
+  .support,
+  .walker,
+  .s-fig.play .support,
+  .s-fig.play .walker {
+    animation:none;
   }
-  .pstat {
-    display:grid;
-    grid-template-columns:54px minmax(0,1fr);
-    align-items:baseline;
+  .page *,
+  .page *::before,
+  .page *::after {
+    animation-duration:.001ms!important;
+    animation-delay:0s!important;
+    transition-duration:.001ms!important;
   }
-  .pstat b {
-    font-size:1.7rem;
-  }
-  .pstat span {
-    margin:0;
-  }
-}
-/* ===== v8.28 (Azade, 16 Nov 2026): closing band restructured from her reference screenshot (structure only, our colours).
-   Headline left with the lede and buttons to its right, so the top row fills the width; the three doors in a row below, on the
-   same three columns as the commitments above. Replaces the v8.21 layout (message left, doors stacked right). Orange band kept.
-   Contrast: white on orange-strong 4.67, purple-800 on white 12.88, ink on white 14.13, purple-700 on white 10.6. */
-.close-band.cb2 {
-  display:block;
-  max-width:none;
-}
-.cb2 .close-copy {
-  display:grid;
-  grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);
-  gap:24px 56px;
-  align-items:end;
-  margin:0 0 40px;
-}
-.cb2 h2 {
-  max-width:none;
-  text-wrap:balance;
-}
-.cb2 .cc-r p {
-  margin:0;
-  font-size:1.08rem;
-  line-height:1.55;
-}
-.cb2 .cta-row {
-  margin-top:22px;
-}
-.cb2 .doors {
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:40px;
-  margin:0;
-  padding:0;
-  border-top:0;
-}
-.cb2 .doors li {
-  border-radius:16px;
-  padding:26px 28px 14px;
-}
-.cb2 .doors h3 {
-  font-size:1.22rem;
-  margin:0 0 8px;
-  color:var(--purple-800);
-}
-.cb2 .doors p {
-  font-size:.98rem;
-  margin:0 0 12px;
-}
-.cb2 .doors a {
-  margin-top:auto;
-}
-@media (max-width:900px) {
-  .cb2 .close-copy {
-    grid-template-columns:1fr;
-    margin-bottom:30px;
-  }
-  .cb2 .doors {
-    grid-template-columns:1fr;
-    gap:14px;
-  }
-}
-
-/* v8.26 cards: the IgniteEd card is purple-600, where the default purple-500 ring is 1.37:1, so its link gets the white
-   ring the old dark cards had (7.9). The featured card is white and keeps the purple ring. */
-.page section.dark .pcard.side {
-  --focus-ring: #ffffff;
 }

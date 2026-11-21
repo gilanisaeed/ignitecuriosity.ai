@@ -8,7 +8,7 @@ export default function ProblemPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <SiteHeader />
-      <main className="flex-1">
+      <main id="main" className="flex-1">
         {/* Section 1: The Double Crisis (Hero) */}
         <section className="py-16 md:py-24 bg-muted/30">
           <div className="container px-6 md:px-12">
