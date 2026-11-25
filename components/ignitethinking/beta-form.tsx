@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react"
 import { c } from "@/app/ignitethinking/cx"
 
 // The beta form, ported from the draft's second <script>
-// (docs/handoff-2026-11-10/source/IgniteThinking-Page-v3_50.html), logic as
+// (docs/handoff-2026-11-10/source/IgniteThinking-Page-v3_52.html), logic as
 // written. v3.42 (W-2): one field, the email; the optional question is asked on
 // the next step, which is the mail message itself. It composes a message in the
 // visitor's own mail client; nothing is transmitted from this page. After
@@ -24,8 +24,11 @@ export function BetaForm() {
     const onSubmit = (e: Event) => {
       e.preventDefault()
       const m = em.value.trim()
-      if (!m || m.indexOf("@") < 1 || m.lastIndexOf(".") < m.indexOf("@")) {
-        err.textContent = "Please add an email address, so we can write back."
+      /* v3.52: no spaces, a dot after the @, and a real ending */
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(m)) {
+        err.textContent = m
+          ? "Please check the email address. It looks incomplete."
+          : "Please add an email address, so we can write back."
         em.setAttribute("aria-invalid", "true")
         em.focus()
         return
@@ -33,6 +36,31 @@ export function BetaForm() {
       err.textContent = ""
       ok.textContent = ""
       em.removeAttribute("aria-invalid")
+      /* v3.52: ready for the HubSpot form (ruled 25 Nov). Once the form is created, put its
+         portal ID and form ID here; the email then goes to us through HubSpot and the visitor
+         stays on the page. Until both are set, the mail-app route below is used. Not before
+         Privacy Notice v0.9 is live. */
+      const HS = { portal: "", form: "" }
+      if (HS.portal && HS.form && "fetch" in window) {
+        fetch("https://api.hsforms.com/submissions/v3/integration/submit/" + HS.portal + "/" + HS.form, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            fields: [{ name: "email", value: m }],
+            context: { pageUri: location.href, pageName: document.title },
+          }),
+        })
+          .then((r) => {
+            if (!r.ok) throw new Error(String(r.status))
+            ok.textContent = "Thank you. Your request is in, and we will write to you at " + m + "."
+            f.reset()
+          })
+          .catch(() => mailApp(m))
+        return
+      }
+      mailApp(m)
+    }
+    const mailApp = (m: string) => {
       const body =
         "Please send me an invitation to the IgniteThinking Founding Families beta.\n\nEmail: " +
         m +
@@ -53,6 +81,19 @@ export function BetaForm() {
       a.textContent = "hello@ignitecuriosity.ai"
       ok.appendChild(a)
       ok.appendChild(document.createTextNode("."))
+      /* v3.52: one click copies the address, for a browser with no mail app set up */
+      if (navigator.clipboard) {
+        const cb = document.createElement("button")
+        cb.type = "button"
+        cb.className = c("copy-mail")
+        cb.textContent = "Copy email"
+        cb.addEventListener("click", () => {
+          navigator.clipboard.writeText("hello@ignitecuriosity.ai").then(() => {
+            cb.textContent = "Copied"
+          })
+        })
+        ok.appendChild(cb)
+      }
     }
     f.addEventListener("submit", onSubmit)
     return () => f.removeEventListener("submit", onSubmit)

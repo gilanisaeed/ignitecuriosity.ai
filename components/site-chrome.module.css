@@ -46,7 +46,7 @@
    every chrome ground (2.15 on purple-800, 1.29 on orange-strong).
    White: 12.88 on purple-800, 4.67 on orange-strong. */
 .announce a:focus-visible,
-.topbar :where(a, summary):focus-visible,
+.topbar :where(a, button):focus-visible,
 .footer :where(a):focus-visible {
   outline: 3px solid #ffffff;
   outline-offset: 3px;
@@ -154,13 +154,15 @@
   margin-left: auto;
   color: var(--purple-200);
 }
+/* home v8.30: Log in is a quiet white-outline pill, so orange on the first
+   screen always means "new visitor, start here" */
 .login {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
   padding: 0 18px;
-  background: var(--orange-strong);
-  border: 1.5px solid var(--orange-strong);
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
   border-radius: 999px;
   font-family: var(--font-h);
   font-weight: 600;
@@ -168,33 +170,34 @@
   color: #ffffff;
   text-decoration: none;
   white-space: nowrap;
-  transition: background-color 0.18s var(--ease);
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease;
 }
 .login:hover {
-  background: var(--orange-hover);
-  border-color: var(--orange-hover);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: #ffffff;
 }
-.menu {
+/* home v8.30: the phone menu is a real button (SiteMenuButton: aria-expanded,
+   Escape closes it). Without script the links simply show. */
+.menu-btn {
   display: none;
-}
-.menu summary {
-  list-style: none;
-  cursor: pointer;
-  min-height: 44px;
-  min-width: 44px;
-  display: inline-flex;
   align-items: center;
   gap: 8px;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 4px;
+  background: none;
+  border: 0;
+  cursor: pointer;
   font-family: var(--font-h);
   font-weight: 600;
   font-size: 0.9rem;
+  letter-spacing: normal;
+  line-height: normal;
   color: #ffffff;
-  padding: 0 4px;
 }
-.menu summary::-webkit-details-marker {
-  display: none;
-}
-.menu summary svg {
+.menu-btn svg {
   display: block;
 }
 
@@ -244,15 +247,11 @@
   .login {
     display: none;
   }
-  .menu {
-    display: block;
+  :global(.js) .menu-btn {
+    display: inline-flex;
     margin-left: auto;
   }
   .topbar nav {
-    display: none;
-  }
-  .topbar:has(.menu[open]) nav {
-    display: flex;
     flex-direction: column;
     gap: 0;
     width: 100%;
@@ -260,14 +259,20 @@
     border-top: 1px solid rgba(255, 255, 255, 0.14);
     padding: 6px 0 10px;
   }
-  .topbar:has(.menu[open]) nav a {
+  .topbar nav a {
     min-height: 48px;
     font-size: 1rem;
   }
-  .topbar:has(.menu[open]) nav .nav-login {
+  .topbar nav .nav-login {
     display: inline-flex;
   }
-  .topbar:has(.menu[open]) nav a[aria-current] {
+  :global(.js) .topbar nav {
+    display: none;
+  }
+  :global(.js) .topbar.open nav {
+    display: flex;
+  }
+  .topbar nav a[aria-current] {
     box-shadow: none;
     border-left: 3px solid var(--orange);
     padding-left: 10px;

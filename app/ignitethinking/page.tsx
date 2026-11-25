@@ -8,8 +8,8 @@ import { BetaForm } from "@/components/ignitethinking/beta-form"
 import { StickyCta } from "@/components/ignitethinking/sticky-cta"
 import { c } from "./cx"
 
-// Ported from docs/handoff-2026-11-10/source/IgniteThinking-Page-v3_50.html
-// (20 Nov 2026), replacing the v3.4 port. Copy is final and audited
+// Ported from docs/handoff-2026-11-10/source/IgniteThinking-Page-v3_52.html
+// (25 Nov 2026), replacing the v3.4 port. Copy is final and audited
 // (handoff rule 3): port verbatim, no edits. Class names are the draft's,
 // mapped to the CSS Module by c(). Review-only elements (draft banner, todo
 // chips, draft footer tail, version-history comments) do not ship
@@ -75,8 +75,8 @@ export default function IgniteThinkingPage() {
               <p className={c("sub")}>Your child solves it.<b>The guide is never given the answer.</b></p>
               <p className={c("lede")}>Your child puts down more than one idea, tests one, and explains what they found. When they get stuck, help comes in small steps, written and reviewed by educators.</p>
               <div className={c("cta-row")}>
-                <a className={c("btn btn-primary")} href="#try">Try the maze</a>
-                <a className={c("btn btn-onphoto")} href="#beta">Request beta access</a>
+                <a className={c("btn btn-primary")} href="#beta">Request beta access</a>
+                <a className={c("btn btn-onphoto")} href="#try" id="try-link">Try the maze</a>
               </div>
             </div>
             {/* ---------- a sample puzzle, written for this page, playable ---------- */}
@@ -124,7 +124,7 @@ export default function IgniteThinkingPage() {
                   <span className={c("bd")}>Explorer</span>
                   <h3>More than one thing to hold</h3>
                   <p>Choose an approach, not a trick, and try a second way when the first one fails.</p>
-                  <div className={c("pz-tag")}><span className={c("pz-k")}>Example puzzle</span><span className={c("pz-nm")}>Fewest Colours</span><span className={c("pz-bl")}>Color the map with as few colors as you can.</span><details className={c("pz-more")}><summary><span className={c("s-closed")}>Show details</span><span className={c("s-open")}>Hide details</span><svg className={c("chev")} width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 5l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg></summary><p><span className={c("pz-k")}>The story your child reads</span>Mapmakers play a quiet game: color every region so neighbors never match, using as FEW colors as you can. Five regions. Surely that takes five colors&hellip; or does it?</p></details></div>
+                  <div className={c("pz-tag")}><span className={c("pz-k")}>Example puzzle</span><span className={c("pz-nm")}>Fewest Colors</span><span className={c("pz-bl")}>Color the map with as few colors as you can.</span><details className={c("pz-more")}><summary><span className={c("s-closed")}>Show details</span><span className={c("s-open")}>Hide details</span><svg className={c("chev")} width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 5l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg></summary><p><span className={c("pz-k")}>The story your child reads</span>Mapmakers play a quiet game: color every region so neighbors never match, using as FEW colors as you can. Five regions. Surely that takes five colors&hellip; or does it?</p></details></div>
               </div>
               <div className={c("pzc lv")} style={{ "--pa": "#7B61FF" } as CSSProperties}>
                   <svg className={c("pzv")} viewBox="0 0 168 100" role="img" aria-label="A snowflake branch that splits into three, and each tip splits into three again">
@@ -181,7 +181,7 @@ export default function IgniteThinkingPage() {
               <div>
                 <figure className={c("shot")}>
                   <div className={c("shot-bar")} aria-hidden="true"><i></i><i></i><i></i></div>
-                  <img src="/ignitethinking/ideate-ways-crop.jpg" width="1022" height="762" loading="lazy" decoding="async" alt="From the IgniteThinking app at the Ideate step of the Fewest Colours puzzle. The guide says not to pick an answer yet and to think of one way to try first. Under “Ways I could solve it”, two empty boxes wait for the child’s ideas, with a button to add another." />
+                  <img src="/ignitethinking/ideate-ways-crop.jpg" width="1022" height="762" loading="lazy" decoding="async" alt="From the IgniteThinking app at the Ideate step of the Fewest Colors puzzle. The guide says not to pick an answer yet and to think of one way to try first. Under “Ways I could solve it”, two empty boxes wait for the child’s ideas, with a button to add another." />
                 </figure>
                 <p className={c("shot-cap")}>Ideate, in the app: your child writes down ways to try before choosing.</p>
               </div>
@@ -400,8 +400,7 @@ export default function IgniteThinkingPage() {
                 <summary><h3>Is there AI in the app today?</h3><svg className={c("chev")} width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 5l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg></summary>
                 <div className={c("qa-a")}>
                   <p>Today every hint your child sees is written and reviewed by educators. The guide&rsquo;s AI comes in a later update, once it passes its tests.</p>
-                  <p><b>The AI won&rsquo;t hand over the answer.</b> It is built without the answer, it only phrases help our educators approved, every line in the first AI release is read by a learning scientist, and live phrasing ships only after it passes a leakage test and a learning test.</p>
-                  <p><a className={c("go")} href="#ai-vision">Our vision for AI &rarr;</a></p>
+                  <p><a className={c("go")} href="#ai-vision">Our vision for AI, and how it is held to the promise &rarr;</a></p>
                 </div>
               </details>
               <details className={c("qa")}>

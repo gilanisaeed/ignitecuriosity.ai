@@ -1,8 +1,8 @@
-# Home draft v8.29, IgniteThinking draft v3.50 and About draft v1.7 (10 to 20 Nov 2026)
+# Home draft v8.30, IgniteThinking draft v3.52 and About draft v1.7 (10 to 25 Nov 2026)
 
-`source/ICL-Home-Philosophy-v8_29.html` (20 Nov 2026) is the visual and copy
-source of truth for `/`, superseding v8.17, v8.20, v8.21, v8.22 and v8.28 (kept
-alongside for the diff) and
+`source/ICL-Home-Philosophy-v8_30.html` (25 Nov 2026) is the visual and copy
+source of truth for `/`, superseding v8.17, v8.20, v8.21, v8.22, v8.28 and v8.29
+(kept alongside for the diff) and
 `../handoff-2026-11-01/source/ICL-Home-Philosophy-v8_4.html`. v8.18 adds the
 Instagram and LinkedIn footer links (shown site-wide, since the footer is
 shared); v8.19 and v8.20 bring Curiosity Teal to the science section; v8.21
@@ -46,14 +46,37 @@ label hides below 1000 px so Log in never drops to a second row; below 760 px
 Log in moves into the menu; a "Skip to content" link leads to each page's
 `<main id="main">` (the first section on `/solution/`).
 
-Todo chips left in home v8.29 (not shipped, still open; unchanged from v8.28):
+v8.30 (25 Nov), after an outside review of v8.29:
 
-- Credentials band, hint author: "needs Azin's agreement to be named here; wording from deck v36, slide 2" (the line ships, as the "Who writes the hints" box does on IgniteThinking)
+- "What we build" moves to lavender, so the top is no longer four dark bands
+  in a row; the hero's primary button is "Explore IgniteThinking", to
+  `/ignitethinking/`;
+- the hint-author line moves from the credentials band into the
+  IgniteThinking card (still pending Azin's agreement);
+- "The boundary is the product." reads horizontally under the two cards, with
+  the orange line running into it; the commitments heading is visible;
+- Finding 01's design decision gains a sentence on grades 4 and 5, and Finding
+  02's drops "And the AI is never given the answer, so the restraint does not
+  rest on instructions to the model." (the pedagogy section keeps it);
+- the trace finishes by about 2.1 s and "AI: a scaffold" moves in on phones;
+- share tags (canonical, Open Graph URL); the draft's share image and its
+  responsive WebP versions of the app screenshot are not in the repo yet, so
+  the site's default share image and the one JPEG stay.
+
+Its header changes again apply site-wide: Log in is a white-outline pill (so
+orange on the first screen means "new visitor"), and the phone menu is a real
+button (`components/site-menu-button.tsx`: aria-expanded, Escape closes it and
+returns focus). `app/layout.tsx` marks the root with a `js` class before paint,
+so without script the phone menu's links simply show.
+
+Todo chips left in home v8.30 (not shipped, still open; unchanged from v8.28):
+
+- IgniteThinking card, hint author (in the credentials band before v8.30): "needs Azin's agreement to be named here; wording from deck v36, slide 2" (the line ships, as the "Who writes the hints" box does on IgniteThinking)
 - Evidence, beta date: "re-check the date at every deploy"
 - Privacy commitment link: "blocker: page must exist before launch"
 - Footer privacy link: "blocker: needs a real page"
-`source/IgniteThinking-Page-v3_50.html` (20 Nov 2026) is the source for
-`/ignitethinking/`, superseding v3.34, v3.40, v3.41, v3.48 and v3.49 (kept
+`source/IgniteThinking-Page-v3_52.html` (25 Nov 2026) is the source for
+`/ignitethinking/`, superseding v3.34, v3.40, v3.41, v3.48, v3.49 and v3.50 (kept
 alongside for the diff) and `../handoff-2026-11-01/source/IgniteThinking-Page-v3_4.html`.
 Its three images (two app screenshot crops and the hint-author portrait) are
 embedded in the draft; the site serves them from `public/ignitethinking/`.
@@ -92,6 +115,28 @@ stylesheet into one (the page module and markup are regenerated from it) and:
   as home v8.29. The schools section and the other blocks hidden in v3.49 are
   removed from the draft.
 
+v3.51 and v3.52 (25 Nov) take the home v8.30 header (already shared) and apply
+a second outside review:
+
+- the hero's primary button is Request beta access, with Try the maze beside
+  it; Try the maze brings the maze into view, rings it briefly and puts focus
+  on Walk the path;
+- the maze shows "Arrows turned: 0 of 1", Start over clears the solved
+  message, and a browser without script sees a short note in the maze;
+- the FAQ's AI answer drops its repeated paragraph; its link reads "Our vision
+  for AI, and how it is held to the promise";
+- "Fewest Colours" is "Fewest Colors" (puzzle name and screenshot alt text);
+- the email check is stricter ("Please check the email address. It looks
+  incomplete."), the mail-app route adds a Copy email button, and the form is
+  ready for HubSpot (`HS` portal and form IDs in `beta-form.tsx`, empty until
+  the form exists and Privacy Notice v0.9 is live);
+- the pinned bar stays hidden once the beta section is reached, so it never
+  returns over the footer; the Access band is tighter; section headings are
+  Deep Curiosity Purple.
+
+The draft's note on responsive WebP versions of the three images
+(`assets/ignitethinking-*`) is for later: those files are not in the repo.
+
 Two parts stay hidden on the site, each behind a switch in the page module:
 
 - `PRIVACY_SECTION_READY`: the draft shows the privacy section (four promises
@@ -103,7 +148,7 @@ Two parts stay hidden on the site, each behind a switch in the page module:
   is not on the site yet (Thinking Map Explorer v1.0 is a separate draft; its
   address is still to confirm).
 
-Todo chips left in IgniteThinking v3.50 (not shipped, still open):
+Todo chips left in IgniteThinking v3.52 (not shipped, still open):
 
 - Over time row: "publish only once TC-8 Growing view ships"
 - Grown-up review screenshot: "test profile; retake once the review's interpretive wording is replaced (UXR-16) and the independence-bar ruling lands"
@@ -117,8 +162,8 @@ Todo chips left in IgniteThinking v3.50 (not shipped, still open):
 - FAQ, reading: "same release checks as the Access section (AX-4)"
 - FAQ, more: "held until you rule or we have the fact: how long a puzzle takes, devices and browser, what happens after the beta"
 - Beta heading: "on readiness; re-check before publishing"
-- Beta form note: "form endpoint pending"
-- Beta form: "W-2: the form now asks for an email only. Privacy Notice v0.8, section 3, still lists first name, grade and a question: align one of them before publishing" (the paragraph held only this note)
+- Beta form note: "HubSpot form (ruled 25 Nov): add the portal and form IDs in the script (HS); then this note changes to say the email reaches us through HubSpot. Needs Privacy Notice v0.9 live first"
+- Beta form: "W-2 closed 25 Nov: Privacy Notice v0.9 says the form collects an email only and names HubSpot; counsel review pending" (the paragraph held only this note)
 - Footer privacy link: "blocker: needs a real page"
 - (hidden privacy section: three more chips, on Privacy Notice v0.8, counsel and "Do not publish this section before the notice is live")
 

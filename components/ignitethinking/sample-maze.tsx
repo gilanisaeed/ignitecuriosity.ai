@@ -13,8 +13,10 @@ import styles from "@/app/ignitethinking/page.module.css"
 // only after an attempt (a walk with a changed arrow), as in the app; Start
 // over cancels a walk in progress. v3.50: each arrow is one drawing, turned
 // (clockwise when tapped, the short way back when it resets), and a solve
-// reveals the page's #solved box under the maze, once.
-// Without JavaScript the grid stays empty, exactly as in the draft file.
+// reveals the page's #solved box under the maze. v3.52: an "Arrows turned"
+// count, Start over hides the solved box again, a note for a browser without
+// script, and the hero's "Try the maze" link rings the maze and focuses Walk.
+// Without JavaScript the grid holds only the draft's note (v3.52), as in the draft file.
 
 type Dir = "R" | "D" | "L" | "U"
 
@@ -151,7 +153,15 @@ export function SampleMaze() {
           if (n) n.remove()
         }
     }
+    /* v3.52: the one-arrow rule shown as a count */
+    function count() {
+      const t = root!.querySelector("#turned")
+      if (!t) return
+      t.textContent = "Arrows turned: " + (changed ? 1 : 0) + " of 1"
+      t.classList.toggle(styles.full, !!changed)
+    }
     function paintChanged() {
+      count()
       for (let r = 0; r < 3; r++)
         for (let c = 0; c < 3; c++) {
           if (r === HOUSE.r && c === HOUSE.c) continue
@@ -301,7 +311,14 @@ export function SampleMaze() {
       guide.reset()
       walkBtn.disabled = false
       nudgeBtn.disabled = false
+      /* v3.52: Start over clears the solved message */
+      const sv = document.getElementById("solved")
+      if (sv) {
+        sv.hidden = true
+        sv.classList.remove(styles.in)
+      }
       build()
+      count()
       route.textContent = ""
       speak(guide.opening)
     }
@@ -321,6 +338,21 @@ export function SampleMaze() {
     chipEl.addEventListener("click", onChip)
     init()
 
+    /* v3.52: "Try the maze" (hero link, page markup) brings the maze into view if it is
+       not, rings it briefly, and puts focus on Walk the path */
+    const tryLink = document.getElementById("try-link")
+    const onTry = (e: Event) => {
+      e.preventDefault()
+      root.scrollIntoView({ block: "nearest", behavior: reduce ? "auto" : "smooth" })
+      walkBtn.focus({ preventScroll: true })
+      if (!reduce) {
+        root.classList.remove(styles.pulse)
+        void root.offsetWidth
+        root.classList.add(styles.pulse)
+      }
+    }
+    if (tryLink) tryLink.addEventListener("click", onTry)
+
     let sparkAnim: Animation | undefined
     if (!reduce && sparkEl && "animate" in sparkEl) {
       sparkAnim = sparkEl.animate(
@@ -337,6 +369,7 @@ export function SampleMaze() {
       nudgeBtn.removeEventListener("click", onNudge)
       resetBtn.removeEventListener("click", init)
       chipEl.removeEventListener("click", onChip)
+      if (tryLink) tryLink.removeEventListener("click", onTry)
       if (walkTimer) clearTimeout(walkTimer)
       if (sparkAnim) sparkAnim.cancel()
     }
@@ -361,9 +394,21 @@ export function SampleMaze() {
             id="maze"
             role="group"
             aria-label="Arrow maze, 3 squares by 3. Start is top left, the House is bottom right."
-          ></div>
+          >
+            <noscript>
+              <p className={styles["maze-ns"]}>
+                This sample maze runs in your browser and needs JavaScript turned on. Without it: start top left, follow
+                each arrow, and find the one arrow to turn so the walk reaches the House.
+              </p>
+            </noscript>
+          </div>
         </div>
-        <p className={styles["map-cap"]}>Walk the path first. Then tap one square to turn its arrow, and walk again.</p>
+        <p className={styles["map-cap"]}>
+          Walk the path first. Then tap one square to turn its arrow, and walk again.{" "}
+          <span className={styles.turned} id="turned" aria-live="polite">
+            Arrows turned: 0 of 1
+          </span>
+        </p>
         <div className={styles.controls}>
           <button className={`${styles.abtn} ${styles["abtn-pri"]}`} type="button" id="walk">
             Walk the path

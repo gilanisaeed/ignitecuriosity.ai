@@ -68,7 +68,12 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="bg-background">
+    <html lang="en" className="bg-background" suppressHydrationWarning>
+      <head>
+        {/* Marks the root before paint so the phone menu (SiteMenuButton) can hide its
+            links while script runs; without script they simply show (home v8.30). */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+      </head>
       <body
         className={`${montserrat.variable} ${roboto.variable} ${robotoMono.variable} font-sans antialiased`}
       >
