@@ -1,10 +1,11 @@
+import type { Metadata } from "next"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { SuccessFigure } from "@/components/home/success-figure"
 import styles from "./page.module.css"
 
-// Ported from docs/handoff-2026-11-10/source/ICL-Home-Philosophy-v8_29.html
-// (20 Nov 2026); first ported from v8.4 (docs/handoff-2026-11-01/source/).
+// Ported from docs/handoff-2026-11-10/source/ICL-Home-Philosophy-v8_30.html
+// (25 Nov 2026); first ported from v8.4 (docs/handoff-2026-11-01/source/).
 // Copy is final and audited (handoff rule 3): port verbatim, no edits. Class
 // names are the draft's, mapped to the CSS Module by c(). Review-only elements
 // (draft banner, todo chips, draft footer tail, version-history comments) do
@@ -19,6 +20,21 @@ const c = (names: string) =>
     .map((n) => styles[n] ?? n)
     .join(" ")
 
+// Share tags (v8.30). The draft's share image (assets/icl-home-share-1200x630.png, "confirm
+// its address at deploy") is not in this repo yet, so the site's default image stands in.
+export const metadata: Metadata = {
+  alternates: { canonical: "https://ignitecuriosity.ai/" },
+  openGraph: {
+    type: "website",
+    siteName: "Ignite Curiosity Lab",
+    title: "Ignite Curiosity Lab | Learning to think with AI, not just use it",
+    description:
+      "Ignite Curiosity Lab creates AI learning experiences that build independent reasoning skills in K-12 students, where AI guides their thinking instead of giving them answers.",
+    url: "https://ignitecuriosity.ai/",
+    images: [{ url: "/images/icl-mainpage.jpg", width: 1280, height: 720, alt: "Ignite Curiosity Lab" }],
+  },
+}
+
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col">
@@ -30,7 +46,7 @@ export default function Home() {
             <h1>Learning to think with AI,<br /><b>not just use it.</b></h1>
             <p className={c("mission")}><span className={c("mlab")}>Our mission</span>Ignite Curiosity Lab creates AI learning experiences that build independent reasoning skills in K-12 students, where AI guides their thinking instead of giving them answers.</p>
             <div className={c("cta-row")}>
-              <a className={c("btn btn-primary")} href="#build">See what we build</a>
+              <a className={c("btn btn-primary")} href="/ignitethinking/">Explore IgniteThinking</a>
               <a className={c("btn btn-onphoto")} href="#science">Explore the science</a>
             </div>
           </div>
@@ -40,13 +56,13 @@ export default function Home() {
               <path className={c("ghost")} d="M40 300 C120 282 150 200 210 190 C272 178 318 232 352 254 C408 290 420 346 362 350 C300 354 276 274 324 232 C382 185 440 150 500 140 C542 133 580 108 600 80" />
               <path className={c("line")} pathLength="1" d="M40 300 C120 282 150 200 210 190 C272 178 318 232 352 254 C408 290 420 346 362 350 C300 354 276 274 324 232 C382 185 440 150 500 140 C542 133 580 108 600 80" />
               <g><circle className={c("node")} cx="40" cy="300" r="7" /><text x="22" y="334">Question</text></g>
-              <g className={c("stop")} style={{ animationDelay: "0.97s" }}><circle className={c("node")} cx="210" cy="190" r="7" /><text x="224" y="172">First idea</text></g>
-              <g className={c("stop")} style={{ animationDelay: "1.45s" }}><circle className={c("ring")} cx="366" cy="349" r="16" /><circle className={c("node")} cx="366" cy="349" r="9" /><text x="296" y="386">Wrong turn</text></g>
-              <g className={c("stop")} style={{ animationDelay: "1.71s" }}><circle className={c("node")} cx="324" cy="232" r="7" /><text x="288" y="258" textAnchor="end">Revise</text></g>
-              <g className={c("stop")} style={{ animationDelay: "2.09s" }}><circle className={c("node")} cx="500" cy="140" r="7" /><text x="506" y="118" textAnchor="end">Insight</text></g>
-              <g className={c("stop")} style={{ animationDelay: "2.64s" }}><circle className={c("node end")} cx="600" cy="80" r="8" /><text x="634" y="60" textAnchor="end">Explains why</text></g>
-              <g className={c("aimark")} style={{ animationDelay: "2.85s" }}><path className={c("ai")} d="M168 128 L204 182" /><circle className={c("aidot")} cx="164" cy="124" r="4" /><text className={c("ai-t")} x="60" y="108">AI: a question</text></g>
-              <g className={c("aimark")} style={{ animationDelay: "3.05s" }}><path className={c("ai")} d="M452 372 L392 346" /><circle className={c("aidot")} cx="456" cy="374" r="4" /><text className={c("ai-t")} x="468" y="380">AI: a scaffold</text></g>
+              <g className={c("stop")} style={{ animationDelay: "0.67s" }}><circle className={c("node")} cx="210" cy="190" r="7" /><text x="224" y="172">First idea</text></g>
+              <g className={c("stop")} style={{ animationDelay: "1.01s" }}><circle className={c("ring")} cx="366" cy="349" r="16" /><circle className={c("node")} cx="366" cy="349" r="9" /><text x="296" y="386">Wrong turn</text></g>
+              <g className={c("stop")} style={{ animationDelay: "1.20s" }}><circle className={c("node")} cx="324" cy="232" r="7" /><text x="288" y="258" textAnchor="end">Revise</text></g>
+              <g className={c("stop")} style={{ animationDelay: "1.47s" }}><circle className={c("node")} cx="500" cy="140" r="7" /><text x="506" y="118" textAnchor="end">Insight</text></g>
+              <g className={c("stop")} style={{ animationDelay: "1.86s" }}><circle className={c("node end")} cx="600" cy="80" r="8" /><text x="634" y="60" textAnchor="end">Explains why</text></g>
+              <g className={c("aimark")} style={{ animationDelay: "1.96s" }}><path className={c("ai")} d="M168 128 L204 182" /><circle className={c("aidot")} cx="164" cy="124" r="4" /><text className={c("ai-t")} x="60" y="108">AI: a question</text></g>
+              <g className={c("aimark")} style={{ animationDelay: "2.10s" }}><path className={c("ai")} d="M452 372 L392 346" /><circle className={c("aidot")} cx="456" cy="374" r="4" /><text className={c("ai-t r")} x="468" y="380">AI: a scaffold</text></g>
             </svg>
             <figcaption>The line is the learner&rsquo;s. The marks are ours.</figcaption>
           </figure>
@@ -55,11 +71,10 @@ export default function Home() {
         <div className={c("creds")}><div className={c("wrap")}>
           <span><span className={c("ci")}>NVIDIA Inception</span> &middot; <span className={c("ci")}>Stanford LEAD</span> &middot; <span className={c("ci")}>LISA Cohort 11</span> &middot; <span className={c("ci")}>Me2We 2026 Top-10 (Stanford GSB)</span></span>
           <span>Workshop and poster, Khan Lab School AI in Education Summit 2026</span>
-          <span className={c("people")}>Every IgniteThinking hint is written and reviewed by Dr. Azin Sanjari, Assistant Professor of Mathematics Education, University of Central Arkansas</span>
         </div></div>
 
         {/* 1 · products (moved up in v8.29: the product is the first thing after the hero) */}
-        <section className={c("dark")} id="build">
+        <section className={c("tinted")} id="build">
           <div className={c("wrap")}>
             <div className={c("head")}><h2>What we build</h2></div>
             <article className={c("pcard feat")}>
@@ -72,6 +87,7 @@ export default function Home() {
                   <div className={c("pstat")}><b>3</b><span>levels, all open from day one</span></div>
                   <div className={c("pstat")}><b>0</b><span>chat boxes</span></div>
                 </div>
+                <p className={c("hint-author")}>Every IgniteThinking hint is written and reviewed by Dr. Azin Sanjari, Assistant Professor of Mathematics Education, University of Central Arkansas.</p>
                 <div className={c("pcta")}>
                   <a className={c("btn btn-primary")} href="/ignitethinking/">See IgniteThinking &rarr;</a>
                   <a className={c("btn btn-outline")} href="/ignitethinking/#beta">Request beta access</a>
@@ -147,7 +163,7 @@ export default function Home() {
                   <li><span className={c("n")} aria-hidden="true">04</span><span>Prompt reflection</span></li>
                 </ul>
               </div>
-              <div className={c("own-line")}><p className={c("own-pill")}>The boundary is the product.</p></div>
+              <div className={c("own-line")} aria-hidden="true"></div>
               <div className={c("own-card lrn")}>
                 <span className={c("lab own-lab")}>Learner</span>
                 <h3>The learner must own</h3>
@@ -159,6 +175,7 @@ export default function Home() {
                 </ul>
               </div>
             </div>
+            <p className={c("own-pill")}>The boundary is the product.</p>
           </div>
         </section>
 
@@ -190,7 +207,7 @@ export default function Home() {
                 <span className={c("tag")}>Finding</span>
                 <p>Problem solving before instruction can deepen understanding and transfer, but the effect depends on age, task, guidance, and implementation. In the meta-analysis, learners in grades 2 to 5 did better with instruction first.</p>
                 <span className={c("src")}>Kapur 2008, 2016 &middot; Sinha &amp; Kapur 2021, meta-analysis</span>
-                <div className={c("dd")}><span className={c("tag")}>Design decision</span><p>We protect the learner&rsquo;s effort without assuming struggle itself teaches. We scaffold support and design each struggle to resolve in sense-making.</p></div>
+                <div className={c("dd")}><span className={c("tag")}>Design decision</span><p>We protect the learner&rsquo;s effort without assuming struggle itself teaches. We scaffold support and design each struggle to resolve in sense-making. For grades 4 and 5, that means guided struggle, not unguided: every puzzle opens with Understand and Define, and when a child is stuck, help comes in small steps written and reviewed by educators.</p></div>
               </div>
               <div className={c("belief")}>
                 <span className={c("n")}>02</span>
@@ -198,7 +215,7 @@ export default function Home() {
                 <span className={c("tag")}>Finding</span>
                 <p>About 1,000 high-school math students in Turkey, randomized. With unrestricted GPT-4, practice performance improved, but later unaided exam performance was 17 percent lower than the no-AI control. A guided version that gave hints instead of answers showed no significant reduction.</p>
                 <span className={c("src")}>Bastani et al. 2025, PNAS</span>
-                <div className={c("dd")}><span className={c("tag")}>Design decision</span><p>We record the help behind every attempt, so an assisted score is never mistaken for what a learner can do alone. And the AI is never given the answer, so the restraint does not rest on instructions to the model.</p></div>
+                <div className={c("dd")}><span className={c("tag")}>Design decision</span><p>We record the help behind every attempt, so an assisted score is never mistaken for what a learner can do alone.</p></div>
               </div>
               <div className={c("belief")}>
                 <span className={c("n")}>03</span>
@@ -224,7 +241,7 @@ export default function Home() {
         {/* 5 · commitments (lavender in v8.29, so it does not run into the white science section above) */}
         <section className={c("tinted")}>
           <div className={c("wrap")}>
-            <h2 className={c("vh")}>What we hold ourselves to</h2>
+            <div className={c("head")}><h2>What we hold ourselves to</h2></div>
             <div className={c("strip")}>
               <div><span className={c("pic")} aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="8" r="3.2" /><path d="M3.2 19.2c0-3.1 2.6-5.2 5.8-5.2s5.8 2.1 5.8 5.2" /><path d="M15.6 5a3.2 3.2 0 0 1 0 6" /><path d="M17.4 14.4c2 .7 3.4 2.4 3.4 4.8" /></svg></span><h3>Human-led, AI-supported</h3><p>Human judgment stays central. Teachers direct the tools they use in class, and in learner-facing experiences the learner owns the reasoning. AI supports both. It replaces neither.</p></div>
               <div><span className={c("pic")} aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M2.5 12s3.5-6.5 9.5-6.5S21.5 12 21.5 12s-3.5 6.5-9.5 6.5S2.5 12 2.5 12z" /><circle cx="12" cy="12" r="2.8" /></svg></span><h3>Explainable by design</h3><p>Every AI intervention has a pedagogical purpose we can name. Where the system steps in, we design that step to be visible to the teacher or parent, not hidden inside the experience.</p></div>

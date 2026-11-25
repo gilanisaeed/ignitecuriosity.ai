@@ -1,13 +1,15 @@
 import Link from "next/link"
 import styles from "./site-chrome.module.css"
+import { SiteMenuButton } from "./site-menu-button"
 
 // Ported from home draft v8.17's <header class="topbar"> and announcement
 // bar (docs/handoff-2026-11-10/source/), used site-wide outside IgniteEd.
 // The Science is out of the main menu (23 Sep ruling, restored in v8.5);
 // /science/ stays reachable from the pages that link to it. Markup and copy
-// as in the draft; the <details> menu works without JavaScript. Home v8.29
+// as in the draft. Without JavaScript the phone menu's links simply show. Home v8.29
 // adds the skip link (to <main id="main"> on every page that uses this
-// header) and a Log in item that shows inside the phone menu.
+// header) and a Log in item that shows inside the phone menu. Home v8.30 makes
+// Log in a white-outline pill and the phone menu a real button (SiteMenuButton).
 
 const navItems = [
   { key: "ignitethinking", href: "/ignitethinking/", label: "IgniteThinking" },
@@ -47,15 +49,8 @@ export function SiteHeader({
           <Link href="/" className={styles.brandmark} aria-current={current === "home" ? "page" : undefined}>
             Ignite Curiosity Lab
           </Link>
-          <details className={styles.menu}>
-            <summary aria-label="Open menu">
-              <svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true">
-                <path d="M1 1h18M1 7h18M1 13h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-              </svg>
-              Menu
-            </summary>
-          </details>
-          <nav aria-label="Products and pages">
+          <SiteMenuButton controls="primary-nav" />
+          <nav id="primary-nav" aria-label="Products and pages">
             {navItems.map((item) => (
               <Link key={item.key} href={item.href} aria-current={current === item.key ? "page" : undefined}>
                 {item.label}

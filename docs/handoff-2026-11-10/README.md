@@ -1,8 +1,8 @@
-# Home draft v8.29, IgniteThinking draft v3.50 and About draft v1.7 (10 to 20 Nov 2026)
+# Home draft v8.30, IgniteThinking draft v3.50 and About draft v1.7 (10 to 25 Nov 2026)
 
-`source/ICL-Home-Philosophy-v8_29.html` (20 Nov 2026) is the visual and copy
-source of truth for `/`, superseding v8.17, v8.20, v8.21, v8.22 and v8.28 (kept
-alongside for the diff) and
+`source/ICL-Home-Philosophy-v8_30.html` (25 Nov 2026) is the visual and copy
+source of truth for `/`, superseding v8.17, v8.20, v8.21, v8.22, v8.28 and v8.29
+(kept alongside for the diff) and
 `../handoff-2026-11-01/source/ICL-Home-Philosophy-v8_4.html`. v8.18 adds the
 Instagram and LinkedIn footer links (shown site-wide, since the footer is
 shared); v8.19 and v8.20 bring Curiosity Teal to the science section; v8.21
@@ -46,9 +46,32 @@ label hides below 1000 px so Log in never drops to a second row; below 760 px
 Log in moves into the menu; a "Skip to content" link leads to each page's
 `<main id="main">` (the first section on `/solution/`).
 
-Todo chips left in home v8.29 (not shipped, still open; unchanged from v8.28):
+v8.30 (25 Nov), after an outside review of v8.29:
 
-- Credentials band, hint author: "needs Azin's agreement to be named here; wording from deck v36, slide 2" (the line ships, as the "Who writes the hints" box does on IgniteThinking)
+- "What we build" moves to lavender, so the top is no longer four dark bands
+  in a row; the hero's primary button is "Explore IgniteThinking", to
+  `/ignitethinking/`;
+- the hint-author line moves from the credentials band into the
+  IgniteThinking card (still pending Azin's agreement);
+- "The boundary is the product." reads horizontally under the two cards, with
+  the orange line running into it; the commitments heading is visible;
+- Finding 01's design decision gains a sentence on grades 4 and 5, and Finding
+  02's drops "And the AI is never given the answer, so the restraint does not
+  rest on instructions to the model." (the pedagogy section keeps it);
+- the trace finishes by about 2.1 s and "AI: a scaffold" moves in on phones;
+- share tags (canonical, Open Graph URL); the draft's share image and its
+  responsive WebP versions of the app screenshot are not in the repo yet, so
+  the site's default share image and the one JPEG stay.
+
+Its header changes again apply site-wide: Log in is a white-outline pill (so
+orange on the first screen means "new visitor"), and the phone menu is a real
+button (`components/site-menu-button.tsx`: aria-expanded, Escape closes it and
+returns focus). `app/layout.tsx` marks the root with a `js` class before paint,
+so without script the phone menu's links simply show.
+
+Todo chips left in home v8.30 (not shipped, still open; unchanged from v8.28):
+
+- IgniteThinking card, hint author (in the credentials band before v8.30): "needs Azin's agreement to be named here; wording from deck v36, slide 2" (the line ships, as the "Who writes the hints" box does on IgniteThinking)
 - Evidence, beta date: "re-check the date at every deploy"
 - Privacy commitment link: "blocker: page must exist before launch"
 - Footer privacy link: "blocker: needs a real page"

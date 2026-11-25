@@ -1,5 +1,5 @@
-/* Home page, ported from docs/handoff-2026-11-10/source/ICL-Home-Philosophy-v8_29.html
-   (20 Nov 2026), whose one consolidated stylesheet replaces the layered v8.28 one.
+/* Home page, ported from docs/handoff-2026-11-10/source/ICL-Home-Philosophy-v8_30.html
+   (25 Nov 2026); v8.29's one consolidated stylesheet replaced the layered v8.28 one.
    Generated from the draft's <style> block in its order, the same way as the
    IgniteThinking and About modules:
    - :root tokens and the body rules sit on .page (CSS Modules cannot target :root);
@@ -12,7 +12,7 @@
      .draft-banner rules do not ship (handoff 4.2).
    The draft's own comment follows. */
 
-/* ICL home v8.29, 20 Nov 2026. One consolidated stylesheet: the nine override layers of v8.8 to v8.28 are resolved into
+/* ICL home v8.30, 25 Nov 2026 (v8.29 stylesheet, 20 Nov, with the 25 Nov review changes). One consolidated stylesheet: the nine override layers of v8.8 to v8.28 are resolved into
    their final values and the rules for layouts that no longer exist are removed. Section looks are unchanged unless noted.
    Every colour is a token from IgniteCuriosityLab_DesignSystem.html. Shadows and translucent lines are palette colours at
    reduced alpha (white, purple-900 #2A223D, Curiosity Orange). Coral is not used on this page.
@@ -154,6 +154,9 @@
 }
 :where(.page) :where(.pcard.feat,.own-card.lrn,.doors li) :where(a,button):focus-visible {
   outline-color:var(--purple-600);
+}
+.pcard.side a:focus-visible {
+  outline-color:#FFFFFF;
 }
 /* review chips and the draft bar: draft annotations, removed before publishing */
 /* buttons: hover steps the colour, press scales; the lift only where there is a real pointer */
@@ -324,7 +327,7 @@
   stroke-linejoin:round;
   stroke-dasharray:1;
   stroke-dashoffset:0;
-  animation:draw 2.4s var(--ease-in-out) .3s backwards;
+  animation:draw 1.7s var(--ease-in-out) .2s backwards;
 }
 .trace .node {
   fill:var(--purple-800);
@@ -386,6 +389,9 @@
     font-size:19px;
     letter-spacing:.03em;
   }
+  .trace text.r {
+    transform:translate(-10px,16px);
+  }
 }
 /* credentials: plain sentence-case text so the trust signals can be read */
 .creds {
@@ -405,9 +411,6 @@
 }
 .creds .ci {
   white-space:nowrap;
-}
-.creds .people {
-  flex-basis:100%;
 }
 .creds .todo {
   font-size:.66rem;
@@ -454,6 +457,7 @@
   align-items:center;
   background:var(--surface);
   color:var(--ink);
+  box-shadow:0 14px 34px rgba(42,34,61,.10);
 }
 .pf-copy {
   display:flex;
@@ -484,7 +488,7 @@
   display:flex;
   flex-wrap:wrap;
   gap:16px 48px;
-  margin:0 0 28px;
+  margin:0 0 18px;
   padding-top:22px;
   border-top:1px solid var(--line);
 }
@@ -501,6 +505,12 @@
   display:block;
   margin-top:6px;
   font-size:.92rem;
+  color:var(--ink-muted);
+}
+.pcard.feat .hint-author {
+  margin:0 0 24px;
+  font-size:.92rem;
+  line-height:1.5;
   color:var(--ink-muted);
 }
 .pcta {
@@ -551,7 +561,7 @@
 }
 .pcard.soon {
   border:1.5px dashed var(--purple-300);
-  color:var(--purple-100);
+  color:var(--ink);
 }
 .pb-side h3 {
   margin:0 0 8px;
@@ -570,18 +580,25 @@
   margin-bottom:12px;
 }
 .pcard.soon .state {
-  color:var(--purple-200);
+  color:var(--purple-600);
   margin-bottom:12px;
 }
-.pcard.soon p {
+.pb-side .pcard.soon h3 {
+  color:var(--purple-800);
+}
+.pb-side .pcard.soon p {
   margin-bottom:0;
+  color:var(--ink);
 }
 .pcard.side .go {
   margin-top:auto;
   color:#FFFFFF;
 }
 .pcard.side .go:hover {
-  color:var(--orange-50);
+  color:#FFFFFF;
+  text-decoration:underline;
+  text-decoration-thickness:2px;
+  text-underline-offset:5px;
 }
 @media (max-width:1000px) {
   .pcard.feat {
@@ -794,37 +811,33 @@
 .own-card.lrn .n {
   color:var(--orange-strong);
 }
+/* v8.30: the orange line runs between the cards and down into the pill, which now reads horizontally under them */
 .own-line {
   position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:center;
 }
 .own-line::before {
   content:"";
   position:absolute;
   top:0;
-  bottom:0;
+  bottom:-28px;
   left:50%;
   width:2px;
   margin-left:-1px;
   background:var(--orange);
 }
 .own-pill {
-  position:relative;
-  margin:0;
+  display:table;
+  margin:28px auto 0;
   background:var(--orange);
   color:var(--purple-900);
   border-radius:999px;
-  padding:18px 9px;
+  padding:11px 22px 10px;
   font-family:var(--font-m);
   font-size:var(--lab);
   font-weight:500;
   letter-spacing:.2em;
   text-transform:uppercase;
   white-space:nowrap;
-  writing-mode:vertical-rl;
-  transform:rotate(180deg);
 }
 /* evidence: findings and the claims ladder. Teal marks evidence; orange marks our action. */
 :global(#science) .lab.eyebrow {
@@ -1215,8 +1228,7 @@
     margin:-1px 0 0;
   }
   .own-pill {
-    writing-mode:horizontal-tb;
-    transform:none;
+    margin-top:22px;
     padding:9px 18px;
     letter-spacing:.14em;
   }
